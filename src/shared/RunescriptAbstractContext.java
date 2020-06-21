@@ -23,6 +23,8 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     protected SharedService sharedService;
     private Date startDate;
 
+    boolean isStarted = false;
+
     public static void logScript(String str) {
         Date currentDate = new Date();
         DateFormat df = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ");
@@ -32,23 +34,33 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     @Override
     public void onStart() {
         super.onStart();
-        ctx = this;
+        RunescriptAbstractContext.ctx = this;
         this.antibanService = XptZenAntibanService.getInstance();
         this.sharedService = SharedService.getInstance();
         this.startDate = new Date();
         this.distractions = Arrays.asList(DistractionType.PhoneNotification, DistractionType.TalkingToSomeone);
+        for (DistractionType distraction : distractions) {
+            distraction.initialize();
+        }
+        logScript("dd");
     }
 
     @Override
     public int onLoop() {
-        long currentDate = new Date().getTime();
-        long secondsSinceBeginning = (currentDate - startDate.getTime()) / 1000;
-        int hours = (int) (secondsSinceBeginning / 3600);
-        int minutes = (int) ((secondsSinceBeginning%3600) / 60);
-        int seconds = (int) ((secondsSinceBeginning%3600) % 60);
-        String time = String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds);
-        logScript("Running for " + time);
-        antibanService.antiban();
+        logScript("bb");
+
+        if (startDate != null) {
+            long currentDate = new Date().getTime();
+            long secondsSinceBeginning = (currentDate - startDate.getTime()) / 1000;
+            int hours = (int) (secondsSinceBeginning / 3600);
+            int minutes = (int) ((secondsSinceBeginning % 3600) / 60);
+            int seconds = (int) ((secondsSinceBeginning % 3600) % 60);
+            String time = hours + ":" + minutes + ":" + seconds;
+            logScript("Running for " + time);
+        }
+        if (antibanService != null) {
+            antibanService.antiban();
+        }
         return 0;
     }
 

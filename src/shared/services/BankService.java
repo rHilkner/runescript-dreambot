@@ -9,9 +9,11 @@ import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 public class BankService extends AbstractService {
 
     private static BankService instance;
+    private XptZenAntibanService antibanService;
 
     private BankService() {
         super();
+        antibanService = XptZenAntibanService.getInstance();
     }
 
     public static BankService getInstance() {

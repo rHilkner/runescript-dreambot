@@ -1,11 +1,11 @@
 package shared.services;
 
-import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.GroundItem;
 import shared.Constants;
 import shared.Util;
 import shared.enums.ActionType;
+import shared.enums.Areas;
 import shared.enums.Items;
 
 import java.util.List;
@@ -17,13 +17,15 @@ public class CombatService extends AbstractService {
 
     private static CombatService instance;
 
+    private XptZenAntibanService antibanService;
     private final SharedService sharedService;
     private final InventoryService inventoryService;
 
     private CombatService() {
         super();
-        this.sharedService = SharedService.getInstance();
-        this.inventoryService = InventoryService.getInstance();
+        antibanService = XptZenAntibanService.getInstance();
+        sharedService = SharedService.getInstance();
+        inventoryService = InventoryService.getInstance();
     }
 
     public static CombatService getInstance() {
@@ -32,9 +34,9 @@ public class CombatService extends AbstractService {
         return instance;
     }
 
-    public void combatLoot(List<String> targets, List<Items> lootIds, Area area, boolean buryBones) {
+    public void combatLoot(List<String> targets, List<Items> lootIds, Areas area, boolean buryBones) {
 
-        if (!area.contains(ctx.getLocalPlayer())) {
+        if (!area.getArea().contains(ctx.getLocalPlayer())) {
             // Go to given area
             sharedService.walkTo(area);
             return;

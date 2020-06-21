@@ -5,27 +5,33 @@ import shared.Util;
 
 import java.util.Date;
 
-public enum DistractionType {
-    PhoneNotification,
-    TalkingToSomeone,
-    CoffeeBreak;
-    
-    public Date nextDistractionDate;
+import static shared.RunescriptAbstractContext.logScript;
 
-    DistractionType() {
-        this.resetNextDistractionDate();
-    }
+public enum DistractionType {
+    PhoneNotification(),
+    TalkingToSomeone(),
+    CoffeeBreak();
+    
+    private Date nextDistractionDate;
+
+    DistractionType() { }
 
     public Date getNextDistractionDate() {
         return this.nextDistractionDate;
     }
 
+    public void initialize() {
+        this.resetNextDistractionDate();
+    }
+
     public void resetNextDistractionDate() {
 
+        nextDistractionDate = new Date();
         int millisToAdd;
 
         switch (this) {
             case PhoneNotification:
+                logScript("hmm");
                 // Happens with peak at u = 17 min and sigma = 6 min (99% of the probability are between (u - 2sigma) and (u + 2sigma), 69%  between (u - sigma) and (u + sigma))
                 millisToAdd = (int) Calculations.nextGaussianRandom(17 * 60 * 1000, 6 * 60 * 60);
                 this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);

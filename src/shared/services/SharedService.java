@@ -1,10 +1,10 @@
 package shared.services;
 
-import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.wrappers.items.GroundItem;
 import shared.Constants;
 import shared.RunescriptAbstractContext;
 import shared.enums.ActionType;
+import shared.enums.Areas;
 
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
@@ -13,6 +13,7 @@ import static shared.RunescriptAbstractContext.logScript;
 public class SharedService extends AbstractService {
 
     private static SharedService instance;
+    private XptZenAntibanService antibanService;
 
     /** SINGLETON METHODS */
 
@@ -28,10 +29,10 @@ public class SharedService extends AbstractService {
 
     /** STATIC FUNCTIONS */
 
-    public void walkTo(Area area) {
-        logScript("Walking to: " + area.toString());
-        if (!area.contains(ctx.getLocalPlayer())) {
-            ctx.getWalking().walk(area.getRandomTile());
+    public void walkTo(Areas area) {
+        logScript("Walking to: " + area.getArea().getRandomTile().getX());
+        if (!area.getArea().contains(ctx.getLocalPlayer())) {
+            ctx.getWalking().walk(area.getArea().getRandomTile());
             antibanService.antibanSleep(ActionType.Walking);
         }
     }
