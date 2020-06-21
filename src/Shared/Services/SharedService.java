@@ -1,14 +1,13 @@
 package Shared.Services;
 
 import Shared.Constants;
-import Shared.Enums.AntibanActions;
+import Shared.Enums.ActionType;
 import Shared.RunescriptAbstractContext;
 import Shared.Util;
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.wrappers.items.GroundItem;
 
 import static Shared.RunescriptAbstractContext.logScript;
-import static Shared.Services.AntibanService.antibanSleep;
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 
@@ -33,16 +32,16 @@ public class SharedService extends AbstractService {
     public void bankItems(Integer[] itemIDs, boolean all) {
         if (!ctx.getBank().isOpen()) {
             ctx.getBank().open(ctx.getBank().getClosestBankLocation());
-            antibanSleep(AntibanActions.SLOW_PACE);
+            antibanService.antibanSleep(ActionType.SlowPace);
         } else {
             if (all) {
                 ctx.getBank().depositAllItems();
             } else {
                 ctx.getBank().depositAll(item -> Util.isElementInList(item.getID(), itemIDs));
             }
-            antibanSleep(AntibanActions.FAST_PACE);
+            antibanService.antibanSleep(ActionType.FastPace);
             ctx.getBank().close();
-            antibanSleep(AntibanActions.FAST_PACE);
+            antibanService.antibanSleep(ActionType.FastPace);
         }
     }
 
@@ -50,7 +49,7 @@ public class SharedService extends AbstractService {
         logScript("Walking to: " + area.toString());
         if (!area.contains(ctx.getLocalPlayer())) {
             ctx.getWalking().walk(area.getRandomTile());
-            antibanSleep(AntibanActions.WALKING);
+            antibanService.antibanSleep(ActionType.Walking);
         }
     }
 
@@ -59,7 +58,7 @@ public class SharedService extends AbstractService {
         loot.interact("Take");
         sleep(RunescriptAbstractContext.getLatency());
         sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
-        antibanSleep(AntibanActions.FAST_PACE);
+        antibanService.antibanSleep(ActionType.FastPace);
     }
     
 }

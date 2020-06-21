@@ -1,7 +1,7 @@
 package Shared;
 
-import Shared.Enums.AntibanActions;
-import Shared.Services.AntibanService;
+import Shared.Enums.GameStyle;
+import Shared.Services.XptZenAntibanService;
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.script.AbstractScript;
 
@@ -12,9 +12,10 @@ import java.util.Date;
 public abstract class RunescriptAbstractContext extends AbstractScript {
 
     public static RunescriptAbstractContext ctx;
-    public Date startDate;
-    private Date nextAfkSleepDate;
-    private Date nextLogoutSleepDate;
+    private GameStyle gameStyle = GameStyle.Normal;
+
+    private XptZenAntibanService antibanService;
+    private Date startDate;
 
     public static void logScript(String str) {
         Date currentDate = new Date();
@@ -25,31 +26,14 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     @Override
     public void onStart() {
         super.onStart();
+        this.antibanService = XptZenAntibanService.getInstance();
         this.startDate = new Date();
-        this.resetSleepDates();
         ctx = this;
     }
 
     @Override
     public int onLoop() {
-        loopCounter++;
-        logScript("Iteration: " + loopCounter);
-
-        if (loopCounter % 1000 == 0) {
-            // every 1000 iterations logout + sleep 15-30min
-            getTabs().logout();
-            int randomSleep = Calculations.random(15*60*1000, 30*60*1000);
-            logScript("1000 iterations: sleep(" + randomSleep + ")");
-            sleep(randomSleep);
-            logScript("Awake from 1000 iterations sleep - going to login");
-        } else if (loopCounter == 40 || loopCounter % 100 == 0) {
-            // every 100 iterations sleep 30-120s
-            int randomSleep = Calculations.random(30000, 120000);
-            logScript("100 iterations: sleep(" + randomSleep + ")");
-            sleep(randomSleep);
-            logScript("Awake from 100 iterations sleep");
-        }
-
+        antibanService.antibanRandomAction();
         return 0;
     }
 
@@ -63,9 +47,8 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
         return Calculations.random(50, 110);
     }
 
-    private void resetSleepDates() {
-        this.nextAfkSleepDate = AntibanService.getNextSleepDate(AntibanActions.AFK);
-        this.nextLogoutSleepDate = AntibanService.getNextSleepDate(AntibanActions.LOGOUT);
+    public GameStyle getGameStyle() {
+        return gameStyle;
     }
 
 }

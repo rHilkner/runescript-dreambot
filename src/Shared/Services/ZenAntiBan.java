@@ -34,7 +34,7 @@ public class ZenAntiBan {
     private String STATUS = "Idling"; // Current anti-ban status
     private Skill[] STATS_TO_CHECK = {Skill.HITPOINTS}; // This is used for determining which stats to randomly check
     public int MIN_WAIT_BETWEEN_EVENTS = 10; // In seconds
-    private long LAST_EVENT = 0L; // Last time an antiban event was triggered
+    private long LAST_EVENT = 0L; // Last time an antibanRandomAction event was triggered
     private long LAST_IDLE; // Last time we idled for a while
     private boolean DO_RANDOM = false; // This is a generic flag for randomly doing something early in a script for anti-patterning
     private int MAX_RUNTIME_MINUTES = -1; // This is the maximum amount of time the script should run for (used for calculating progressive lag multiplier + max duration)
@@ -87,12 +87,12 @@ public class ZenAntiBan {
         START_TIME = System.currentTimeMillis();
     }
 
-    // Returns the wait time for when the antiban system does nothing
+    // Returns the wait time for when the antibanRandomAction system does nothing
     private int doNothing() {
         return rh(MIN_WAIT_NO_ACTION, MAX_WAIT_NO_ACTION);
     }
 
-    // Sets the stats to check during random antiban events
+    // Sets the stats to check during random antibanRandomAction events
     public void setStatsToCheck(Skill... skills) {
         STATS_TO_CHECK = skills;
     }
@@ -150,7 +150,7 @@ public class ZenAntiBan {
                 }
                 case 1: { // Check random stat
                     if (rp < 10) { // 10% chance
-                        if (s.getTabs().getOpen() != Tab.STATS)
+                        if (s.getTabs().getOpen() != Tab.SKILLS)
                             openStats();
                         int x = r(0, 25);
                         int y = r(0, 15);
@@ -290,7 +290,7 @@ public class ZenAntiBan {
                             return rh(500, 1000);
                         }
                     } else if (rp > 75) { // 25% chance
-                        if (s.getTabs().getOpen() != Tab.STATS)
+                        if (s.getTabs().getOpen() != Tab.SKILLS)
                             setStatus("Opening stats");
                         if (openStats()) {
                             LAST_EVENT = System.currentTimeMillis();
@@ -396,7 +396,7 @@ public class ZenAntiBan {
         return false;
     }
 
-    // Get antiban status
+    // Get antibanRandomAction status
     public String getStatus() {
         return STATUS;
     }
@@ -642,7 +642,7 @@ public class ZenAntiBan {
 
     // This method opens the stats menu
     public boolean openStats() {
-        if (s.getTabs().getOpen() != Tab.STATS) {
+        if (s.getTabs().getOpen() != Tab.SKILLS) {
             // Sometimes use hot keys, sometimes use mouse
             if (Calculations.random(1, 3) == 2)
                 s.getSkills().open();
@@ -657,7 +657,7 @@ public class ZenAntiBan {
             s.sleep(50, 250);
         }
 
-        return s.getTabs().getOpen() == Tab.STATS;
+        return s.getTabs().getOpen() == Tab.SKILLS;
     }
 
     // Opens the  combat menu then waits for a second

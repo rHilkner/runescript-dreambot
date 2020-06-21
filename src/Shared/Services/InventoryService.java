@@ -1,13 +1,12 @@
 package Shared.Services;
 
 import Shared.Constants;
-import Shared.Enums.AntibanActions;
+import Shared.Enums.ActionType;
 import Shared.Enums.Items;
 import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.wrappers.items.Item;
 
 import static Shared.RunescriptAbstractContext.logScript;
-import static Shared.Services.AntibanService.antibanSleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 
 public class InventoryService extends AbstractService {
@@ -33,9 +32,9 @@ public class InventoryService extends AbstractService {
             Item bones = ctx.getInventory().get(Items.BONES.id);
             bones.interact("Bury");
             sleepUntil(() -> !ctx.getLocalPlayer().isStandingStill(), Constants.MAX_SLEEP_UNTIL);
-            antibanSleep(AntibanActions.FAST_PACE);
+            antibanService.antibanSleep(ActionType.FastPace);
         }
-        antibanSleep(AntibanActions.FAST_PACE);
+        antibanService.antibanSleep(ActionType.FastPace);
     }
 
 }

@@ -1,7 +1,7 @@
 package Shared.Services;
 
 import Shared.Constants;
-import Shared.Enums.AntibanActions;
+import Shared.Enums.ActionType;
 import Shared.Enums.Items;
 import Shared.Util;
 import org.dreambot.api.methods.map.Area;
@@ -11,7 +11,6 @@ import org.dreambot.api.wrappers.items.GroundItem;
 import java.util.List;
 
 import static Shared.RunescriptAbstractContext.logScript;
-import static Shared.Services.AntibanService.antibanSleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 
 public class CombatService extends AbstractService {
@@ -76,7 +75,7 @@ public class CombatService extends AbstractService {
             sleepUntil(() -> ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
             sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
         }
-        antibanSleep(AntibanActions.SLOW_PACE);
+        antibanService.antibanSleep(ActionType.SlowPace);
     }
 
 

@@ -1,6 +1,6 @@
 //package CowKiller;
 //
-//import Shared.Enums.AntibanActions;
+//import Shared.Enums.ActionType;
 //import Shared.Services.SharedServices;
 //import Shared.Util;
 //import org.dreambot.api.methods.Calculations;
@@ -23,7 +23,7 @@
 //    int spamShape;
 //    int scale;
 //    int reaction;   // minimum wait between actions
-//    int patience;   // minimum wait between running to a new spot while still running. patience is doubled while WALKING
+//    int patience;   // minimum wait between running to a new spot while still running. patience is doubled while Walking
 //    int latency = 250;  // how long does it take the game to register your actions? change this depending on CPU/RAM/lag
 //    Area cowPen = new Area(new Tile(3265, 3296), new Tile(3253, 3255));
 //    int cowHide = 1739;
@@ -66,7 +66,7 @@
 //                prize.interact("Take");
 //                sleep(latency);
 //                sleepUntil(()-> !getLocalPlayer().isMoving(), 60000);
-//                SharedServices.antibanSleep(AntibanActions.FAST_PACE);
+//                SharedServices.antibanSleep(ActionType.FastPace);
 //            } else if (target != null && !getLocalPlayer().isInCombat()) {
 //                GameObject g = getGameObjects().closest(o -> o.getID() == gate);
 //                if (!area.contains(target) && g.hasAction("Open")) {
@@ -75,7 +75,7 @@
 //                    sleepUntil(() -> getLocalPlayer().isInCombat(), 60000);
 //                    sleepUntil(() -> !getLocalPlayer().isInCombat(), 60000);
 //                }
-//                SharedServices.antibanSleep(AntibanActions.FAST_PACE);
+//                SharedServices.antibanSleep(ActionType.FastPace);
 //            }
 //        } else {
 //            sleepUntil(() -> !getLocalPlayer().isInCombat(), 60000);
