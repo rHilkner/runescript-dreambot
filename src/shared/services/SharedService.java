@@ -19,6 +19,7 @@ public class SharedService extends AbstractService {
 
     private SharedService() {
         super();
+        antibanService = XptZenAntibanService.getInstance();
     }
 
     public static SharedService getInstance() {

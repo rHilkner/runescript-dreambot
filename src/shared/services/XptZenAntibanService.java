@@ -26,16 +26,13 @@ public class XptZenAntibanService extends  AbstractService {
 
     public static XptZenAntibanService getInstance() {
         if (instance == null)
-            logScript("d");
             instance = new XptZenAntibanService();
-        logScript("def");
         return instance;
     }
 
     /** ANTIBAN METHODS */
 
     public void antiban() {
-        logScript("soz");
 //        antibanRandomAction();
 //        antibanDistraction();
     }
@@ -62,22 +59,22 @@ public class XptZenAntibanService extends  AbstractService {
         switch (action) {
             case Spam:
                 sleepTime = getSleepDuration(ActionType.Spam);
-                logScript("antibanRandomAction Spam: sleep(" + sleepTime + ")");
+                logScript("antiban Spam: sleep(" + sleepTime + ")");
                 sleep(sleepTime);
                 break;
             case FastPace:
                 sleepTime = getSleepDuration(ActionType.FastPace);
-                logScript("antibanRandomAction FastPace: sleep(" + sleepTime + ")");
+                logScript("antiban FastPace: sleep(" + sleepTime + ")");
                 sleep(sleepTime);
                 break;
             case SlowPace:
                 sleepTime = getSleepDuration(ActionType.SlowPace);
-                logScript("antibanRandomAction SlowPace: sleep(" + sleepTime + ")");
+                logScript("antiban SlowPace: sleep(" + sleepTime + ")");
                 sleep(sleepTime);
                 break;
             case Walking:
                 sleepTime = getSleepDuration(ActionType.Walking);
-                logScript("antibanRandomAction Walking: sleepUntil(!localPlayer.isMoving(), " + sleepTime + ")");
+                logScript("antiban Walking: sleepUntil(!localPlayer.isMoving(), " + sleepTime + ")");
                 sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), sleepTime);
                 break;
         }

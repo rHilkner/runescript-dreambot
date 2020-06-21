@@ -1,6 +1,7 @@
 package shared.services;
 
 import org.dreambot.api.wrappers.interactive.NPC;
+import shared.Constants;
 import shared.Util;
 import shared.enums.ActionType;
 
@@ -25,7 +26,7 @@ public class BankService extends AbstractService {
     public void bankItems(Integer[] itemIDs) {
         if (!ctx.getBank().isOpen()) {
             ctx.getBank().open(ctx.getBank().getClosestBankLocation());
-            antibanService.antibanSleep(ActionType.SlowPace);
+            antibanService.antibanSleep(ActionType.FastPace);
         } else {
             ctx.getBank().depositAll(item -> Util.isElementInList(item.getID(), itemIDs));
             antibanService.antibanSleep(ActionType.FastPace);
@@ -35,26 +36,40 @@ public class BankService extends AbstractService {
     }
 
     public void bankAllExcept(String exceptItem) {
-        NPC banker = ctx.getNpcs().closest(npc -> npc != null && npc.hasAction("Bank"));
-        if (banker == null || !banker.interact("Bank")) {
-            return;
+        if (!ctx.getBank().isOpen()) {
+            ctx.getBank().open(ctx.getBank().getClosestBankLocation());
+            antibanService.antibanSleep(ActionType.FastPace);
+        } else {
+            ctx.getBank().depositAllExcept(item -> item != null && item.getName().contains(exceptItem));
+            antibanService.antibanSleep(ActionType.FastPace);
+            ctx.getBank().close();
+            antibanService.antibanSleep(ActionType.FastPace);
         }
 
-        if (sleepUntil(() -> ctx.getBank().isOpen(), 9000)) {
-            if (ctx.getBank().depositAllExcept(item -> item != null && item.getName().contains(exceptItem))) {
-                if (sleepUntil(() -> !ctx.getInventory().isFull(), 8000)) {
-                    if (ctx.getBank().close()) {
-                        sleepUntil(() -> !ctx.getBank().isOpen(), 8000);
-                    }
-                }
-            }
-        }
+//        NPC banker = ctx.getNpcs().closest(npc -> npc != null && npc.hasAction("Bank"));
+//        if (banker == null || !banker.interact("Bank")) {
+//            return;
+//        }
+//
+//        if (sleepUntil(() -> ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL)) {
+//            antibanService.antibanSleep(ActionType.FastPace);
+//            if (ctx.getBank().depositAllExcept(item -> item != null && item.getName().contains(exceptItem))) {
+//                antibanService.antibanSleep(ActionType.FastPace);
+//                if (sleepUntil(() -> !ctx.getInventory().isFull(), Constants.MAX_SLEEP_UNTIL)) {
+//                    if (ctx.getBank().close()) {
+//                        antibanService.antibanSleep(ActionType.FastPace);
+//                        sleepUntil(() -> !ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL);
+//                    }
+//                }
+//            }
+//        }
+//        antibanService.antibanSleep(ActionType.SlowPace);
     }
 
     public void bankAll() {
         if (!ctx.getBank().isOpen()) {
             ctx.getBank().open(ctx.getBank().getClosestBankLocation());
-            antibanService.antibanSleep(ActionType.SlowPace);
+            antibanService.antibanSleep(ActionType.FastPace);
         } else {
             ctx.getBank().depositAllItems();
             antibanService.antibanSleep(ActionType.FastPace);

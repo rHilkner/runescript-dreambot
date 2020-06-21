@@ -3,6 +3,7 @@ package scriptz;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import shared.enums.Areas;
+import shared.enums.Trees;
 
 import java.awt.*;
 
@@ -12,7 +13,7 @@ public class EdgevilleTreeCutter extends WoodcuttingAbstractScript {
     @Override
     public void onStart() {
         logScript("Starting EdgevilleTreeCutter - all creditz to Xpt º*º");
-        super.onStart("Tree", Areas.EdgevilleTrees, Areas.EdgevilleBank);
+        super.onStart(Trees.Tree, Areas.EdgevilleTrees, Areas.EdgevilleBank);
         logScript("Starting EdgevilleTreeCutter - all creditz to Xpt º*º");
     }
 

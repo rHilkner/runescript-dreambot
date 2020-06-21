@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class RunescriptAbstractContext extends AbstractScript {
 
     public static RunescriptAbstractContext ctx;
-    private GameStyle gameStyle = GameStyle.Normal;
+    private GameStyle gameStyle = GameStyle.VeryLazy;
     private List<DistractionType> distractions;
 
     private XptZenAntibanService antibanService;
@@ -42,12 +42,10 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
         for (DistractionType distraction : distractions) {
             distraction.initialize();
         }
-        logScript("dd");
     }
 
     @Override
     public int onLoop() {
-        logScript("bb");
 
         if (startDate != null) {
             long currentDate = new Date().getTime();
@@ -55,7 +53,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
             int hours = (int) (secondsSinceBeginning / 3600);
             int minutes = (int) ((secondsSinceBeginning % 3600) / 60);
             int seconds = (int) ((secondsSinceBeginning % 3600) % 60);
-            String time = hours + ":" + minutes + ":" + seconds;
+            String time = String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
             logScript("Running for " + time);
         }
         if (antibanService != null) {
@@ -76,6 +74,10 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
 
     public GameStyle getGameStyle() {
         return gameStyle;
+    }
+
+    public void setGameStyle(GameStyle gameStyle) {
+        this.gameStyle = gameStyle;
     }
 
     public List<DistractionType> getDistractions() {
