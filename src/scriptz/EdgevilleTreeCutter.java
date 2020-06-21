@@ -7,13 +7,13 @@ import shared.enums.Areas;
 import java.awt.*;
 
 @ScriptManifest(category = Category.WOODCUTTING, name = "Basic Woodcutter", author = "XpT", version = 1.0)
-public class BasicWoodcutter extends WoodcuttingAbstractScript {
+public class EdgevilleTreeCutter extends WoodcuttingAbstractScript {
 
     @Override
     public void onStart() {
-        logScript("Starting BasicWoodcutter - all creditz to Xpt º*º");
-        super.onStart("Tree", Areas.EDGEVILLE_TREES, Areas.EDGEVILLE_BANK);
-        logScript("Starting BasicWoodcutter - all creditz to Xpt º*º");
+        logScript("Starting EdgevilleTreeCutter - all creditz to Xpt º*º");
+        super.onStart("Tree", Areas.EdgevilleTrees, Areas.EdgevilleBank);
+        logScript("Starting EdgevilleTreeCutter - all creditz to Xpt º*º");
     }
 
     @Override

@@ -30,7 +30,7 @@ public class ChickenKiller extends RunescriptAbstractContext {
 
         List<String> targets = Collections.singletonList("Chicken");
         List<Items> lootItems = Arrays.asList(Items.FEATHERS, Items.BONES);
-        combatService.combatLoot(targets, lootItems, Areas.FALADOR_SOUTH_CHICKENS, true);
+        combatService.combatLoot(targets, lootItems, Areas.FaladorSouthChickens, true);
 
         return 0;
     }
