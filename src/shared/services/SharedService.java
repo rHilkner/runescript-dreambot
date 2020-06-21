@@ -1,16 +1,14 @@
 package shared.services;
 
-import org.dreambot.api.wrappers.interactive.NPC;
-import shared.Constants;
-import shared.enums.ActionType;
-import shared.RunescriptAbstractContext;
-import shared.Util;
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.wrappers.items.GroundItem;
+import shared.Constants;
+import shared.RunescriptAbstractContext;
+import shared.enums.ActionType;
 
-import static shared.RunescriptAbstractContext.logScript;
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
+import static shared.RunescriptAbstractContext.logScript;
 
 public class SharedService extends AbstractService {
 

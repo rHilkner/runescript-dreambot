@@ -1,17 +1,17 @@
 package shared.services;
 
+import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.skills.Skill;
 import shared.enums.ActionType;
 import shared.enums.DistractionType;
 import shared.enums.GameStyle;
-import org.dreambot.api.methods.Calculations;
 
 import java.awt.*;
 import java.util.Date;
 
-import static shared.RunescriptAbstractContext.logScript;
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
+import static shared.RunescriptAbstractContext.logScript;
 
 public class XptZenAntibanService extends  AbstractService {
 

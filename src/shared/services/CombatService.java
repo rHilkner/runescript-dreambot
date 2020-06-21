@@ -1,17 +1,17 @@
 package shared.services;
 
-import shared.Constants;
-import shared.enums.ActionType;
-import shared.enums.Items;
-import shared.Util;
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.GroundItem;
+import shared.Constants;
+import shared.Util;
+import shared.enums.ActionType;
+import shared.enums.Items;
 
 import java.util.List;
 
-import static shared.RunescriptAbstractContext.logScript;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
+import static shared.RunescriptAbstractContext.logScript;
 
 public class CombatService extends AbstractService {
 

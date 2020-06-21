@@ -1,15 +1,14 @@
 package shared;
 
+import org.dreambot.api.methods.Calculations;
+import org.dreambot.api.script.AbstractScript;
 import shared.enums.DistractionType;
 import shared.enums.GameStyle;
 import shared.services.SharedService;
 import shared.services.XptZenAntibanService;
-import org.dreambot.api.methods.Calculations;
-import org.dreambot.api.script.AbstractScript;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

@@ -1,11 +1,11 @@
 package scriptz;
 
-import shared.*;
+import org.dreambot.api.script.Category;
+import org.dreambot.api.script.ScriptManifest;
+import shared.RunescriptAbstractContext;
 import shared.enums.Areas;
 import shared.enums.Items;
 import shared.services.CombatService;
-import org.dreambot.api.script.Category;
-import org.dreambot.api.script.ScriptManifest;
 
 import java.util.Arrays;
 import java.util.Collections;
