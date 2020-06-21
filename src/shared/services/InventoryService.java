@@ -1,12 +1,12 @@
-package Shared.Services;
+package shared.services;
 
-import Shared.Constants;
-import Shared.Enums.ActionType;
-import Shared.Enums.Items;
+import shared.Constants;
+import shared.enums.ActionType;
+import shared.enums.Items;
 import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.wrappers.items.Item;
 
-import static Shared.RunescriptAbstractContext.logScript;
+import static shared.RunescriptAbstractContext.logScript;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 
 public class InventoryService extends AbstractService {

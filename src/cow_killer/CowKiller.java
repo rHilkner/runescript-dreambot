@@ -1,8 +1,8 @@
-//package CowKiller;
+//package cow_killer;
 //
-//import Shared.Enums.ActionType;
-//import Shared.Services.SharedServices;
-//import Shared.Util;
+//import shared.enums.ActionType;
+//import shared.services.SharedServices;
+//import shared.Util;
 //import org.dreambot.api.methods.Calculations;
 //import org.dreambot.api.methods.map.Area;
 //import org.dreambot.api.methods.map.Tile;
@@ -15,7 +15,7 @@
 //
 //@ScriptManifest(author = "fractal", name = "FractalCowKiller", category = Category.COMBAT, version = 1.0, description = "Kills cows, loots their hides, and banks")
 //
-//public class CowKiller extends AbstractScript {
+//public class cow_killer extends AbstractScript {
 //
 //    int walkingShape;
 //    int runningShape;

@@ -1,7 +1,7 @@
-package Shared;
+package shared;
 
-import Shared.Enums.GameStyle;
-import Shared.Services.XptZenAntibanService;
+import shared.enums.GameStyle;
+import shared.services.XptZenAntibanService;
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.script.AbstractScript;
 

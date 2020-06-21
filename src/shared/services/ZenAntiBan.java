@@ -1,4 +1,4 @@
-package YourScript;
+package shared.services;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.map.Area;

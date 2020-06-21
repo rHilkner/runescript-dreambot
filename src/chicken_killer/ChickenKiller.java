@@ -1,9 +1,9 @@
-package ChickenKiller;
+package chicken_killer;
 
-import Shared.*;
-import Shared.Enums.Areas;
-import Shared.Enums.Items;
-import Shared.Services.CombatService;
+import shared.*;
+import shared.enums.Areas;
+import shared.enums.Items;
+import shared.services.CombatService;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@ScriptManifest(author = "xpt", name = "Xpt - ChickenKiller", category = Category.COMBAT, version = 1.0, description = "Kills chickens and bury their bonesId")
+@ScriptManifest(author = "xpt", name = "Xpt - chicken_killer", category = Category.COMBAT, version = 1.0, description = "Kills chickens and bury their bonesId")
 public class ChickenKiller extends RunescriptAbstractContext {
     
     private CombatService combatService;
@@ -20,7 +20,7 @@ public class ChickenKiller extends RunescriptAbstractContext {
     public void onStart() {
         super.onStart();
         combatService = CombatService.getInstance();
-        logScript("ChickenKiller starting - creditz to XpT ø*ø");
+        logScript("chicken_killer starting - creditz to XpT ø*ø");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package Shared.Enums;
+package shared.enums;
 
 public enum Items {
     FEATHERS("Feathers", 314),

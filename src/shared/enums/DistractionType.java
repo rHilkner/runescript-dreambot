@@ -1,4 +1,4 @@
-package Shared.Enums;
+package shared.enums;
 
 import org.dreambot.api.methods.Calculations;
 

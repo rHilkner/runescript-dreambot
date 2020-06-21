@@ -1,6 +1,6 @@
-package Shared;
+package shared;
 
-import Shared.Enums.Items;
+import shared.enums.Items;
 
 import java.util.Calendar;
 import java.util.Date;

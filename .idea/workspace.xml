@@ -2,19 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f96521cb-38d3-41f0-be81-b399f0ffbaf6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/client.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runescript-dreambot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/runescript-dreambot.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CowKiller/CowKiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CowKiller/CowKiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/AntibanActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/Enums/ActionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/RunescriptAbstractContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/RunescriptAbstractContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/AbstractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/Services/AbstractService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/AntibanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/Services/AntibanService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/CombatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/Services/CombatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/Services/InventoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/SharedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/Services/SharedService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BasicWoodcutter/BasicWoodcutter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/basic_woodcutter/BasicWoodcutter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChickenKiller/ChickenKiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chicken_killer/ChickenKiller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CowKiller/CowKiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cow_killer/CowKiller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/ActionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/ActionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/Areas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/Areas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/DistractionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/GameStyle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/GameStyle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/Items.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/Items.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/NPCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/NPCs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/RunescriptAbstractContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Services/AbstractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/AbstractService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Services/CombatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/CombatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Services/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Services/SharedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/SharedService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Services/XptZenAntibanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/ZenAntiBan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Util.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,9 +35,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Shared/Services/AntibanService.java">
+        <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-390">
+            <state relative-caret-position="355">
               <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -42,19 +47,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java">
+        <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntiBan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1904">
-              <caret line="195" column="53" lean-forward="true" selection-start-line="195" selection-start-column="53" selection-end-line="197" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Shared/Services/SharedService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="51" column="27" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="27" />
+            <state relative-caret-position="345">
+              <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -89,7 +85,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java" />
         <option value="$PROJECT_DIR$/src/Shared/RunescriptAbstractContext.java" />
         <option value="$PROJECT_DIR$/src/Shared/Enums/DistractionType.java" />
         <option value="$PROJECT_DIR$/src/Shared/Enums/ActionType.java" />
@@ -98,6 +93,9 @@
         <option value="$PROJECT_DIR$/src/Shared/Services/AbstractService.java" />
         <option value="$PROJECT_DIR$/src/Shared/Services/SharedService.java" />
         <option value="$PROJECT_DIR$/src/Shared/Services/AntibanService.java" />
+        <option value="$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java" />
+        <option value="$PROJECT_DIR$/src/shared/Services/ZenAntiBan.java" />
+        <option value="$PROJECT_DIR$/src/shared/services/ZenAntiBan.java" />
       </list>
     </option>
   </component>
@@ -133,21 +131,21 @@
               <item name="runescript-dreambot" type="b2602c69:ProjectViewProjectNode" />
               <item name="runescript-dreambot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Shared" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="runescript-dreambot" type="b2602c69:ProjectViewProjectNode" />
               <item name="runescript-dreambot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Shared" type="462c0819:PsiDirectoryNode" />
-              <item name="Enums" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
+              <item name="enums" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="runescript-dreambot" type="b2602c69:ProjectViewProjectNode" />
               <item name="runescript-dreambot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Shared" type="462c0819:PsiDirectoryNode" />
-              <item name="Services" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -198,12 +196,12 @@
       <option name="presentableId" value="Default" />
       <updated>1592677470279</updated>
       <workItem from="1592677471718" duration="1439000" />
-      <workItem from="1592679851236" duration="11051000" />
+      <workItem from="1592679851236" duration="11451000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12490000" />
+    <option name="totallyTimeSpent" value="12890000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -258,7 +256,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/RunescriptAbstractContext.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
@@ -276,35 +274,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Enums/ActionType.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/ActionType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Util.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/Util.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Services/InventoryService.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/services/InventoryService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Services/AbstractService.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/services/AbstractService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="59" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Enums/GameStyle.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/GameStyle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="37" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="37" />
@@ -317,14 +315,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Enums/DistractionType.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/DistractionType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="26" selection-start-line="26" selection-end-line="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Services/CombatService.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/services/CombatService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="24" column="50" lean-forward="true" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
@@ -334,16 +332,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Services/SharedService.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/services/SharedService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
           <caret line="51" column="27" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Services/AntibanService.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-390">
+        <state relative-caret-position="355">
           <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -351,10 +349,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntiBan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1904">
-          <caret line="195" column="53" lean-forward="true" selection-start-line="195" selection-start-column="53" selection-end-line="197" selection-end-column="49" />
+        <state relative-caret-position="345">
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
         </state>
       </provider>
     </entry>

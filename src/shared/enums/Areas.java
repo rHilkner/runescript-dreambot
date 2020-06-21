@@ -1,4 +1,4 @@
-package Shared.Enums;
+package shared.enums;
 
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.methods.map.Tile;

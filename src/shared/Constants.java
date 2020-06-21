@@ -1,4 +1,4 @@
-package Shared;
+package shared;
 
 public abstract class Constants {
 

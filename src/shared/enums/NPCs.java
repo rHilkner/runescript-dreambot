@@ -1,4 +1,4 @@
-package Shared.Enums;
+package shared.enums;
 
 public enum NPCs {
 

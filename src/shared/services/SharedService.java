@@ -1,13 +1,13 @@
-package Shared.Services;
+package shared.services;
 
-import Shared.Constants;
-import Shared.Enums.ActionType;
-import Shared.RunescriptAbstractContext;
-import Shared.Util;
+import shared.Constants;
+import shared.enums.ActionType;
+import shared.RunescriptAbstractContext;
+import shared.Util;
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.wrappers.items.GroundItem;
 
-import static Shared.RunescriptAbstractContext.logScript;
+import static shared.RunescriptAbstractContext.logScript;
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 

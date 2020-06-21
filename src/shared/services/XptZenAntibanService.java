@@ -1,10 +1,10 @@
-package Shared.Services;
+package shared.services;
 
-import Shared.Enums.ActionType;
-import Shared.Enums.GameStyle;
+import shared.enums.ActionType;
+import shared.enums.GameStyle;
 import org.dreambot.api.methods.Calculations;
 
-import static Shared.RunescriptAbstractContext.logScript;
+import static shared.RunescriptAbstractContext.logScript;
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 

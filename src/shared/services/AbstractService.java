@@ -1,6 +1,6 @@
-package Shared.Services;
+package shared.services;
 
-import Shared.RunescriptAbstractContext;
+import shared.RunescriptAbstractContext;
 
 public abstract class AbstractService {
 
