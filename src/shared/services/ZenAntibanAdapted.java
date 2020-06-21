@@ -12,6 +12,7 @@ import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.Item;
 import org.dreambot.api.wrappers.widgets.Menu;
+import shared.RunescriptAbstractContext;
 
 import java.awt.*;
 
@@ -21,7 +22,7 @@ import java.awt.*;
  * @author Zenarchist
  */
 public class ZenAntibanAdapted {
-    private AbstractScript s; // Script
+    private RunescriptAbstractContext s; // Script
 
     public int ANTIBAN_RATE = 50; // This is the frequency rate for anti-ban actions (in % terms - 100% = frequent, 0% = never)
     public int MIN_WAIT_NO_ACTION = 50; // This is the minimum time to wait if no action was taken
@@ -72,7 +73,7 @@ public class ZenAntibanAdapted {
     };
 
     // Constructs a new Anti-Ban class with the given script
-    public ZenAntibanAdapted(AbstractScript script) {
+    public ZenAntibanAdapted(RunescriptAbstractContext script) {
         this.s = script;
         // Set last idle to now to avoid idling early into the script
         LAST_IDLE = System.currentTimeMillis();
@@ -81,7 +82,8 @@ public class ZenAntibanAdapted {
 
     // Returns the wait time for when the antibanRandomAction system does nothing
     private int doNothing() {
-        return rh(MIN_WAIT_NO_ACTION, MAX_WAIT_NO_ACTION);
+//        return rh(MIN_WAIT_NO_ACTION, MAX_WAIT_NO_ACTION);
+        return 0;
     }
 
     // Sets the stats to check during random antibanRandomAction events
@@ -105,7 +107,7 @@ public class ZenAntibanAdapted {
             // Calculate event-specific activation rate (%)
             rp = r(0, 100);
             // Calculate event ID
-            int event = r(0, 14);
+            int event = r(0, 12);
             // Handle specified event
             switch (event) {
                 case 0: { // Examine random entity
@@ -165,7 +167,7 @@ public class ZenAntibanAdapted {
                         return rh(2000, 5000);
                     }
                 }
-                case 3: { // Move mouse to random location (and sometimes click)
+                case 2: { // Move mouse to random location (and sometimes click)
                     if (rp < 10) { // 10% chance
                         int r = r(0, 100);
                         int x = r(0, 760);
@@ -181,7 +183,7 @@ public class ZenAntibanAdapted {
                         return rh(500, 3000);
                     }
                 }
-                case 4: { // Walk to random location
+                case 3: { // Walk to random location
                     if (rp < 1) { // 1% chance
                         int x = s.getLocalPlayer().getX() - 15;
                         int y = s.getLocalPlayer().getY() - 15;
@@ -195,7 +197,7 @@ public class ZenAntibanAdapted {
                         return rh(500, 3000);
                     }
                 }
-                case 5: { // Chop random tree
+                case 4: { // Chop random tree
                     if (rp < 1) { // 1% chance
                         GameObject obj = s.getGameObjects().closest(o -> o != null && !o.getName().equals("null") && r(1, 2) != 1 && o.hasAction("Chop down") && s.getLocalPlayer().distance(o) < 5);
                         if (obj == null)
@@ -211,7 +213,7 @@ public class ZenAntibanAdapted {
                         return rh(500, 3000);
                     }
                 }
-                case 6: { // Click random entity
+                case 5: { // Click random entity
                     if (rp < 1) { // 1% chance
                         Entity e = s.getGameObjects().closest(o -> o != null && !o.getName().equals("null") && r(1, 2) != 1 && s.getLocalPlayer().distance(o) < 5);
                         int r = r(1, 3);
@@ -239,7 +241,7 @@ public class ZenAntibanAdapted {
                         return rh(500, 3000);
                     }
                 }
-                case 7: { // Just idle for a while
+                case 6: { // Just idle for a while
                     if (rp < 5) { // 5% chance
                         if (System.currentTimeMillis() - LAST_IDLE >= 300000) { // Only allow idling to occur every 5+ minutes
                             int idle = r(60000, 120000);
@@ -259,7 +261,7 @@ public class ZenAntibanAdapted {
                         }
                     }
                 }
-                case 8: { // Open inventory or stats
+                case 7: { // Open inventory or stats
                     if (rp < 25) { // 25% chance
                         if (s.getTabs().getOpen() != Tab.INVENTORY && s.getInventory().getEmptySlots() > 0)
                             setStatus("Opening inventory");
@@ -280,7 +282,7 @@ public class ZenAntibanAdapted {
                         }
                     }
                 }
-                case 9: { // Open combat menu (only if we are training melee stats)
+                case 8: { // Open combat menu (only if we are training melee stats)
                     boolean meleeStats = false;
                     for (Skill s : STATS_TO_CHECK)
                         if (s.equals(Skill.ATTACK) || s.equals(Skill.STRENGTH) || s.equals(Skill.DEFENCE))
@@ -299,7 +301,7 @@ public class ZenAntibanAdapted {
                         return rh(500, 1000);
                     }
                 }
-                case 10: { // Moving mouse off-screen for a moment
+                case 9: { // Moving mouse off-screen for a moment
                     if (rp < 50) { // 50% chance
                         if (s.getMouse().getX() == -1 && s.getMouse().getY() == -1)
                             return doNothing();
@@ -310,7 +312,7 @@ public class ZenAntibanAdapted {
                         return rh(5000, 8000);
                     }
                 }
-                case 11: { // Open magic menu
+                case 10: { // Open magic menu
                     if (rp < 1) { // 1% chance
                         if (s.getTabs().getOpen() != Tab.MAGIC) {
                             setStatus("Opening magic menu");
@@ -320,7 +322,7 @@ public class ZenAntibanAdapted {
                         }
                     }
                 }
-                case 12: { // Examine random inventory item
+                case 11: { // Examine random inventory item
                     if (rp < 1) { // 1% chance
                         if (openInventory())
                             s.sleep(10, 250);
@@ -343,7 +345,7 @@ public class ZenAntibanAdapted {
                         }
                     }
                 }
-                case 13: { // Move camera randomly
+                case 12: { // Move camera randomly
                     if (rp < 30) { // 30% chance
                         print("Moving camera");
                         Area a = new Area(s.getLocalPlayer().getX() - 10, s.getLocalPlayer().getY() - 10, s.getLocalPlayer().getX() + 10, s.getLocalPlayer().getY() + 10);
@@ -367,7 +369,7 @@ public class ZenAntibanAdapted {
 
     // Print to the console if debug is enabled
     private void print(Object o) {
-        s.log("[AntiBan] " + o.toString());
+        s.logScript("Random antiban " + o.toString());
     }
 
     // Allows an external class to set the anti-ban status

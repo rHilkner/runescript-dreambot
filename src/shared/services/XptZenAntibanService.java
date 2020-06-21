@@ -1,11 +1,13 @@
 package shared.services;
 
 import org.dreambot.api.methods.Calculations;
+import org.dreambot.api.methods.skills.Skill;
 import shared.enums.ActionType;
 import shared.enums.DistractionType;
 import shared.enums.GameStyle;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
@@ -30,24 +32,35 @@ public class XptZenAntibanService extends  AbstractService {
         return instance;
     }
 
+    /** GETTERS AND SETTERS */
+
+    public void setSkillsToHover(Skill... skills) {
+        zenAntibanAdapted.setStatsToCheck(skills);
+    }
+
     /** ANTIBAN METHODS */
 
     public void antiban() {
-//        antibanRandomAction();
-//        antibanDistraction();
+        antibanRandomAction();
+        antibanDistraction();
     }
 
     public void antibanRandomAction() {
         int sleepTimeMillis = zenAntibanAdapted.antiban();
-        sleep(sleepTimeMillis);
+        if (sleepTimeMillis > 0) {
+            logScript("antiban-random-actions sleep: " + sleepTimeMillis);
+            sleep(sleepTimeMillis);
+        }
     }
 
     public void antibanDistraction() {
         Date currentDate = new Date();
 
         for (DistractionType distraction : ctx.getDistractions()) {
-            if (distraction.getNextDistractionDate().after(currentDate)) {
-                sleep(distraction.getDistractionSleep(ctx.getGameStyle()));
+            if (distraction.getNextDistractionDate().before(currentDate)) {
+                int sleepTimeMillis = distraction.getDistractionSleep(ctx.getGameStyle());
+                logScript("antiban-distraction sleep: " + sleepTimeMillis);
+                sleep(sleepTimeMillis);
             }
         }
     }

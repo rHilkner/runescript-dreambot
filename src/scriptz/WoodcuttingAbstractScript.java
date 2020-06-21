@@ -1,11 +1,15 @@
 package scriptz;
 
+import org.dreambot.api.methods.skills.Skill;
 import shared.RunescriptAbstractContext;
 import shared.enums.Areas;
 import shared.enums.GameStyle;
 import shared.enums.Trees;
 import shared.services.BankService;
 import shared.services.WoodcuttingService;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContext {
 
@@ -32,6 +36,7 @@ public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContex
         originalGameStyle = ctx.getGameStyle();
         woodcuttingService = WoodcuttingService.getInstance();
         bankService = BankService.getInstance();
+        antibanService.setSkillsToHover(Skill.WOODCUTTING);
     }
 
     @Override

@@ -19,7 +19,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     private GameStyle gameStyle = GameStyle.Lazy;
     private List<DistractionType> distractions;
 
-    private XptZenAntibanService antibanService;
+    protected XptZenAntibanService antibanService;
     protected SharedService sharedService;
     private Date startDate;
 

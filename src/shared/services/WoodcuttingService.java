@@ -28,7 +28,6 @@ public class WoodcuttingService extends AbstractService {
         GameObject treeObject = ctx.getGameObjects().closest(gameObject -> gameObject != null && gameObject.getName().equals(tree.getTreeName()));
         if (treeObject != null && treeObject.interact("Chop down")) {
             ctx.logScript("Chopping down " + tree.getTreeName());
-            int countLog = ctx.getInventory().count(tree.getLogsName());
             antibanService.antibanSleep(ActionType.SlowPace);
             sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(ActionType.SlowPace);
