@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class RunescriptAbstractContext extends AbstractScript {
 
     public static RunescriptAbstractContext ctx;
-    private GameStyle gameStyle = GameStyle.Lazy;
+    private GameStyle gameStyle;
     private List<DistractionType> distractions;
 
     protected XptZenAntibanService antibanService;
@@ -35,6 +35,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     public void onStart() {
         super.onStart();
         RunescriptAbstractContext.ctx = this;
+        setGameStyle(GameStyle.Lazy);
         this.antibanService = XptZenAntibanService.getInstance();
         this.sharedService = SharedService.getInstance();
         this.startDate = new Date();

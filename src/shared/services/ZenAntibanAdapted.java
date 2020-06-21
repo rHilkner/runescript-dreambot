@@ -174,7 +174,7 @@ public class ZenAntibanAdapted {
                         int y = r(0, 500);
                         setStatus("Moving mouse (" + x + "," + y + ")");
                         s.getMouse().move(new Point(x, y));
-                        if (r < 5) // 10% chance of right-clicking
+                        if (r > 90) // 10% chance of right-clicking
                             s.getMouse().click(true);
                         else if (r < 5) // 5% chance of left-clicking
                             s.getMouse().click();

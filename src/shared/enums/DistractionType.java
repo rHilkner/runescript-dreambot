@@ -5,6 +5,8 @@ import shared.Util;
 
 import java.util.Date;
 
+import static shared.RunescriptAbstractContext.logScript;
+
 public enum DistractionType {
     PhoneNotification(),
     TalkingToSomeone(),
@@ -39,11 +41,16 @@ public enum DistractionType {
                 this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
                 break;
             case CoffeeBreak:
-                // Happens with peak at u = 17 min and sigma = 6 min
+                // Everyday between 15h30 and 17h30, with peak in the middle
                 millisToAdd = (int) Calculations.nextGaussianRandom(60 * 60 * 1000, 30 * 60 * 1000);
                 this.nextDistractionDate = Util.dateAddMillis(Util.getDate("15:30:00"), millisToAdd);
+                if (this.nextDistractionDate.before(new Date())) {
+                    this.nextDistractionDate = Util.dateAddDays(nextDistractionDate, 1);
+                }
                 break;
         }
+
+        logScript("nextDistractionDate " + this.name() + ": " + nextDistractionDate);
 
     }
 

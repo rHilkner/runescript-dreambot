@@ -7,10 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f96521cb-38d3-41f0-be81-b399f0ffbaf6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/scriptz/WoodcuttingAbstractScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/WoodcuttingAbstractScript.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -26,88 +24,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1015#1016#0" expanded="true" />
-                <element signature="e#1066#1067#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scriptz/WoodcuttingAbstractScript.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scriptz/EdgevilleWillowCutter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="20" column="16" lean-forward="true" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/services/BankService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="42" column="104" selection-start-line="42" selection-start-column="104" selection-end-line="42" selection-end-column="104" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+            <state relative-caret-position="285">
+              <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
               <folding>
-                <element signature="e#2812#2813#0" expanded="true" />
-                <element signature="e#2847#2848#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="371" column="35" selection-start-line="371" selection-start-column="35" selection-end-line="371" selection-end-column="35" />
-              <folding>
-                <element signature="e#3797#3798#0" expanded="true" />
-                <element signature="e#3836#3837#0" expanded="true" />
-                <element signature="e#17416#17417#0" expanded="true" />
-                <element signature="e#17467#17468#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/services/WoodcuttingService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="61" lean-forward="true" selection-start-line="32" selection-start-column="61" selection-end-line="32" selection-end-column="61" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#2814#2815#0" expanded="true" />
+                <element signature="e#2849#2850#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -125,7 +49,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>doub</find>
       <find>skills</find>
       <find>Tab.STATS</find>
       <find>antibanSleep(</find>
@@ -153,8 +76,9 @@
       <find>chopping do</find>
       <find>sleepUntil</find>
       <find>fastpa</find>
-      <find>end of</find>
       <find>setstat</find>
+      <find>end of</find>
+      <find>log</find>
     </findStrings>
     <replaceStrings>
       <replace>Tab.SKILLS</replace>
@@ -180,7 +104,6 @@
         <option value="$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java" />
         <option value="$PROJECT_DIR$/src/shared/Services/ZenAntiBan.java" />
         <option value="$PROJECT_DIR$/src/shared/enums/GameStyle.java" />
-        <option value="$PROJECT_DIR$/src/shared/Util.java" />
         <option value="$PROJECT_DIR$/src/shared/services/ZenAntiBan.java" />
         <option value="$PROJECT_DIR$/src/shared/services/ZenAntiBanAdapted.java" />
         <option value="$PROJECT_DIR$/src/scriptz/basic_woodcutter/BasicWoodcutter.java" />
@@ -190,7 +113,6 @@
         <option value="$PROJECT_DIR$/src/shared/services/CombatService.java" />
         <option value="$PROJECT_DIR$/src/shared/services/AbstractService.java" />
         <option value="$PROJECT_DIR$/src/scriptz/ChickenKiller.java" />
-        <option value="$PROJECT_DIR$/src/shared/enums/DistractionType.java" />
         <option value="$PROJECT_DIR$/src/shared/services/SharedService.java" />
         <option value="$PROJECT_DIR$/src/shared/enums/Trees.java" />
         <option value="$PROJECT_DIR$/src/scriptz/EdgevilleTreeCutter.java" />
@@ -199,10 +121,12 @@
         <option value="$PROJECT_DIR$/src/shared/services/BankService.java" />
         <option value="$PROJECT_DIR$/src/shared/Constants.java" />
         <option value="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" />
-        <option value="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" />
         <option value="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" />
         <option value="$PROJECT_DIR$/src/scriptz/WoodcuttingAbstractScript.java" />
+        <option value="$PROJECT_DIR$/src/shared/Util.java" />
+        <option value="$PROJECT_DIR$/src/shared/enums/DistractionType.java" />
         <option value="$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java" />
+        <option value="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" />
       </list>
     </option>
   </component>
@@ -323,12 +247,12 @@
       <updated>1592677470279</updated>
       <workItem from="1592677471718" duration="1439000" />
       <workItem from="1592679851236" duration="21605000" />
-      <workItem from="1592715528663" duration="13583000" />
+      <workItem from="1592715528663" duration="14723000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36627000" />
+    <option name="totallyTimeSpent" value="37767000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -424,13 +348,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="31" column="27" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/DreamBot/BotData/client.jar!/org/dreambot/api/methods/MethodContext.class">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -497,16 +414,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/enums/DistractionType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="33" column="27" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/DreamBot/BotData/client.jar!/org/dreambot/api/methods/container/AbstractItemContainer.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -562,13 +469,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/services/SharedService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shared/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -586,31 +486,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/services/WoodcuttingService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="61" lean-forward="true" selection-start-line="32" selection-start-column="61" selection-end-line="32" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/scriptz/EdgevilleWillowCutter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="20" column="16" lean-forward="true" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
-          <folding>
-            <element signature="e#2812#2813#0" expanded="true" />
-            <element signature="e#2847#2848#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -624,27 +503,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/services/WoodcuttingService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+        <state relative-caret-position="480">
+          <caret line="32" column="61" lean-forward="true" selection-start-line="32" selection-start-column="61" selection-end-line="32" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1015#1016#0" expanded="true" />
-            <element signature="e#1066#1067#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/Util.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="40" column="27" lean-forward="true" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="371" column="35" selection-start-line="371" selection-start-column="35" selection-end-line="371" selection-end-column="35" />
+        <state relative-caret-position="377">
+          <caret line="159" lean-forward="true" selection-start-line="159" selection-end-line="159" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/DistractionType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="52" column="59" selection-start-line="52" selection-start-column="59" selection-end-line="52" selection-end-column="59" />
           <folding>
-            <element signature="e#3797#3798#0" expanded="true" />
-            <element signature="e#3836#3837#0" expanded="true" />
-            <element signature="e#17416#17417#0" expanded="true" />
-            <element signature="e#17467#17468#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="611">
+          <caret line="58" column="49" selection-start-line="58" selection-start-column="49" selection-end-line="58" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/services/SharedService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/DreamBot/BotData/client.jar!/org/dreambot/api/methods/MethodProvider$LogType.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="24" column="38" lean-forward="true" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/DreamBot/BotData/client.jar!/org/dreambot/api/methods/MethodProvider.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="65" column="5" lean-forward="true" selection-start-line="65" selection-start-column="5" selection-end-line="65" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#6591#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+          <folding>
+            <element signature="e#2814#2815#0" expanded="true" />
+            <element signature="e#2849#2850#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -41,6 +41,13 @@ public class Util {
         return c.getTime();
     }
 
+    public static Date dateAddDays(Date date, int days) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, days);
+        return c.getTime();
+    }
+
     /** Input dates as "HH:mm:ss" */
     public static Date getDate(String dateString) {
         try {
