@@ -2,24 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f96521cb-38d3-41f0-be81-b399f0ffbaf6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/BasicWoodcutter/BasicWoodcutter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/basic_woodcutter/BasicWoodcutter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChickenKiller/ChickenKiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chicken_killer/ChickenKiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CowKiller/CowKiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cow_killer/CowKiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/ActionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/ActionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/Areas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/Areas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/DistractionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/GameStyle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/GameStyle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/Items.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/Items.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Enums/NPCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/NPCs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/RunescriptAbstractContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/AbstractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/AbstractService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/CombatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/CombatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/InventoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/SharedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/SharedService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/XptZenAntibanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/ZenAntiBan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/GameStyle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/GameStyle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/services/ZenAntiBan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/ZenAntiBan.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,29 +21,97 @@
     <option name="delegatedBuild" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntiBan.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shared/enums/DistractionType.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="592">
+                  <caret line="78" column="26" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#275#276#0" expanded="true" />
+                    <element signature="e#321#322#0" expanded="true" />
+                    <element signature="e#274#275#0" expanded="true" />
+                    <element signature="e#300#301#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shared/Util.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="315">
+                  <caret line="31" column="27" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="630">
+                  <caret line="59" column="32" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+                  <folding>
+                    <element signature="e#1717#1718#0" expanded="true" />
+                    <element signature="e#1752#1753#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shared/enums/GameStyle.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="195">
+                  <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntiBan.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="138">
+                  <caret line="435" column="121" selection-start-line="435" selection-start-column="121" selection-end-line="435" selection-end-column="121" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-16">
+                  <caret line="98" column="18" selection-start-line="98" selection-start-column="18" selection-end-line="98" selection-end-column="18" />
+                  <folding>
+                    <element signature="e#4750#4751#0" expanded="true" />
+                    <element signature="e#4815#4816#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="553">
+                  <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -72,10 +128,12 @@
       <find>skills</find>
       <find>Tab.STATS</find>
       <find>antibanSleep(</find>
+      <find>distractionType</find>
     </findStrings>
     <replaceStrings>
       <replace>Tab.SKILLS</replace>
       <replace>antibanService.antibanSleep(</replace>
+      <replace>this</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -95,7 +153,14 @@
         <option value="$PROJECT_DIR$/src/Shared/Services/AntibanService.java" />
         <option value="$PROJECT_DIR$/src/Shared/Services/ZenAntiBan.java" />
         <option value="$PROJECT_DIR$/src/shared/Services/ZenAntiBan.java" />
+        <option value="$PROJECT_DIR$/src/shared/enums/GameStyle.java" />
+        <option value="$PROJECT_DIR$/src/shared/Util.java" />
+        <option value="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" />
+        <option value="$PROJECT_DIR$/src/shared/enums/DistractionType.java" />
         <option value="$PROJECT_DIR$/src/shared/services/ZenAntiBan.java" />
+        <option value="$PROJECT_DIR$/src/shared/services/ZenAntiBanAdapted.java" />
+        <option value="$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java" />
+        <option value="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" />
       </list>
     </option>
   </component>
@@ -170,6 +235,11 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="shared.services" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -196,17 +266,18 @@
       <option name="presentableId" value="Default" />
       <updated>1592677470279</updated>
       <workItem from="1592677471718" duration="1439000" />
-      <workItem from="1592679851236" duration="11451000" />
+      <workItem from="1592679851236" duration="19066000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12890000" />
+    <option name="totallyTimeSpent" value="20505000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25274727" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.25274727" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -256,38 +327,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-          <folding>
-            <element signature="e#1476#1477#0" expanded="true" />
-            <element signature="e#1507#1508#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/DreamBot/BotData/client.jar!/org/dreambot/api/methods/Calculations.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="56" column="5" lean-forward="true" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/enums/ActionType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shared/services/InventoryService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -299,26 +338,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="59" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/enums/GameStyle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="37" />
-          <folding>
-            <element signature="e#178#179#0" expanded="true" />
-            <element signature="e#229#230#0" expanded="true" />
-            <element signature="e#375#376#0" expanded="true" />
-            <element signature="e#414#415#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/enums/DistractionType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" selection-start-line="26" selection-end-line="27" />
         </state>
       </provider>
     </entry>
@@ -339,20 +358,105 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/Areas.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+        <state relative-caret-position="210">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/ActionType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/GameStyle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/src.zip!/java/util/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="423" column="6" lean-forward="true" selection-start-line="423" selection-start-column="6" selection-end-line="423" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/src.zip!/java/text/DateFormat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="367" column="22" lean-forward="true" selection-start-line="367" selection-start-column="22" selection-end-line="367" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/Util.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="31" column="27" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/DreamBot/BotData/client.jar!/org/dreambot/api/methods/Calculations.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="47" column="35" lean-forward="true" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="59" column="32" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+          <folding>
+            <element signature="e#1717#1718#0" expanded="true" />
+            <element signature="e#1752#1753#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/DistractionType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="592">
+          <caret line="78" column="26" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#275#276#0" expanded="true" />
+            <element signature="e#321#322#0" expanded="true" />
+            <element signature="e#274#275#0" expanded="true" />
+            <element signature="e#300#301#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntiBan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+        <state relative-caret-position="138">
+          <caret line="435" column="121" selection-start-line="435" selection-start-column="121" selection-end-line="435" selection-end-column="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16">
+          <caret line="98" column="18" selection-start-line="98" selection-start-column="18" selection-end-line="98" selection-end-column="18" />
+          <folding>
+            <element signature="e#4750#4751#0" expanded="true" />
+            <element signature="e#4815#4816#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

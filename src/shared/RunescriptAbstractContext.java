@@ -1,5 +1,6 @@
 package shared;
 
+import shared.enums.DistractionType;
 import shared.enums.GameStyle;
 import shared.services.XptZenAntibanService;
 import org.dreambot.api.methods.Calculations;
@@ -7,12 +8,16 @@ import org.dreambot.api.script.AbstractScript;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public abstract class RunescriptAbstractContext extends AbstractScript {
 
     public static RunescriptAbstractContext ctx;
     private GameStyle gameStyle = GameStyle.Normal;
+    private List<DistractionType> distractions;
 
     private XptZenAntibanService antibanService;
     private Date startDate;
@@ -26,9 +31,10 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     @Override
     public void onStart() {
         super.onStart();
+        ctx = this;
         this.antibanService = XptZenAntibanService.getInstance();
         this.startDate = new Date();
-        ctx = this;
+        this.distractions = Arrays.asList(DistractionType.PhoneNotification, DistractionType.TalkingToSomeone);
     }
 
     @Override
@@ -49,6 +55,10 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
 
     public GameStyle getGameStyle() {
         return gameStyle;
+    }
+
+    public List<DistractionType> getDistractions() {
+        return distractions;
     }
 
 }

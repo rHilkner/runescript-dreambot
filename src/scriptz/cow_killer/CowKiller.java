@@ -1,4 +1,4 @@
-//package cow_killer;
+//package scriptz.cow_killer;
 //
 //import shared.enums.ActionType;
 //import shared.services.SharedServices;
@@ -15,7 +15,7 @@
 //
 //@ScriptManifest(author = "fractal", name = "FractalCowKiller", category = Category.COMBAT, version = 1.0, description = "Kills cows, loots their hides, and banks")
 //
-//public class cow_killer extends AbstractScript {
+//public class scriptz.cow_killer extends AbstractScript {
 //
 //    int walkingShape;
 //    int runningShape;

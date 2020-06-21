@@ -2,6 +2,11 @@ package shared;
 
 import shared.enums.Items;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +34,24 @@ public class Util {
         c.setTime(date);
         c.add(Calendar.SECOND, seconds);
         return c.getTime();
+    }
+
+    public static Date dateAddMillis(Date date, int milliseconds) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.MILLISECOND, milliseconds);
+        return c.getTime();
+    }
+
+    /** Input dates as "HH:mm:ss" */
+    public static Date getDate(String dateString) {
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            RunescriptAbstractContext.logScript("ERROR: couldn't parse date: " + dateString);
+            return null;
+        }
     }
 
 }

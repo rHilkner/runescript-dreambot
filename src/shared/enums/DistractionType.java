@@ -1,13 +1,52 @@
 package shared.enums;
 
 import org.dreambot.api.methods.Calculations;
+import shared.Util;
+
+import java.util.Date;
 
 public enum DistractionType {
     PhoneNotification,
     TalkingToSomeone,
     CoffeeBreak;
+    
+    public Date nextDistractionDate;
 
-    double getDistractionSleep(double engagementChance) {
+    DistractionType() {
+        this.resetNextDistractionDate();
+    }
+
+    public Date getNextDistractionDate() {
+        return this.nextDistractionDate;
+    }
+
+    public void resetNextDistractionDate() {
+
+        int millisToAdd;
+
+        switch (this) {
+            case PhoneNotification:
+                // Happens with peak at u = 17 min and sigma = 6 min (99% of the probability are between (u - 2sigma) and (u + 2sigma), 69%  between (u - sigma) and (u + sigma))
+                millisToAdd = (int) Calculations.nextGaussianRandom(17 * 60 * 1000, 6 * 60 * 60);
+                this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
+                break;
+            case TalkingToSomeone:
+                // Happens with peak at u = 17 min and sigma = 6 min
+                millisToAdd = (int) Calculations.nextGaussianRandom(60 * 60 * 1000, 15 * 60 * 1000);
+                this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
+                break;
+            case CoffeeBreak:
+                // Happens with peak at u = 17 min and sigma = 6 min
+                millisToAdd = (int) Calculations.nextGaussianRandom(60 * 60 * 1000, 30 * 60 * 1000);
+                this.nextDistractionDate = Util.dateAddMillis(Util.getDate("15:30:00"), millisToAdd);
+                break;
+        }
+
+    }
+
+    public int getDistractionSleep(GameStyle gameStyle) {
+
+        double engagementChance = getDistractionEngagement(gameStyle);
 
         // Obs: E(X) = shape * scale (expectation value of the distribution)
         // So if we want to have E(X) = 3000 as expectation of a phone distraction, and we have shape = 2, we should set scale = 1500
@@ -37,8 +76,74 @@ public enum DistractionType {
                 break;
         }
 
-        return distractionEngaged ? Calculations.nextGammaRandom(engagedShape, engagedScale)
-                : Calculations.nextGammaRandom(notEngagedShape, notEngagedScale);
+        return (int) (distractionEngaged ? Calculations.nextGammaRandom(engagedShape, engagedScale)
+                        : Calculations.nextGammaRandom(notEngagedShape, notEngagedScale));
+    }
+
+    public double getDistractionEngagement(GameStyle gameStyle) {
+        double engagementChance = 0.5;
+
+        switch (this) {
+            case PhoneNotification:
+                switch (gameStyle) {
+                    case HardCore:
+                        engagementChance = 0.05;
+                        break;
+                    case Normal:
+                        engagementChance = 0.10;
+                        break;
+                    case Lazy:
+                        engagementChance = 0.15;
+                        break;
+                    case VeryLazy:
+                        engagementChance = 0.20;
+                        break;
+                    case Afk:
+                        engagementChance = 0.0;
+                        break;
+                }
+            case TalkingToSomeone:
+                switch (gameStyle) {
+                    case HardCore:
+                        engagementChance = 0.05;
+                        break;
+                    case Normal:
+                        engagementChance = 0.15;
+                        break;
+                    case Lazy:
+                        engagementChance = 0.20;
+                        break;
+                    case VeryLazy:
+                        engagementChance = 0.20;
+                        break;
+                    case Afk:
+                        engagementChance = 0.0;
+                        break;
+                }
+                break;
+            case CoffeeBreak:
+                switch (gameStyle) {
+                    case HardCore:
+                        engagementChance = 0.8;
+                        break;
+                    case Normal:
+                        engagementChance = 0.8;
+                        break;
+                    case Lazy:
+                        engagementChance = 0.8;
+                        break;
+                    case VeryLazy:
+                        engagementChance = 0.9;
+                        break;
+                    case Afk:
+                        engagementChance = 0.0;
+                        break;
+                }
+                break;
+        }
+
+        return engagementChance;
+
     }
 
 }

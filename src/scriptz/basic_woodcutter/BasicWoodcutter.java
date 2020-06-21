@@ -1,4 +1,4 @@
-package basic_woodcutter;
+package scriptz.basic_woodcutter;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.map.Area;
