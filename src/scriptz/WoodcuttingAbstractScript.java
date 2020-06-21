@@ -57,9 +57,4 @@ public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContex
         return 0;
     }
 
-    @Override
-    public void onExit() {
-        super.onExit();
-        logScript("End of script.");
-    }
 }

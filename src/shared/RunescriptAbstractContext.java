@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class RunescriptAbstractContext extends AbstractScript {
 
     public static RunescriptAbstractContext ctx;
-    private GameStyle gameStyle = GameStyle.VeryLazy;
+    private GameStyle gameStyle = GameStyle.Lazy;
     private List<DistractionType> distractions;
 
     private XptZenAntibanService antibanService;
@@ -77,7 +77,10 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     }
 
     public void setGameStyle(GameStyle gameStyle) {
-        this.gameStyle = gameStyle;
+        if (this.gameStyle != gameStyle) {
+            logScript("Setting GameStyle to: " + gameStyle);
+            this.gameStyle = gameStyle;
+        }
     }
 
     public List<DistractionType> getDistractions() {
