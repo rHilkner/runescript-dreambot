@@ -1,4 +1,4 @@
-package scriptz.chicken_killer;
+package scriptz;
 
 import shared.*;
 import shared.enums.Areas;
@@ -30,7 +30,7 @@ public class ChickenKiller extends RunescriptAbstractContext {
 
         List<String> targets = Collections.singletonList("Chicken");
         List<Items> lootItems = Arrays.asList(Items.FEATHERS, Items.BONES);
-        combatService.combatLoot(targets, lootItems, Areas.FALADOR_SOUTH_CHICKENS.area, true);
+        combatService.combatLoot(targets, lootItems, Areas.FALADOR_SOUTH_CHICKENS.getArea(), true);
 
         return 0;
     }

@@ -1,5 +1,6 @@
 package shared.services;
 
+import org.dreambot.api.wrappers.interactive.NPC;
 import shared.Constants;
 import shared.enums.ActionType;
 import shared.RunescriptAbstractContext;
@@ -28,22 +29,6 @@ public class SharedService extends AbstractService {
     }
 
     /** STATIC FUNCTIONS */
-
-    public void bankItems(Integer[] itemIDs, boolean all) {
-        if (!ctx.getBank().isOpen()) {
-            ctx.getBank().open(ctx.getBank().getClosestBankLocation());
-            antibanService.antibanSleep(ActionType.SlowPace);
-        } else {
-            if (all) {
-                ctx.getBank().depositAllItems();
-            } else {
-                ctx.getBank().depositAll(item -> Util.isElementInList(item.getID(), itemIDs));
-            }
-            antibanService.antibanSleep(ActionType.FastPace);
-            ctx.getBank().close();
-            antibanService.antibanSleep(ActionType.FastPace);
-        }
-    }
 
     public void walkTo(Area area) {
         logScript("Walking to: " + area.toString());

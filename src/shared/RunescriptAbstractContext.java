@@ -2,6 +2,7 @@ package shared;
 
 import shared.enums.DistractionType;
 import shared.enums.GameStyle;
+import shared.services.SharedService;
 import shared.services.XptZenAntibanService;
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.script.AbstractScript;
@@ -20,6 +21,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     private List<DistractionType> distractions;
 
     private XptZenAntibanService antibanService;
+    protected SharedService sharedService;
     private Date startDate;
 
     public static void logScript(String str) {
@@ -33,13 +35,21 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
         super.onStart();
         ctx = this;
         this.antibanService = XptZenAntibanService.getInstance();
+        this.sharedService = SharedService.getInstance();
         this.startDate = new Date();
         this.distractions = Arrays.asList(DistractionType.PhoneNotification, DistractionType.TalkingToSomeone);
     }
 
     @Override
     public int onLoop() {
-        antibanService.antibanRandomAction();
+        long currentDate = new Date().getTime();
+        long secondsSinceBeginning = (currentDate - startDate.getTime()) / 1000;
+        int hours = (int) (secondsSinceBeginning / 3600);
+        int minutes = (int) ((secondsSinceBeginning%3600) / 60);
+        int seconds = (int) ((secondsSinceBeginning%3600) % 60);
+        String time = String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds);
+        logScript("Running for " + time);
+        antibanService.antiban();
         return 0;
     }
 
