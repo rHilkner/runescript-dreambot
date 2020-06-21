@@ -1,11 +1,7 @@
 package shared.services;
 
-import org.dreambot.api.wrappers.interactive.NPC;
-import shared.Constants;
 import shared.Util;
 import shared.enums.ActionType;
-
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 
 public class BankService extends AbstractService {
 

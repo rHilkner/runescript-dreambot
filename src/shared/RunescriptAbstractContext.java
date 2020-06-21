@@ -23,8 +23,6 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     protected SharedService sharedService;
     private Date startDate;
 
-    boolean isStarted = false;
-
     public static void logScript(String str) {
         Date currentDate = new Date();
         DateFormat df = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss] ");
@@ -35,7 +33,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     public void onStart() {
         super.onStart();
         RunescriptAbstractContext.ctx = this;
-        setGameStyle(GameStyle.Lazy);
+        setGameStyle(GameStyle.Normal);
         this.antibanService = XptZenAntibanService.getInstance();
         this.sharedService = SharedService.getInstance();
         this.startDate = new Date();
@@ -49,8 +47,8 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     public int onLoop() {
 
         if (startDate != null) {
-            long currentDate = new Date().getTime();
-            long secondsSinceBeginning = (currentDate - startDate.getTime()) / 1000;
+            long currentDateTime = new Date().getTime();
+            long secondsSinceBeginning = (currentDateTime - startDate.getTime()) / 1000;
             int hours = (int) (secondsSinceBeginning / 3600);
             int minutes = (int) ((secondsSinceBeginning % 3600) / 60);
             int seconds = (int) ((secondsSinceBeginning % 3600) % 60);

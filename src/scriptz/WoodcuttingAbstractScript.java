@@ -8,9 +8,6 @@ import shared.enums.Trees;
 import shared.services.BankService;
 import shared.services.WoodcuttingService;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContext {
 
     private Trees tree;

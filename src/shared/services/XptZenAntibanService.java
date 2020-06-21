@@ -7,7 +7,6 @@ import shared.enums.DistractionType;
 import shared.enums.GameStyle;
 
 import java.util.Date;
-import java.util.List;
 
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
