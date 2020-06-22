@@ -1,7 +1,7 @@
-package scriptz;
+package scriptz.fishing;
 
 import org.dreambot.api.methods.skills.Skill;
-import shared.RunescriptAbstractContext;
+import scriptz.RunescriptAbstractContext;
 import shared.enums.Areas;
 import shared.enums.FishingType;
 import shared.enums.GameStyle;
@@ -46,7 +46,7 @@ public abstract class FishingAbstractScript extends RunescriptAbstractContext {
         } else {
             if (bankArea.getArea().contains(getLocalPlayer())) {
                 setGameStyle(GameStyle.Normal);
-                bankService.bankAllExcept(fish.getEquipmentName());
+                bankService.bankAllExcept(fish.getEquipmentName(), "Feather", "Bait");
             } else {
                 sharedService.walkTo(bankArea);
             }

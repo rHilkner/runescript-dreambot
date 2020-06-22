@@ -1,8 +1,8 @@
-package scriptz;
+package scriptz.combat;
 
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
-import shared.RunescriptAbstractContext;
+import scriptz.RunescriptAbstractContext;
 import shared.enums.Areas;
 import shared.enums.Items;
 import shared.services.CombatService;

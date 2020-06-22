@@ -1,4 +1,4 @@
-package scriptz;
+package scriptz.fishing;
 
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
@@ -7,13 +7,13 @@ import shared.enums.FishingType;
 
 import java.awt.*;
 
-@ScriptManifest(category = Category.WOODCUTTING, name = "Edgeville small-net fisher", author = "XpT", version = 1.0)
-public class EdgevilleSmallNetFisher extends FishingAbstractScript {
+@ScriptManifest(category = Category.WOODCUTTING, name = "Draynor Village small-net fisher", author = "XpT", version = 1.0)
+public class DraynorVillageSmallNetFisher extends FishingAbstractScript {
 
     @Override
     public void onStart() {
-        logScript("Edgeville small-net fisher - all creditz to Xpt º*º");
-        super.onStart(FishingType.SmallFishingNet, Areas.DraynorVillageFishingSpots, Areas.DraynorVillageBank);
+        logScript("Draynor Village small-net fisher - all creditz to Xpt º*º");
+        super.onStart(FishingType.SmallNet, Areas.DraynorVillageFishingSpots, Areas.DraynorVillageBank);
     }
 
     @Override
