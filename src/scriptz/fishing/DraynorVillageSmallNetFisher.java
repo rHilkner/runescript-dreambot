@@ -13,7 +13,7 @@ public class EdgevilleSmallNetFisher extends FishingAbstractScript {
     @Override
     public void onStart() {
         logScript("Edgeville small-net fisher - all creditz to Xpt º*º");
-        super.onStart(FishingType.SmallFishingNet, Areas.EdgevilleFishingSpots, Areas.EdgevilleBank);
+        super.onStart(FishingType.SmallFishingNet, Areas.DraynorVillageFishingSpots, Areas.DraynorVillageBank);
     }
 
     @Override

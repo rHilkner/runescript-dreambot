@@ -4,7 +4,7 @@ import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import shared.Constants;
-import shared.RunescriptAbstractContext;
+import scriptz.RunescriptAbstractContext;
 import shared.Util;
 import shared.enums.ActionType;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @ScriptManifest(category = Category.QUEST, name = "Stronghold Of Security", author = "XpT", version = 1.0)
 public class StrongholdOfSecurity extends RunescriptAbstractContext {
 
-    private int currentPlayerInteractionIndex = 2;
+    private int currentPlayerInteractionIndex = 0;
     private List<Interactions> playerInteractions = Arrays.asList(
             Interactions.Floor0Entrance,
             Interactions.Floor1Door0,

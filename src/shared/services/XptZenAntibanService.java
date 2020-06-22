@@ -10,7 +10,7 @@ import java.util.Date;
 
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
-import static shared.RunescriptAbstractContext.logScript;
+import static scriptz.RunescriptAbstractContext.logScript;
 
 public class XptZenAntibanService extends  AbstractService {
 
@@ -47,7 +47,7 @@ public class XptZenAntibanService extends  AbstractService {
     public void antibanRandomAction() {
         int sleepTimeMillis = zenAntibanAdapted.antiban();
         if (sleepTimeMillis > 0) {
-            logScript("antiban-random-actions sleep: " + sleepTimeMillis);
+            logScript("antiban Random-action [" + zenAntibanAdapted.getStatus() + "] sleep(" + sleepTimeMillis + ")");
             sleep(sleepTimeMillis);
         }
     }
@@ -58,8 +58,9 @@ public class XptZenAntibanService extends  AbstractService {
         for (DistractionType distraction : ctx.getDistractions()) {
             if (distraction.getNextDistractionDate().before(currentDate)) {
                 int sleepTimeMillis = distraction.getDistractionSleep(ctx.getGameStyle());
-                logScript("antiban-distraction sleep: " + sleepTimeMillis);
+                logScript("antiban Distraction [" + distraction + "]: sleep(" + sleepTimeMillis + ")");
                 sleep(sleepTimeMillis);
+                distraction.resetNextDistractionDate();
             }
         }
     }

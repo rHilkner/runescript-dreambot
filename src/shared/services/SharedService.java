@@ -5,7 +5,7 @@ import org.dreambot.api.methods.map.Tile;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
 import shared.Constants;
-import shared.RunescriptAbstractContext;
+import scriptz.RunescriptAbstractContext;
 import shared.enums.ActionType;
 import shared.enums.Areas;
 
@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
-import static shared.RunescriptAbstractContext.logScript;
+import static scriptz.RunescriptAbstractContext.logScript;
 
 public class SharedService extends AbstractService {
 

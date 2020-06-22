@@ -5,7 +5,7 @@ import shared.Util;
 
 import java.util.Date;
 
-import static shared.RunescriptAbstractContext.logScript;
+import static scriptz.RunescriptAbstractContext.logScript;
 
 public enum DistractionType {
     PhoneNotification(),
@@ -31,13 +31,14 @@ public enum DistractionType {
 
         switch (this) {
             case PhoneNotification:
-                // Happens with peak at u = 17 min and sigma = 6 min (99% of the probability are between (u - 2sigma) and (u + 2sigma), 69%  between (u - sigma) and (u + sigma))
-                millisToAdd = (int) Calculations.nextGaussianRandom(17 * 60 * 1000, 6 * 60 * 60);
+                // Happens with peak at u = 12 min and sigma = 3 min (99% of the times will happen between 6 and 18 min)
+                // (99% of the probability are between (u - 2sigma) and (u + 2sigma), 69%  between (u - sigma) and (u + sigma))
+                millisToAdd = (int) Calculations.nextGaussianRandom(12 * 60 * 1000, 3 * 60 * 60);
                 this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
                 break;
             case TalkingToSomeone:
-                // Happens with peak at u = 17 min and sigma = 6 min
-                millisToAdd = (int) Calculations.nextGaussianRandom(60 * 60 * 1000, 15 * 60 * 1000);
+                // Happens with peak at u = 45 min and sigma = 15 min (99% of the times will happen between 15 and 75 min)
+                millisToAdd = (int) Calculations.nextGaussianRandom(45 * 60 * 1000, 15 * 60 * 1000);
                 this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
                 break;
             case CoffeeBreak:
@@ -51,7 +52,6 @@ public enum DistractionType {
         }
 
         logScript("nextDistractionDate " + this.name() + ": " + nextDistractionDate);
-
     }
 
     public int getDistractionSleep(GameStyle gameStyle) {

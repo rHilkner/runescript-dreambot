@@ -1,4 +1,4 @@
-package shared;
+package scriptz;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.script.AbstractScript;

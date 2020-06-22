@@ -1,37 +1,37 @@
-package scriptz;
+package scriptz.woodcutting;
 
 import org.dreambot.api.methods.skills.Skill;
-import shared.RunescriptAbstractContext;
+import scriptz.RunescriptAbstractContext;
 import shared.enums.Areas;
-import shared.enums.FishingType;
 import shared.enums.GameStyle;
+import shared.enums.Trees;
 import shared.services.BankService;
-import shared.services.FishingService;
+import shared.services.WoodcuttingService;
 
-public abstract class FishingAbstractScript extends RunescriptAbstractContext {
+public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContext {
 
-    private FishingType fish;
-    private Areas fishArea;
+    private Trees tree;
+    private Areas treeArea;
     private Areas bankArea;
 
     GameStyle originalGameStyle;
-    private FishingService fishingService;
+    private WoodcuttingService woodcuttingService;
     private BankService bankService;
 
-    public FishingAbstractScript() {
+    public WoodcuttingAbstractScript() {
 
     }
 
     /** LOOP FUNCTIONS */
 
-    public void onStart(FishingType fish, Areas treeArea, Areas bankArea) {
+    public void onStart(Trees tree, Areas treeArea, Areas bankArea) {
         super.onStart();
         logScript("Starting WoodcuttingAbstractScript");
-        this.fish = fish;
-        this.fishArea = treeArea;
+        this.tree = tree;
+        this.treeArea = treeArea;
         this.bankArea = bankArea;
         originalGameStyle = ctx.getGameStyle();
-        fishingService = FishingService.getInstance();
+        woodcuttingService = WoodcuttingService.getInstance();
         bankService = BankService.getInstance();
         antibanService.setSkillsToHover(Skill.WOODCUTTING);
     }
@@ -42,15 +42,15 @@ public abstract class FishingAbstractScript extends RunescriptAbstractContext {
 
         if (!getInventory().isFull()) {
             setGameStyle(originalGameStyle);
-            if (fishArea.getArea().contains(getLocalPlayer())) {
-                fishingService.fish(fish); //change "Tree" to the name of your tree.
+            if (treeArea.getArea().contains(getLocalPlayer())) {
+                woodcuttingService.chopTree(tree); //change "Tree" to the name of your tree.
             } else {
-                sharedService.walkTo(fishArea);
+                sharedService.walkTo(treeArea);
             }
         } else {
             if (bankArea.getArea().contains(getLocalPlayer())) {
                 setGameStyle(GameStyle.Normal);
-                bankService.bankAllExcept(fish.getEquipmentName());
+                bankService.bankAllExcept("axe");
             } else {
                 sharedService.walkTo(bankArea);
             }

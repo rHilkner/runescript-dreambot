@@ -11,7 +11,7 @@ import shared.enums.Items;
 import java.util.List;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
-import static shared.RunescriptAbstractContext.logScript;
+import static scriptz.RunescriptAbstractContext.logScript;
 
 public class CombatService extends AbstractService {
 

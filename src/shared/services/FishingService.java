@@ -25,12 +25,14 @@ public class FishingService extends AbstractService {
     }
 
     public void fish(FishingType fish) {
-        NPC fishNpc = ctx.getNpcs().closest("Fishing spot");
+        NPC fishNpc = ctx.getNpcs().closest(fish.getFishingSpot());
         if (fishNpc != null && fishNpc.interact(fish.getInteractionType())) {
             ctx.logScript("Fishing with " + fish.getEquipmentName());
             antibanService.antibanSleep(ActionType.SlowPace);
             sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(ActionType.SlowPace);
+            if (!ctx.getLocalPlayer().isAnimating()) {
+                antibanService.antibanSleep(ActionType.SlowPace);
+            }
         }
     }
 

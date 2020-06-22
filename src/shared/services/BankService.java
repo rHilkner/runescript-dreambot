@@ -31,12 +31,22 @@ public class BankService extends AbstractService {
         }
     }
 
-    public void bankAllExcept(String exceptItem) {
+    public void bankAllExcept(String... exceptItems) {
         if (!ctx.getBank().isOpen()) {
             ctx.getBank().open(ctx.getBank().getClosestBankLocation());
             antibanService.antibanSleep(ActionType.FastPace);
         } else {
-            ctx.getBank().depositAllExcept(item -> item != null && item.getName().contains(exceptItem));
+            ctx.getBank().depositAllExcept(item -> {
+                if (item == null) {
+                    return false;
+                }
+                for (String exceptItem : exceptItems) {
+                    if (item.getName().contains(exceptItem)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
             antibanService.antibanSleep(ActionType.FastPace);
             ctx.getBank().close();
             antibanService.antibanSleep(ActionType.FastPace);

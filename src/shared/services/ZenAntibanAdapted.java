@@ -11,7 +11,7 @@ import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.Item;
 import org.dreambot.api.wrappers.widgets.Menu;
-import shared.RunescriptAbstractContext;
+import scriptz.RunescriptAbstractContext;
 
 import java.awt.*;
 
@@ -143,7 +143,7 @@ public class ZenAntibanAdapted {
                 }
                 case 1: { // Check random stat
                     if (rp < 10) { // 10% chance
-                        if (s.getTabs().getOpen() != Tab.SKILLS)
+                        if (s.getTabs().getOpen() != Tab.STATS)
                             openStats();
                         int x = r(0, 25);
                         int y = r(0, 15);
@@ -271,7 +271,7 @@ public class ZenAntibanAdapted {
                             return rh(500, 1000);
                         }
                     } else if (rp > 75) { // 25% chance
-                        if (s.getTabs().getOpen() != Tab.SKILLS)
+                        if (s.getTabs().getOpen() != Tab.STATS)
                             setStatus("Opening stats");
                         if (openStats()) {
                             LAST_EVENT = System.currentTimeMillis();
@@ -402,7 +402,7 @@ public class ZenAntibanAdapted {
 
     // This method opens the stats menu
     public boolean openStats() {
-        if (s.getTabs().getOpen() != Tab.SKILLS) {
+        if (s.getTabs().getOpen() != Tab.STATS) {
             // Sometimes use hot keys, sometimes use mouse
             if (Calculations.random(1, 3) == 2)
                 s.getSkills().open();
@@ -417,7 +417,7 @@ public class ZenAntibanAdapted {
             s.sleep(50, 250);
         }
 
-        return s.getTabs().getOpen() == Tab.SKILLS;
+        return s.getTabs().getOpen() == Tab.STATS;
     }
 
     // Opens the  combat menu then waits for a second

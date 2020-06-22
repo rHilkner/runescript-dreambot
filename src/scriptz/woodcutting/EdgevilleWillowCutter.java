@@ -1,7 +1,8 @@
-package scriptz;
+package scriptz.woodcutting;
 
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
+import scriptz.RunescriptAbstractContext;
 import shared.enums.Areas;
 import shared.enums.Trees;
 
@@ -12,8 +13,8 @@ public class EdgevilleWillowCutter extends WoodcuttingAbstractScript {
 
     @Override
     public void onStart() {
-        logScript("Edgeville willow woodcutter - all creditz to Xpt º*º");
-        super.onStart(Trees.Willow, Areas.EdgevilleWillowTrees, Areas.EdgevilleBank);
+        RunescriptAbstractContext.logScript("Edgeville willow woodcutter - all creditz to Xpt º*º");
+        super.onStart(Trees.Willow, Areas.DraynorVillageWillowTrees, Areas.DraynorVillageBank);
     }
 
     @Override

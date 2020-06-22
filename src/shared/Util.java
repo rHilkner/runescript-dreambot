@@ -2,6 +2,7 @@ package shared;
 
 import org.dreambot.api.methods.filter.Filter;
 import org.dreambot.api.wrappers.interactive.GameObject;
+import scriptz.RunescriptAbstractContext;
 import shared.enums.Items;
 
 import java.text.DateFormat;
@@ -10,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Util {

@@ -7,7 +7,7 @@ import shared.enums.ActionType;
 import shared.enums.Items;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
-import static shared.RunescriptAbstractContext.logScript;
+import static scriptz.RunescriptAbstractContext.logScript;
 
 public class InventoryService extends AbstractService {
 
