@@ -1,7 +1,9 @@
 package shared.services;
 
+import org.dreambot.api.methods.filter.Filter;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import shared.Constants;
+import shared.Util;
 import shared.enums.ActionType;
 import shared.enums.Trees;
 
@@ -25,7 +27,7 @@ public class WoodcuttingService extends AbstractService {
     }
 
     public void chopTree(Trees tree) {
-        GameObject treeObject = ctx.getGameObjects().closest(gameObject -> gameObject != null && gameObject.getName().equals(tree.getTreeName()));
+        GameObject treeObject = ctx.getGameObjects().closest(Util.filterGameObjectByName(tree.getTreeName()));
         if (treeObject != null && treeObject.interact("Chop down")) {
             ctx.logScript("Chopping down " + tree.getTreeName());
             antibanService.antibanSleep(ActionType.SlowPace);

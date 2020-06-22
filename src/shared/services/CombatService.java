@@ -57,7 +57,7 @@ public class CombatService extends AbstractService {
         Double targetDistance = target != null ? target.distance(ctx.getLocalPlayer()) : null;
 
         while (loot != null && ctx.getMap().canReach(loot) && target != null && lootDistance < targetDistance) {
-            sharedService.getLoot(loot);
+            sharedService.takeLoot(loot);
             loot = ctx.getGroundItems().closest(Util.getItemIds(lootIds));
             targetDistance = target.distance(ctx.getLocalPlayer());
         }

@@ -1,10 +1,15 @@
 package shared.services;
 
+import org.dreambot.api.methods.map.Area;
+import org.dreambot.api.methods.map.Tile;
+import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
 import shared.Constants;
 import shared.RunescriptAbstractContext;
 import shared.enums.ActionType;
 import shared.enums.Areas;
+
+import java.util.Objects;
 
 import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
@@ -31,19 +36,52 @@ public class SharedService extends AbstractService {
     /** STATIC FUNCTIONS */
 
     public void walkTo(Areas area) {
-        logScript("Walking to: " + area.getArea().getRandomTile().getX());
-        if (!area.getArea().contains(ctx.getLocalPlayer())) {
-            ctx.getWalking().walk(area.getArea().getRandomTile());
+
+        if (area == null) return;
+
+        walkTo(area.getArea());
+    }
+
+    public void walkTo(Area area) {
+
+        if (area == null) return;
+
+        Tile randomTile = area.getRandomTile();
+
+        logScript("Walking to: " + randomTile);
+        if (!area.contains(ctx.getLocalPlayer())) {
+            ctx.getWalking().walk(randomTile);
             antibanService.antibanSleep(ActionType.Walking);
         }
     }
 
-    public void getLoot(GroundItem loot) {
+    public void takeLoot(GroundItem loot) {
         logScript("Getting loot from the ground");
         loot.interact("Take");
         sleep(RunescriptAbstractContext.getLatency());
         sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
         antibanService.antibanSleep(ActionType.FastPace);
+    }
+
+    public static GameObject getObjectOnTileWithName(Tile tile, String objectName) {
+
+        if (tile == null || objectName == null) {
+            return null;
+        }
+
+        GameObject[] gameObjects = ctx.getGameObjects().getObjectsOnTile(tile);
+
+        if (gameObjects == null || gameObjects.length == 0) {
+            return null;
+        }
+
+        for (GameObject object : gameObjects) {
+            if (Objects.equals(objectName, object.getName())) {
+                return object;
+            }
+        }
+
+        return null;
     }
     
 }
