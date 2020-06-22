@@ -19,7 +19,8 @@ public class StrongholdOfSecurity extends RunescriptAbstractContext {
             Interactions.Floor0Entrance,
             Interactions.Floor1Door0,
             Interactions.Floor1Door1,
-            Interactions.Floor1Door2
+            Interactions.Floor1Door2,
+            Interactions.Floor1Door3
     );
 
     private List<String> rightAnswers = Arrays.asList(

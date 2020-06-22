@@ -7,12 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f96521cb-38d3-41f0-be81-b399f0ffbaf6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/scriptz/ChickenKiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/ChickenKiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/enums/FishingType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/enums/Areas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/Areas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/CombatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/CombatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/SharedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/SharedService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,21 +25,63 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java">
+        <entry file="file://$PROJECT_DIR$/src/scriptz/stronghold_of_security/Interactions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+            <state relative-caret-position="90">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/scriptz/stronghold_of_security/Interactions.java">
+        <entry file="file://$PROJECT_DIR$/src/scriptz/FishingAbstractScript.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+            <state relative-caret-position="390">
+              <caret line="32" column="47" lean-forward="true" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/services/FishingService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="26" column="18" lean-forward="true" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/scriptz/EdgevilleSmallNetFisher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/enums/Areas.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="10" column="25" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/enums/FishingType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#418#419#0" expanded="true" />
+                <element signature="e#456#457#0" expanded="true" />
+                <element signature="e#639#640#0" expanded="true" />
+                <element signature="e#675#676#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -59,7 +99,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&quot;3&quot;</find>
       <find>&quot;bb&quot;</find>
       <find>runn</find>
       <find>antiban&quot;</find>
@@ -89,6 +128,7 @@
       <find>interac</find>
       <find>interact(</find>
       <find>openclo</find>
+      <find>NPC</find>
     </findStrings>
     <replaceStrings>
       <replace>Tab.SKILLS</replace>
@@ -134,14 +174,20 @@
         <option value="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" />
         <option value="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" />
         <option value="$PROJECT_DIR$/src/scriptz/ChickenKiller.java" />
-        <option value="$PROJECT_DIR$/src/shared/enums/Areas.java" />
         <option value="$PROJECT_DIR$/src/scriptz/StrongholdOfSecurity.java" />
         <option value="$PROJECT_DIR$/src/shared/Util.java" />
         <option value="$PROJECT_DIR$/src/shared/services/SharedService.java" />
         <option value="$PROJECT_DIR$/resources/sh run-dreambot.sh" />
         <option value="$PROJECT_DIR$/run-dreambot.sh" />
-        <option value="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" />
         <option value="$PROJECT_DIR$/src/scriptz/stronghold_of_security/Interactions.java" />
+        <option value="$PROJECT_DIR$/src/shared/enums/Fish.java" />
+        <option value="$PROJECT_DIR$/src/scriptz/FishingAbstractScript.java" />
+        <option value="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" />
+        <option value="$PROJECT_DIR$/src/shared/enums/Fishes.java" />
+        <option value="$PROJECT_DIR$/src/shared/enums/FishingType.java" />
+        <option value="$PROJECT_DIR$/src/shared/services/FishingService.java" />
+        <option value="$PROJECT_DIR$/src/shared/enums/Areas.java" />
+        <option value="$PROJECT_DIR$/src/scriptz/EdgevilleSmallNetFisher.java" />
       </list>
     </option>
   </component>
@@ -237,6 +283,7 @@
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="scriptz" />
+      <recent name="shared.enums" />
       <recent name="shared.services" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -287,18 +334,18 @@
       <updated>1592677470279</updated>
       <workItem from="1592677471718" duration="1439000" />
       <workItem from="1592679851236" duration="21605000" />
-      <workItem from="1592715528663" duration="36277000" />
+      <workItem from="1592715528663" duration="37534000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59321000" />
+    <option name="totallyTimeSpent" value="60578000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25579977" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25579977" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -655,13 +702,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/enums/Areas.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="34" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/scriptz/WoodcuttingAbstractScript.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="605">
@@ -681,18 +721,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+        <state relative-caret-position="255">
+          <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scriptz/stronghold_of_security/Interactions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+        <state relative-caret-position="90">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/FishingType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+          <folding>
+            <element signature="e#418#419#0" expanded="true" />
+            <element signature="e#456#457#0" expanded="true" />
+            <element signature="e#639#640#0" expanded="true" />
+            <element signature="e#675#676#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/enums/Areas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scriptz/EdgevilleSmallNetFisher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/services/FishingService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="26" column="18" lean-forward="true" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scriptz/FishingAbstractScript.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="32" column="47" lean-forward="true" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
         </state>
       </provider>
     </entry>

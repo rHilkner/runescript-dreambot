@@ -8,6 +8,8 @@ public enum Areas {
     EdgevilleBank(new Area(3092, 3240, 3097, 3246, 0)),
     EdgevilleTrees(new Area(3074, 3265, 3083, 3274, 0)),
     EdgevilleWillowTrees(new Area(3083, 3239, 3090, 3226, 0)),
+    EdgevilleFishingSpots(new Area(3087, 3227, 3084, 3234, 0)),
+
     FaladorSouthChickens(new Area(3014, 3294, 3020, 3282, 0)),
     FaladorSouthCowPen(new Area(3265, 3296, 3253, 3255, 0)),
 
