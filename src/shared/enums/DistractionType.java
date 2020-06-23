@@ -8,87 +8,63 @@ import java.util.Date;
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public enum DistractionType {
-    PhoneNotification(),
-    TalkingToSomeone(),
-    LittleLogot(),
-    CoffeeBreak();
-    
-    private Date nextDistractionDate;
+    PhoneNotification( 3 * 60, 11 * 60, 3, 20),
+    TalkingToSomeone(15 * 60, 75 * 60, 60, 180),
+    LittleLogout(60 * 60, 90 * 60, 5 * 60, 10 * 60);
 
-    DistractionType() { }
+    private Date nextDistractionDate;
+    private int nextDistractionMin;
+    private int nextDistractionMax;
+    private int engagedDuration;
+    private int notEngagedDuration;
+
+    DistractionType(int nextDistractionMin, int nextDistractionMax, int notEngagedDuration, int engagedDuration) {
+        this.nextDistractionMin = nextDistractionMin;
+        this.nextDistractionMax = nextDistractionMax;
+        this.engagedDuration = engagedDuration;
+        this.notEngagedDuration = notEngagedDuration;
+        this.resetNextDistractionDate();
+    }
 
     public Date getNextDistractionDate() {
         return this.nextDistractionDate;
     }
 
-    public void initialize() {
-        this.resetNextDistractionDate();
-    }
-
     public void resetNextDistractionDate() {
 
         nextDistractionDate = new Date();
-        int millisToAdd;
 
-        switch (this) {
-            case PhoneNotification:
-                // Happens with peak at u = 12 min and sigma = 3 min (99% of the times will happen between 6 and 18 min)
-                // (99% of the probability are between (u - 2sigma) and (u + 2sigma), 69%  between (u - sigma) and (u + sigma))
-                millisToAdd = (int) Calculations.nextGaussianRandom(7 * 60 * 1000, 2 * 60 * 60);
-                this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
-                break;
-            case TalkingToSomeone:
-                // Happens with peak at u = 45 min and sigma = 15 min (99% of the times will happen between 15 and 75 min)
-                millisToAdd = (int) Calculations.nextGaussianRandom(45 * 60 * 1000, 15 * 60 * 1000);
-                this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
-                break;
-            case CoffeeBreak:
-                // Everyday between 15h30 and 17h30, with peak in the middle
-                millisToAdd = (int) Calculations.nextGaussianRandom(60 * 60 * 1000, 30 * 60 * 1000);
-                this.nextDistractionDate = Util.dateAddMillis(Util.getDate("15:30:00"), millisToAdd);
-                if (this.nextDistractionDate.before(new Date())) {
-                    this.nextDistractionDate = Util.dateAddDays(nextDistractionDate, 1);
-                }
-                break;
-        }
+        // 99% of the chances for a gaussian distribution happens between (peak - 2 sigma) and (peak + 2 sigma)
+        double peak = (this.nextDistractionMin + this.nextDistractionMax) / 2;
+        double sigma = (peak - this.nextDistractionMin) / 2;
+        int millisToAdd = (int) Calculations.nextGaussianRandom(peak * 1000, sigma * 1000);
+        this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
 
         logScript("nextDistractionDate " + this.name() + ": " + nextDistractionDate);
     }
 
     public int getDistractionSleep(GameStyle gameStyle) {
 
-        double engagementChance = getDistractionEngagement(gameStyle);
-
         // Obs: E(X) = shape * scale (expectation value of the distribution)
         // So if we want to have E(X) = 3000 as expectation of a phone distraction, and we have shape = 2, we should set scale = 1500
         // Use this website to try some values: https://homepage.divms.uiowa.edu/~mbognar/applets/gamma.html
 
-        int engagedShape = Calculations.random(1, 3);
-        int notEngagedShape = Calculations.random(2, 4);
+        int shape;
+        int scale;
+        int baseScale;
 
-        int engagedScale = Calculations.random(800, 1600);
-        int notEngagedScale = Calculations.random(1000, 2000);
+        boolean isDistractionEngaged = Calculations.random(0.0, 1.0) <= getDistractionEngagement(gameStyle);
 
-        double randomPercentage = Calculations.random(0.0, 1.0);
-        boolean distractionEngaged = randomPercentage <= engagementChance;
-
-        switch (this) {
-            case PhoneNotification:
-                notEngagedScale = Calculations.random(1500, 2100); // P(X < 3s) = 0.5 - shape = 2; scale = 1.8k
-                engagedScale = Calculations.random(10000, 14000);  // P(X < 20s) = 0.5 - shape = 2; scale = 12k
-                break;
-            case TalkingToSomeone:
-                notEngagedScale = Calculations.random(30000, 42000); // P(X < 60s) = 0.5 - shape = 2; scale = 36k
-                engagedScale = Calculations.random(90000, 126000);  // P(X < 180s) = 0.5 - shape = 2; scale = 108k
-                break;
-            case CoffeeBreak:
-                notEngagedScale = Calculations.random(250000, 330000); // P(X < 8m) = 0.5 - shape = 2; scale = 290k
-                engagedScale = Calculations.random(500000, 660000);    // P(X < 16m) = 0.5 - shape = 2; scale = 580k
-                break;
+        if (isDistractionEngaged) {
+            baseScale = engagedDuration * 500;
+            shape = Calculations.random(2, 4);
+        } else {
+            baseScale = notEngagedDuration * 500;
+            shape = Calculations.random(3, 5);
         }
 
-        return (int) (distractionEngaged ? Calculations.nextGammaRandom(engagedShape, engagedScale)
-                        : Calculations.nextGammaRandom(notEngagedShape, notEngagedScale));
+        scale = (int) Calculations.random(baseScale * 0.8, baseScale * 1.2);
+        return (int) Calculations.nextGammaRandom(shape, scale);
     }
 
     public double getDistractionEngagement(GameStyle gameStyle) {
@@ -132,25 +108,7 @@ public enum DistractionType {
                         break;
                 }
                 break;
-            case CoffeeBreak:
-                switch (gameStyle) {
-                    case HardCore:
-                        engagementChance = 0.8;
-                        break;
-                    case Normal:
-                        engagementChance = 0.8;
-                        break;
-                    case Lazy:
-                        engagementChance = 0.8;
-                        break;
-                    case VeryLazy:
-                        engagementChance = 0.9;
-                        break;
-                    case Afk:
-                        engagementChance = 0.0;
-                        break;
-                }
-                break;
+            case LittleLogout:
         }
 
         return engagementChance;

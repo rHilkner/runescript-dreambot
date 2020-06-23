@@ -37,10 +37,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
         this.antibanService = XptZenAntibanService.getInstance();
         this.sharedService = SharedService.getInstance();
         this.startDate = new Date();
-        this.distractions = Arrays.asList(DistractionType.PhoneNotification, DistractionType.TalkingToSomeone);
-        for (DistractionType distraction : distractions) {
-            distraction.initialize();
-        }
+        this.distractions = Arrays.asList(DistractionType.PhoneNotification, DistractionType.TalkingToSomeone, DistractionType.LittleLogout);
     }
 
     @Override
