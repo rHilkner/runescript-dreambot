@@ -10,6 +10,7 @@ import static scriptz.RunescriptAbstractContext.logScript;
 public enum DistractionType {
     PhoneNotification(),
     TalkingToSomeone(),
+    LittleLogot(),
     CoffeeBreak();
     
     private Date nextDistractionDate;
@@ -33,7 +34,7 @@ public enum DistractionType {
             case PhoneNotification:
                 // Happens with peak at u = 12 min and sigma = 3 min (99% of the times will happen between 6 and 18 min)
                 // (99% of the probability are between (u - 2sigma) and (u + 2sigma), 69%  between (u - sigma) and (u + sigma))
-                millisToAdd = (int) Calculations.nextGaussianRandom(12 * 60 * 1000, 3 * 60 * 60);
+                millisToAdd = (int) Calculations.nextGaussianRandom(7 * 60 * 1000, 2 * 60 * 60);
                 this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
                 break;
             case TalkingToSomeone:
@@ -69,7 +70,7 @@ public enum DistractionType {
         int notEngagedScale = Calculations.random(1000, 2000);
 
         double randomPercentage = Calculations.random(0.0, 1.0);
-        boolean distractionEngaged = engagementChance < randomPercentage;
+        boolean distractionEngaged = randomPercentage <= engagementChance;
 
         switch (this) {
             case PhoneNotification:
@@ -77,12 +78,12 @@ public enum DistractionType {
                 engagedScale = Calculations.random(10000, 14000);  // P(X < 20s) = 0.5 - shape = 2; scale = 12k
                 break;
             case TalkingToSomeone:
-                notEngagedScale = Calculations.random(4500, 7500); // P(X < 10s) = 0.5 - shape = 2; scale = 6k
-                engagedScale = Calculations.random(30000, 42000);  // P(X < 60s) = 0.5 - shape = 2; scale = 36k
+                notEngagedScale = Calculations.random(30000, 42000); // P(X < 60s) = 0.5 - shape = 2; scale = 36k
+                engagedScale = Calculations.random(90000, 126000);  // P(X < 180s) = 0.5 - shape = 2; scale = 108k
                 break;
             case CoffeeBreak:
                 notEngagedScale = Calculations.random(250000, 330000); // P(X < 8m) = 0.5 - shape = 2; scale = 290k
-                engagedScale = Calculations.random(500000, 660000);    // P(X < 16m) = 0.5 - shape = 2; scale = 1.8k
+                engagedScale = Calculations.random(500000, 660000);    // P(X < 16m) = 0.5 - shape = 2; scale = 580k
                 break;
         }
 

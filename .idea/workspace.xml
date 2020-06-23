@@ -26,28 +26,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f96521cb-38d3-41f0-be81-b399f0ffbaf6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/runescript-dreambot/META-INF/runescript-dreambot.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/runescript-dreambot/META-INF/runescript-dreambot.kotlin_module" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/ChickenKiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/combat/ChickenKiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/CowKiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/combat/CowKiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/EdgevilleSmallNetFisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/fishing/DraynorVillageSmallNetFisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/EdgevilleTreeCutter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/woodcutting/EdgevilleTreeCutter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/EdgevilleWillowCutter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/woodcutting/EdgevilleWillowCutter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/FishingAbstractScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/fishing/FishingAbstractScript.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/WoodcuttingAbstractScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/woodcutting/WoodcuttingAbstractScript.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/RunescriptAbstractContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/RunescriptAbstractContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/enums/Areas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/Areas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/enums/FishingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/FishingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/AbstractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/AbstractService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/BankService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/BankService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/CombatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/CombatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/FishingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/FishingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/InventoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/SharedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/SharedService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/ZenAntibanAdapted.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +120,7 @@
       <workItem from="1592679851236" duration="21605000" />
       <workItem from="1592715528663" duration="37534000" />
       <workItem from="1592837296017" duration="628000" />
-      <workItem from="1592838187744" duration="3690000" />
+      <workItem from="1592838187744" duration="4365000" />
     </task>
     <servers />
   </component>
