@@ -25,15 +25,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f96521cb-38d3-41f0-be81-b399f0ffbaf6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/BasicWoodcutter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Runescript.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/RunescriptAbstractContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/RunescriptAbstractContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/Interactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/Interactions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/AbstractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/AbstractService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/BankService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/BankService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/CombatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/CombatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/FishingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/FishingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/services/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/Areas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/Areas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/DistractionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/FishingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/FishingType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/NPCs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/Tiles.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/enums/Trees.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/enums/Trees.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/services/SharedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/SharedService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" afterDir="false" />
@@ -79,7 +80,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15178572" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -132,7 +133,7 @@
       <workItem from="1592837296017" duration="628000" />
       <workItem from="1592838187744" duration="4365000" />
       <workItem from="1592875424612" duration="5401000" />
-      <workItem from="1592925841019" duration="4551000" />
+      <workItem from="1592925841019" duration="5472000" />
     </task>
     <servers />
   </component>
@@ -166,18 +167,18 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592967076471">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592967731351">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1592967076471" />
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1592967731351" />
     <state x="533" y="158" key="#com.intellij.ide.util.MemberChooser" timestamp="1592960918258">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="533" y="158" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1592960918258" />
-    <state x="208" y="31" key="SettingsEditor" timestamp="1592966866888">
+    <state x="208" y="31" key="SettingsEditor" timestamp="1592967504868">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="208" y="31" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1592966866888" />
+    <state x="208" y="31" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1592967504868" />
     <state x="606" y="231" width="598" height="490" key="find.popup" timestamp="1592839599831">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

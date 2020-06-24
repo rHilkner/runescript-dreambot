@@ -3,9 +3,8 @@ package scriptz.stronghold_of_security;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.interactive.GameObject;
-import shared.Constants;
 import scriptz.RunescriptAbstractContext;
-import shared.Util;
+import shared.Constants;
 import shared.enums.ActionType;
 
 import java.util.Arrays;

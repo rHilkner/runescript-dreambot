@@ -1,7 +1,5 @@
 package shared;
 
-import org.dreambot.api.methods.filter.Filter;
-import org.dreambot.api.wrappers.interactive.GameObject;
 import scriptz.RunescriptAbstractContext;
 import shared.enums.Items;
 

@@ -17,7 +17,7 @@ public class XptZenAntibanService extends  AbstractService {
 
     private static XptZenAntibanService instance;
 
-    private ZenAntibanAdapted zenAntibanAdapted;
+    private final ZenAntibanAdapted zenAntibanAdapted;
 
     private Date nextDateChangeGameStyle;
 

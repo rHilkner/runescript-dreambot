@@ -4,8 +4,8 @@ import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.methods.map.Tile;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
-import shared.Constants;
 import scriptz.RunescriptAbstractContext;
+import shared.Constants;
 import shared.enums.ActionType;
 import shared.enums.Areas;
 

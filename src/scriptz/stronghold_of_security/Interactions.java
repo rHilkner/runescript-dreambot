@@ -6,7 +6,7 @@ import shared.enums.Areas;
 
 enum Interactions {
     Floor0Entrance("Entrance", "Climb-down",
-            Areas.StrongholdOfSecurityTop.getArea(),
+            Areas.BarbarianVillageCenter.getArea(),
             new Tile(3081, 3420, 0)
     ),
     Floor1Door0("Gate of War", "Open",

@@ -1,9 +1,7 @@
 package shared.services;
 
-import org.dreambot.api.methods.filter.Filter;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import shared.Constants;
-import shared.Util;
 import shared.enums.ActionType;
 import shared.enums.Trees;
 

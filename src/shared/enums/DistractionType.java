@@ -13,10 +13,10 @@ public enum DistractionType {
     LittleLogout(60 * 60, 90 * 60, 5 * 60, 10 * 60);
 
     private Date nextDistractionDate;
-    private int nextDistractionMin;
-    private int nextDistractionMax;
-    private int engagedDuration;
-    private int notEngagedDuration;
+    private final int nextDistractionMin;
+    private final int nextDistractionMax;
+    private final int engagedDuration;
+    private final int notEngagedDuration;
 
     DistractionType(int nextDistractionMin, int nextDistractionMax, int notEngagedDuration, int engagedDuration) {
         this.nextDistractionMin = nextDistractionMin;
@@ -35,7 +35,7 @@ public enum DistractionType {
         nextDistractionDate = new Date();
 
         // 99% of the chances for a gaussian distribution happens between (peak - 2 sigma) and (peak + 2 sigma)
-        double peak = (this.nextDistractionMin + this.nextDistractionMax) / 2;
+        double peak = (this.nextDistractionMin + this.nextDistractionMax) / 2.0;
         double sigma = (peak - this.nextDistractionMin) / 2;
         int millisToAdd = (int) Calculations.nextGaussianRandom(peak * 1000, sigma * 1000);
         this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
