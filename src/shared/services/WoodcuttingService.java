@@ -13,11 +13,8 @@ public class WoodcuttingService extends AbstractService {
 
     private static WoodcuttingService instance;
 
-    private XptZenAntibanService antibanService;
-
     private WoodcuttingService() {
         super();
-        this.antibanService = XptZenAntibanService.getInstance();
     }
 
     public static WoodcuttingService getInstance() {

@@ -18,13 +18,11 @@ import static scriptz.RunescriptAbstractContext.logScript;
 public class SharedService extends AbstractService {
 
     private static SharedService instance;
-    private XptZenAntibanService antibanService;
 
     /** SINGLETON METHODS */
 
     private SharedService() {
         super();
-        antibanService = XptZenAntibanService.getInstance();
     }
 
     public static SharedService getInstance() {

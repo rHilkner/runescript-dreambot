@@ -15,10 +15,6 @@ import java.util.stream.Collectors;
 
 public class Util {
 
-    public static Filter<GameObject> filterGameObjectByName(String name) {
-        return gameObject -> gameObject != null && gameObject.getName().equals(name);
-    }
-
     public static Integer[] getItemIds(List<Items> items) {
         List<Integer> idList = items.stream().map(i -> i.id).collect(Collectors.toList());
         Integer[] itemIds = new Integer[idList.size()];
@@ -33,6 +29,7 @@ public class Util {
         }
         return false;
     }
+    /** DATE METHODS */
 
     public static Date dateAddSeconds(Date date, int seconds) {
         Calendar c = Calendar.getInstance();

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="BasicWoodcutter" />
+      <artifact name="Runescript" />
     </artifacts-to-build>
   </component>
   <component name="BranchesTreeState">
@@ -25,12 +25,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f96521cb-38d3-41f0-be81-b399f0ffbaf6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/BasicWoodcutter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Runescript.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scriptz/RunescriptAbstractContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/RunescriptAbstractContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scriptz/stronghold_of_security/StrongholdOfSecurity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/services/AbstractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/AbstractService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/services/BankService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/BankService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/services/CombatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/CombatService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/services/FishingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/FishingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/services/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/InventoryService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/services/SharedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/SharedService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/WoodcuttingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/services/XptZenAntibanService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +132,7 @@
       <workItem from="1592837296017" duration="628000" />
       <workItem from="1592838187744" duration="4365000" />
       <workItem from="1592875424612" duration="5401000" />
-      <workItem from="1592925841019" duration="1993000" />
+      <workItem from="1592925841019" duration="4551000" />
     </task>
     <servers />
   </component>
@@ -160,96 +166,21 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592967076471">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1592967076471" />
+    <state x="533" y="158" key="#com.intellij.ide.util.MemberChooser" timestamp="1592960918258">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="533" y="158" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1592960918258" />
+    <state x="208" y="31" key="SettingsEditor" timestamp="1592966866888">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="208" y="31" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1592966866888" />
     <state x="606" y="231" width="598" height="490" key="find.popup" timestamp="1592839599831">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="606" y="231" width="598" height="490" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1592839599831" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>BasicWoodcutter</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8.0_241</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>client</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

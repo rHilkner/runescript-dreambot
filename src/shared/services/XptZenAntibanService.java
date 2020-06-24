@@ -2,6 +2,7 @@ package shared.services;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.skills.Skill;
+import shared.Util;
 import shared.enums.ActionType;
 import shared.enums.DistractionType;
 import shared.enums.GameStyle;
@@ -17,6 +18,8 @@ public class XptZenAntibanService extends  AbstractService {
     private static XptZenAntibanService instance;
 
     private ZenAntibanAdapted zenAntibanAdapted;
+
+    private Date nextDateChangeGameStyle;
 
     /** SINGLETON METHODS */
 
@@ -40,8 +43,34 @@ public class XptZenAntibanService extends  AbstractService {
     /** ANTIBAN METHODS */
 
     public void antiban() {
-        antibanRandomAction();
-        antibanDistraction();
+        setCtxGameStyle();
+        if (!ctx.getLocalPlayer().isMoving()) {
+            antibanRandomAction();
+            antibanDistraction();
+        }
+    }
+
+    public void setCtxGameStyle() {
+        if (nextDateChangeGameStyle == null) {
+            nextDateChangeGameStyle = Util.dateAddSeconds(new Date(), Calculations.random(30 * 60, 80 * 60));
+            return;
+        }
+
+        if (new Date().after(nextDateChangeGameStyle)) {
+            boolean playingDurationGreaterThen3h30 = new Date().after(Util.dateAddSeconds(ctx.getStartDate(), (int) (3.5 * 60 * 60)));
+            if (playingDurationGreaterThen3h30) {
+                if (ctx.getGameStyle() != GameStyle.Lazy && ctx.getGameStyle() != GameStyle.VeryLazy) {
+                    ctx.setGameStyle(GameStyle.Lazy);
+                }
+                nextDateChangeGameStyle = new Date(Long.MAX_VALUE);
+            } else {
+                int randomGameStyleIndex = Calculations.random(GameStyle.values().length);
+                GameStyle randomGameStyle = GameStyle.values()[randomGameStyleIndex];
+                logScript("Changing gamestyle from " + ctx.getGameStyle() + " to " + randomGameStyle);
+                ctx.setGameStyle(randomGameStyle);
+                nextDateChangeGameStyle = Util.dateAddSeconds(new Date(), Calculations.random(30 * 60, 80 * 60));
+            }
+        }
     }
 
     public void antibanRandomAction() {

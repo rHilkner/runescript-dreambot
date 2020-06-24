@@ -52,9 +52,9 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
             String time = String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
             logScript("Running for " + time);
         }
-        if (antibanService != null) {
-            antibanService.antiban();
-        }
+
+        antibanService.antiban();
+
         return 0;
     }
 
@@ -83,4 +83,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
         return distractions;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
 }

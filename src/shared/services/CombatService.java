@@ -17,13 +17,11 @@ public class CombatService extends AbstractService {
 
     private static CombatService instance;
 
-    private XptZenAntibanService antibanService;
     private final SharedService sharedService;
     private final InventoryService inventoryService;
 
     private CombatService() {
         super();
-        antibanService = XptZenAntibanService.getInstance();
         sharedService = SharedService.getInstance();
         inventoryService = InventoryService.getInstance();
     }
