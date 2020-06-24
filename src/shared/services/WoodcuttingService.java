@@ -27,12 +27,14 @@ public class WoodcuttingService extends AbstractService {
     }
 
     public void chopTree(Trees tree) {
-        GameObject treeObject = ctx.getGameObjects().closest(Util.filterGameObjectByName(tree.getTreeName()));
+        GameObject treeObject = ctx.getGameObjects().closest(tree.getTreeName());
         if (treeObject != null && treeObject.interact("Chop down")) {
             ctx.logScript("Chopping down " + tree.getTreeName());
             antibanService.antibanSleep(ActionType.SlowPace);
-            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(ActionType.SlowPace);
+            if (ctx.getLocalPlayer().isAnimating()) {
+                sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                antibanService.antibanSleep(ActionType.FastPace);
+            }
         }
     }
 

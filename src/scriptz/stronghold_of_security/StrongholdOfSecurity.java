@@ -80,7 +80,7 @@ public class StrongholdOfSecurity extends RunescriptAbstractContext {
     private void interact(Interactions currentInteraction) {
         GameObject gameObject = currentInteraction.interactionObjectTile != null ?
                 sharedService.getObjectOnTileWithName(currentInteraction.interactionObjectTile, currentInteraction.objectName) :
-                getGameObjects().closest(Util.filterGameObjectByName(currentInteraction.objectName));
+                getGameObjects().closest(currentInteraction.objectName);
 
         if (gameObject != null) {
             logScript("Interacting with game-object: " + gameObject);

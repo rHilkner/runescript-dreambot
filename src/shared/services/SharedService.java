@@ -63,7 +63,7 @@ public class SharedService extends AbstractService {
         antibanService.antibanSleep(ActionType.FastPace);
     }
 
-    public static GameObject getObjectOnTileWithName(Tile tile, String objectName) {
+    public GameObject getObjectOnTileWithName(Tile tile, String objectName) {
 
         if (tile == null || objectName == null) {
             return null;
