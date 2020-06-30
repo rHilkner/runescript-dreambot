@@ -2,6 +2,7 @@ package shared.services;
 
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.methods.map.Tile;
+import org.dreambot.api.randoms.RandomEvent;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
 import scriptz.RunescriptAbstractContext;
@@ -19,10 +20,13 @@ public class SharedService extends AbstractService {
 
     private static SharedService instance;
 
+    private final XptZenAntibanService antibanService;
+
     /** SINGLETON METHODS */
 
     private SharedService() {
         super();
+        this.antibanService = XptZenAntibanService.getInstance();
     }
 
     public static SharedService getInstance() {
@@ -80,6 +84,14 @@ public class SharedService extends AbstractService {
         }
 
         return null;
+    }
+
+    public void enableLoginSolver() {
+        ctx.getRandomManager().enableSolver(RandomEvent.LOGIN);
+    }
+
+    public void disableLoginSolver() {
+        ctx.getRandomManager().disableSolver(RandomEvent.LOGIN);
     }
     
 }

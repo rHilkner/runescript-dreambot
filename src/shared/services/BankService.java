@@ -6,9 +6,11 @@ import shared.enums.ActionType;
 public class BankService extends AbstractService {
 
     private static BankService instance;
+    private final XptZenAntibanService antibanService;
 
     private BankService() {
         super();
+        this.antibanService = XptZenAntibanService.getInstance();
     }
 
     public static BankService getInstance() {

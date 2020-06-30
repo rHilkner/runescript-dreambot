@@ -43,11 +43,13 @@ public class XptZenAntibanService extends  AbstractService {
     /** ANTIBAN METHODS */
 
     public void antiban() {
+//        sharedService.disableLoginSolver();
         setCtxGameStyle();
         if (!ctx.getLocalPlayer().isMoving()) {
             antibanRandomAction();
             antibanDistraction();
         }
+//        sharedService.enableLoginSolver();
     }
 
     public void setCtxGameStyle() {

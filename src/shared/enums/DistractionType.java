@@ -8,6 +8,7 @@ import java.util.Date;
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public enum DistractionType {
+    // Times are in seconds
     PhoneNotification( 3 * 60, 11 * 60, 3, 20),
     TalkingToSomeone(15 * 60, 75 * 60, 60, 180),
     LittleLogout(60 * 60, 90 * 60, 5 * 60, 10 * 60);
@@ -109,6 +110,24 @@ public enum DistractionType {
                 }
                 break;
             case LittleLogout:
+                switch (gameStyle) {
+                    case HardCore:
+                        engagementChance = 0.15;
+                        break;
+                    case Normal:
+                        engagementChance = 0.15;
+                        break;
+                    case Lazy:
+                        engagementChance = 0.20;
+                        break;
+                    case VeryLazy:
+                        engagementChance = 0.20;
+                        break;
+                    case Afk:
+                        engagementChance = 0.0;
+                        break;
+                }
+                break;
         }
 
         return engagementChance;

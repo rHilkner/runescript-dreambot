@@ -17,6 +17,7 @@ public class CombatService extends AbstractService {
 
     private static CombatService instance;
 
+    private final XptZenAntibanService antibanService;
     private final SharedService sharedService;
     private final InventoryService inventoryService;
 
@@ -24,6 +25,7 @@ public class CombatService extends AbstractService {
         super();
         sharedService = SharedService.getInstance();
         inventoryService = InventoryService.getInstance();
+        this.antibanService = XptZenAntibanService.getInstance();
     }
 
     public static CombatService getInstance() {

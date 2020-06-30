@@ -33,7 +33,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     public void onStart() {
         super.onStart();
         RunescriptAbstractContext.ctx = this;
-        setGameStyle(GameStyle.VeryLazy);
+        setGameStyle(GameStyle.Normal);
         this.antibanService = XptZenAntibanService.getInstance();
         this.sharedService = SharedService.getInstance();
         this.startDate = new Date();
