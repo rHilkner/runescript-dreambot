@@ -3,8 +3,8 @@ package shared.services;
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.skills.Skill;
 import shared.Util;
-import shared.enums.ActionType;
-import shared.enums.DistractionType;
+import shared.enums.AntibanActionType;
+import shared.enums.AntibanDistractionType;
 import shared.enums.GameStyle;
 
 import java.util.Date;
@@ -86,7 +86,7 @@ public class XptZenAntibanService extends  AbstractService {
     public void antibanDistraction() {
         Date currentDate = new Date();
 
-        for (DistractionType distraction : ctx.getDistractions()) {
+        for (AntibanDistractionType distraction : ctx.getDistractions()) {
             if (distraction.getNextDistractionDate().before(currentDate)) {
                 int sleepTimeMillis = distraction.getDistractionSleep(ctx.getGameStyle());
                 logScript("antiban Distraction [" + distraction + "]: sleep(" + sleepTimeMillis + ")");
@@ -96,35 +96,35 @@ public class XptZenAntibanService extends  AbstractService {
         }
     }
 
-    public void antibanSleep(ActionType action) {
+    public void antibanSleep(AntibanActionType action) {
 
         int sleepTime;
 
         switch (action) {
             case Spam:
-                sleepTime = getSleepDuration(ActionType.Spam);
+                sleepTime = getSleepDuration(AntibanActionType.Spam);
                 logScript("antiban Spam: sleep(" + sleepTime + ")");
                 sleep(sleepTime);
                 break;
             case FastPace:
-                sleepTime = getSleepDuration(ActionType.FastPace);
+                sleepTime = getSleepDuration(AntibanActionType.FastPace);
                 logScript("antiban FastPace: sleep(" + sleepTime + ")");
                 sleep(sleepTime);
                 break;
             case SlowPace:
-                sleepTime = getSleepDuration(ActionType.SlowPace);
+                sleepTime = getSleepDuration(AntibanActionType.SlowPace);
                 logScript("antiban SlowPace: sleep(" + sleepTime + ")");
                 sleep(sleepTime);
                 break;
             case Walking:
-                sleepTime = getSleepDuration(ActionType.Walking);
+                sleepTime = getSleepDuration(AntibanActionType.Walking);
                 logScript("antiban Walking: sleepUntil(!localPlayer.isMoving(), " + sleepTime + ")");
                 sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), sleepTime);
                 break;
         }
     }
 
-    private int getSleepDuration(ActionType actionType) {
+    private int getSleepDuration(AntibanActionType antibanActionType) {
 
         int time;
         int reaction = Calculations.random(200, 400);
@@ -154,7 +154,7 @@ public class XptZenAntibanService extends  AbstractService {
                 break;
         }
 
-        switch (actionType) {
+        switch (antibanActionType) {
             case Spam:
                 scale = (int) Calculations.random(minScale * 0.6, maxScale * 0.6); // P(X < 3s) = 0.5 - shape = 2; scale = 1.8k
                 break;
@@ -172,7 +172,7 @@ public class XptZenAntibanService extends  AbstractService {
                 break;
         }
 
-        if (actionType == ActionType.Walking) {
+        if (antibanActionType == AntibanActionType.Walking) {
             time = (int) (Calculations.nextGammaRandom(shape, scale) + walkingPatience);
         } else {
             time = (int) (Calculations.nextGammaRandom(shape, scale)) + reaction;

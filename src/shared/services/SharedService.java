@@ -7,7 +7,7 @@ import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
-import shared.enums.ActionType;
+import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 
 import java.util.Objects;
@@ -53,7 +53,7 @@ public class SharedService extends AbstractService {
         logScript("Walking to: " + randomTile);
         if (!area.contains(ctx.getLocalPlayer())) {
             ctx.getWalking().walk(randomTile);
-            antibanService.antibanSleep(ActionType.Walking);
+            antibanService.antibanSleep(AntibanActionType.Walking);
         }
     }
 
@@ -62,7 +62,7 @@ public class SharedService extends AbstractService {
         loot.interact("Take");
         sleep(RunescriptAbstractContext.getLatency());
         sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
-        antibanService.antibanSleep(ActionType.FastPace);
+        antibanService.antibanSleep(AntibanActionType.FastPace);
     }
 
     public GameObject getObjectOnTileWithName(Tile tile, String objectName) {

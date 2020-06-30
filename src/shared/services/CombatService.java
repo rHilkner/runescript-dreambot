@@ -4,7 +4,7 @@ import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.GroundItem;
 import shared.Constants;
 import shared.Util;
-import shared.enums.ActionType;
+import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.Items;
 
@@ -77,7 +77,7 @@ public class CombatService extends AbstractService {
             sleepUntil(() -> ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
             sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
         }
-        antibanService.antibanSleep(ActionType.SlowPace);
+        antibanService.antibanSleep(AntibanActionType.SlowPace);
     }
 
 

@@ -5,7 +5,7 @@ import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
-import shared.enums.ActionType;
+import shared.enums.AntibanActionType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -84,9 +84,9 @@ public class StrongholdOfSecurity extends RunescriptAbstractContext {
         if (gameObject != null) {
             logScript("Interacting with game-object: " + gameObject);
             gameObject.interact(currentInteraction.interactionType);
-            antibanService.antibanSleep(ActionType.FastPace);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
             sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(ActionType.FastPace);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
         } else {
             logScript("ERROR: Player is in interaction area, but is not finding GameObject with name " + currentInteraction.objectName);
         }
@@ -99,13 +99,13 @@ public class StrongholdOfSecurity extends RunescriptAbstractContext {
             if (getDialogues().canContinue()) {
                 logScript("NPC Dialogue continuing: " + dialogue);
                 getDialogues().clickContinue();
-                antibanService.antibanSleep(ActionType.Spam);
+                antibanService.antibanSleep(AntibanActionType.Spam);
             } else if (getDialogues().getOptions() != null && getDialogues().getOptions().length != 0) {
                 logScript(Arrays.toString(getDialogues().getOptions()));
                 for (String option : getDialogues().getOptions()) {
                     if (rightAnswers.contains(option)) {
                         getDialogues().clickOption(option);
-                        antibanService.antibanSleep(ActionType.FastPace);
+                        antibanService.antibanSleep(AntibanActionType.FastPace);
                         break;
                     }
                 }

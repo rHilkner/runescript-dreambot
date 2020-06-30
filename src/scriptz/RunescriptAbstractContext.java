@@ -2,7 +2,7 @@ package scriptz;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.script.AbstractScript;
-import shared.enums.DistractionType;
+import shared.enums.AntibanDistractionType;
 import shared.enums.GameStyle;
 import shared.services.SharedService;
 import shared.services.XptZenAntibanService;
@@ -17,7 +17,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
 
     public static RunescriptAbstractContext ctx;
     private GameStyle gameStyle;
-    private List<DistractionType> distractions;
+    private List<AntibanDistractionType> distractions;
 
     protected XptZenAntibanService antibanService;
     protected SharedService sharedService;
@@ -37,7 +37,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
         this.antibanService = XptZenAntibanService.getInstance();
         this.sharedService = SharedService.getInstance();
         this.startDate = new Date();
-        this.distractions = Arrays.asList(DistractionType.PhoneNotification, DistractionType.TalkingToSomeone, DistractionType.LittleLogout);
+        this.distractions = Arrays.asList(AntibanDistractionType.PhoneNotification, AntibanDistractionType.TalkingToSomeone, AntibanDistractionType.LittleLogout);
     }
 
     @Override
@@ -79,7 +79,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
         }
     }
 
-    public List<DistractionType> getDistractions() {
+    public List<AntibanDistractionType> getDistractions() {
         return distractions;
     }
 

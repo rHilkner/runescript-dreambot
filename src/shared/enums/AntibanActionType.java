@@ -1,5 +1,5 @@
 package shared.enums;
 
-public enum ActionType {
+public enum AntibanActionType {
     Spam, FastPace, SlowPace, Walking
 }

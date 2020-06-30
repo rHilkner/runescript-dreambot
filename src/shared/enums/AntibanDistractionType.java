@@ -7,7 +7,7 @@ import java.util.Date;
 
 import static scriptz.RunescriptAbstractContext.logScript;
 
-public enum DistractionType {
+public enum AntibanDistractionType {
     // Times are in seconds
     PhoneNotification( 3 * 60, 11 * 60, 3, 20),
     TalkingToSomeone(15 * 60, 75 * 60, 60, 180),
@@ -19,7 +19,7 @@ public enum DistractionType {
     private final int engagedDuration;
     private final int notEngagedDuration;
 
-    DistractionType(int nextDistractionMin, int nextDistractionMax, int notEngagedDuration, int engagedDuration) {
+    AntibanDistractionType(int nextDistractionMin, int nextDistractionMax, int notEngagedDuration, int engagedDuration) {
         this.nextDistractionMin = nextDistractionMin;
         this.nextDistractionMax = nextDistractionMax;
         this.engagedDuration = engagedDuration;

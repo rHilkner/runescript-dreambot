@@ -2,7 +2,7 @@ package shared.services;
 
 import org.dreambot.api.wrappers.interactive.NPC;
 import shared.Constants;
-import shared.enums.ActionType;
+import shared.enums.AntibanActionType;
 import shared.enums.FishingType;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
@@ -28,10 +28,10 @@ public class FishingService extends AbstractService {
         NPC fishNpc = ctx.getNpcs().closest(fish.getFishingSpot());
         if (fishNpc != null && fishNpc.interact(fish.getInteractionType())) {
             ctx.logScript("Fishing with " + fish.getEquipmentName());
-            antibanService.antibanSleep(ActionType.SlowPace);
+            antibanService.antibanSleep(AntibanActionType.SlowPace);
             if (!ctx.getLocalPlayer().isAnimating()) {
                 sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
-                antibanService.antibanSleep(ActionType.FastPace);
+                antibanService.antibanSleep(AntibanActionType.FastPace);
             }
         }
     }

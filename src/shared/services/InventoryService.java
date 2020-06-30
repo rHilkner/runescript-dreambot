@@ -3,7 +3,7 @@ package shared.services;
 import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.wrappers.items.Item;
 import shared.Constants;
-import shared.enums.ActionType;
+import shared.enums.AntibanActionType;
 import shared.enums.Items;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
@@ -35,9 +35,9 @@ public class InventoryService extends AbstractService {
             Item bones = ctx.getInventory().get(Items.BONES.id);
             bones.interact("Bury");
             sleepUntil(() -> !ctx.getLocalPlayer().isStandingStill(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(ActionType.FastPace);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
         }
-        antibanService.antibanSleep(ActionType.FastPace);
+        antibanService.antibanSleep(AntibanActionType.FastPace);
     }
 
 }
