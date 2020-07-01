@@ -43,7 +43,7 @@ public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContex
         if (!getInventory().isFull()) {
             setGameStyle(originalGameStyle);
             if (treeArea.getArea().contains(getLocalPlayer())) {
-                woodcuttingService.chopTree(tree); //change "Tree" to the name of your tree.
+                woodcuttingService.chopTree(tree);
             } else {
                 sharedService.walkTo(treeArea);
             }

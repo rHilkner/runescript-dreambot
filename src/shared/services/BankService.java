@@ -51,25 +51,6 @@ public class BankService extends AbstractService {
             ctx.getBank().close();
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
-
-//        NPC banker = ctx.getNpcs().closest(npc -> npc != null && npc.hasAction("Bank"));
-//        if (banker == null || !banker.interact("Bank")) {
-//            return;
-//        }
-//
-//        if (sleepUntil(() -> ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL)) {
-//            antibanService.antibanSleep(ActionType.FastPace);
-//            if (ctx.getBank().depositAllExcept(item -> item != null && item.getName().contains(exceptItem))) {
-//                antibanService.antibanSleep(ActionType.FastPace);
-//                if (sleepUntil(() -> !ctx.getInventory().isFull(), Constants.MAX_SLEEP_UNTIL)) {
-//                    if (ctx.getBank().close()) {
-//                        antibanService.antibanSleep(ActionType.FastPace);
-//                        sleepUntil(() -> !ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL);
-//                    }
-//                }
-//            }
-//        }
-//        antibanService.antibanSleep(ActionType.SlowPace);
     }
 
     public void bankAll() {

@@ -16,7 +16,13 @@ public enum Areas {
     FaladorSouthChickens(new Area(3014, 3294, 3020, 3282, 0)),
     FaladorSouthCowPen(new Area(3265, 3296, 3253, 3255, 0)),
 
-    LumbridgeBank(new Area(3208, 3220, 3209, 3216, 2));
+    LumbridgeBank(new Area(3208, 3220, 3209, 3216, 2)),
+
+    PortSarimToKaramja(new Area()),
+    PortSarimDepositBox(new Area()),
+
+    KaramjaToPortSarim(new Area()),
+    KaramjaVolcano(new Area());
 
     private final Area area;
 
