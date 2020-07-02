@@ -21,10 +21,10 @@ public class BankService extends AbstractService {
 
     public void bankItems(Integer[] itemIDs) {
         if (!ctx.getBank().isOpen()) {
-            ctx.getBank().open(ctx.getBank().getClosestBankLocation());
+            ctx.getBank().openClosest();
             antibanService.antibanSleep(AntibanActionType.FastPace);
         } else {
-            ctx.getBank().depositAll(item -> Util.isElementInList(item.getID(), itemIDs));
+            ctx.getBank().depositAll(item -> Util.isElementInArray(item.getID(), itemIDs));
             antibanService.antibanSleep(AntibanActionType.FastPace);
             ctx.getBank().close();
             antibanService.antibanSleep(AntibanActionType.FastPace);
@@ -36,17 +36,7 @@ public class BankService extends AbstractService {
             ctx.getBank().open(ctx.getBank().getClosestBankLocation());
             antibanService.antibanSleep(AntibanActionType.FastPace);
         } else {
-            ctx.getBank().depositAllExcept(item -> {
-                if (item == null) {
-                    return false;
-                }
-                for (String exceptItem : exceptItems) {
-                    if (item.getName().contains(exceptItem)) {
-                        return true;
-                    }
-                }
-                return false;
-            });
+            ctx.getBank().depositAllExcept(exceptItems);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             ctx.getBank().close();
             antibanService.antibanSleep(AntibanActionType.FastPace);
@@ -61,6 +51,18 @@ public class BankService extends AbstractService {
             ctx.getBank().depositAllItems();
             antibanService.antibanSleep(AntibanActionType.FastPace);
             ctx.getBank().close();
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+        }
+    }
+
+    public void depositAllExcept(String... exceptItems) {
+        if (ctx.getDepositBox().isOpen()) {
+            ctx.getDepositBox().openClosest();
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+        } else {
+            ctx.getDepositBox().depositAllExcept(exceptItems);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+            ctx.getDepositBox().close();
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
     }

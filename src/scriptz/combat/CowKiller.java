@@ -60,7 +60,7 @@
 //        if (!area.contains(getLocalPlayer())) {
 //            SharedServices.walkTo(area);
 //        } else if (!getLocalPlayer().isInCombat()){
-//            NPC target = getNpcs().closest(t -> t!= null && !t.isInCombat() && Util.isElementInList(t.getName(), targets));
+//            NPC target = getNpcs().closest(t -> t!= null && !t.isInCombat() && Util.isElementInArray(t.getName(), targets));
 //            GroundItem prize = getGroundItems().closest(loot);
 //            if (prize != null && target != null && prize.distance(getLocalPlayer()) < target.distance(getLocalPlayer())) {
 //                prize.interact("Take");

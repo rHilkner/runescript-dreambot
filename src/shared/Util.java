@@ -1,25 +1,16 @@
 package shared;
 
 import scriptz.RunescriptAbstractContext;
-import shared.enums.Items;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Util {
 
-    public static Integer[] getItemIds(List<Items> items) {
-        List<Integer> idList = items.stream().map(i -> i.id).collect(Collectors.toList());
-        Integer[] itemIds = new Integer[idList.size()];
-        return idList.toArray(itemIds);
-    }
-
-    public static boolean isElementInList(Object elem, Object[] list) {
+    public static boolean isElementInArray(Object elem, Object[] list) {
         for (Object o : list) {
             if (o.equals(elem)) {
                 return true;

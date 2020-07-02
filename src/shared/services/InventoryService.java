@@ -4,7 +4,6 @@ import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.wrappers.items.Item;
 import shared.Constants;
 import shared.enums.AntibanActionType;
-import shared.enums.Items;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
@@ -26,13 +25,23 @@ public class InventoryService extends AbstractService {
         return instance;
     }
 
-    public void buryBones() {
+    void buryBones(String specificBonesName) {
+
         logScript("Burying bones");
+
+        String bonesName;
+
+        if (specificBonesName == null) {
+            bonesName = "Bones";
+        } else {
+            bonesName = specificBonesName;
+        }
+
         if (!ctx.getTabs().isOpen(Tab.INVENTORY))
             ctx.getTabs().open(Tab.INVENTORY);
 
-        while (ctx.getInventory().contains(Items.BONES.id)) {
-            Item bones = ctx.getInventory().get(Items.BONES.id);
+        while (ctx.getInventory().contains(bonesName)) {
+            Item bones = ctx.getInventory().get(bonesName);
             bones.interact("Bury");
             sleepUntil(() -> !ctx.getLocalPlayer().isStandingStill(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);

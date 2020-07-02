@@ -5,10 +5,6 @@ import org.dreambot.api.wrappers.items.GroundItem;
 import shared.Constants;
 import shared.Util;
 import shared.enums.AntibanActionType;
-import shared.enums.Areas;
-import shared.enums.Items;
-
-import java.util.List;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
@@ -34,13 +30,7 @@ public class CombatService extends AbstractService {
         return instance;
     }
 
-    public void combatLoot(List<String> targets, List<Items> lootIds, Areas area, boolean buryBones) {
-
-        if (!area.getArea().contains(ctx.getLocalPlayer())) {
-            // Go to given area
-            sharedService.walkTo(area);
-            return;
-        }
+    public void combatLoot(String[] targets, String[] lootItems, boolean prioritizeLoot, boolean buryBones) {
 
         if (ctx.getLocalPlayer().isInCombat()) {
             // Sleep until player is not in combat
@@ -48,26 +38,53 @@ public class CombatService extends AbstractService {
             return;
         }
 
-        // Getting nearest chicken (target) that is not in a combat
-        NPC target = ctx.getNpcs().closest(t -> t != null && !t.isInCombat() && Util.isElementInList(t.getName(), targets.toArray()));
+        if (prioritizeLoot) {
+            takeLootLoop(lootItems);
+        } else {
+            takeLootIfCloseEnough(targets, lootItems);
+        }
+
+        if (buryBones) {
+            inventoryService.buryBones(null);
+        }
+
+        // If nearest target exists and player is not in combat (double check here)
+        NPC target = closestTargetNotInCombat(targets);
+        if (target != null && ctx.getMap().canReach(target) && !ctx.getLocalPlayer().isInCombat()) {
+            attackTarget(target);
+        }
+    }
+
+    private NPC closestTargetNotInCombat(String[] targets) {
+        return ctx.getNpcs().closest(t -> t != null && !t.isInCombat() && Util.isElementInArray(t.getName(), targets));
+    }
+
+    private void takeLootIfCloseEnough(String[] targets, String[] lootItems) {
+        // Getting nearest target that is not in a combat
+        NPC target = closestTargetNotInCombat(targets);
         // Getting nearest loots in the ground
-        GroundItem loot = ctx.getGroundItems().closest(Util.getItemIds(lootIds));
+        GroundItem loot = ctx.getGroundItems().closest(lootItems);
 
         Double lootDistance = loot != null ? loot.distance(ctx.getLocalPlayer()) : null;
         Double targetDistance = target != null ? target.distance(ctx.getLocalPlayer()) : null;
 
-        while (loot != null && ctx.getMap().canReach(loot) && target != null && lootDistance < targetDistance) {
+        // while loot is closer than target, take loot
+        while (loot != null && ctx.getMap().canReach(loot) && (target == null || lootDistance < targetDistance)) {
             sharedService.takeLoot(loot);
-            loot = ctx.getGroundItems().closest(Util.getItemIds(lootIds));
-            targetDistance = target.distance(ctx.getLocalPlayer());
+            antibanService.antibanSleep(AntibanActionType.SlowPace);
+
+            loot = ctx.getGroundItems().closest(lootItems);
+            target = closestTargetNotInCombat(targets);
+            targetDistance = target != null ? target.distance(ctx.getLocalPlayer()) : null;
         }
+    }
 
-        if (buryBones)
-            inventoryService.buryBones();
+    private void takeLootLoop(String[] lootItems) {
+        GroundItem loot = ctx.getGroundItems().closest((String[]) lootItems);
 
-        // If nearest target exists and player is not in combat (double check here)
-        if (target != null && ctx.getMap().canReach(target) && !ctx.getLocalPlayer().isInCombat()) {
-            attackTarget(target);
+        while (loot != null && ctx.getMap().canReach(loot)) {
+            sharedService.takeLoot(loot);
+            loot = ctx.getGroundItems().closest(lootItems);
         }
     }
 
