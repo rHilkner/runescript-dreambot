@@ -4,6 +4,8 @@ import org.dreambot.api.methods.map.Area;
 
 public enum Areas {
 
+    AlKharidBank(new Area(3269, 3170, 3271, 3166, 0)),
+    AlKharidTanner(new Area(3277, 3193, 3274, 3191, 0)),
     BarbarianVillageCenter(new Area(3077, 3423, 3084, 3416, 0)),
     BarbarianVillageFlyFishing(new Area(3101, 3424, 3110, 3434, 0)),
     EdgevilleBank(new Area(3091, 3488, 3098, 3496, 0)),
