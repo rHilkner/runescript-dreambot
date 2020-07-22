@@ -6,6 +6,7 @@ import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.AntibanDistractionType;
 import shared.enums.GameStyle;
+import shared.services.providers.ZenAntibanAdapted;
 
 import java.util.Date;
 
@@ -18,6 +19,7 @@ public class XptZenAntibanService extends  AbstractService {
     private static XptZenAntibanService instance;
 
     private final ZenAntibanAdapted zenAntibanAdapted;
+    private SharedService sharedService;
 
     private Date nextDateChangeGameStyle;
 
@@ -43,36 +45,15 @@ public class XptZenAntibanService extends  AbstractService {
     /** ANTIBAN METHODS */
 
     public void antiban() {
-//        sharedService.disableLoginSolver();
-        setCtxGameStyle();
+        if (sharedService == null) {
+            sharedService = SharedService.getInstance();
+        }
+        sharedService.disableLoginSolver();
         if (!ctx.getLocalPlayer().isMoving()) {
             antibanRandomAction();
             antibanDistraction();
         }
-//        sharedService.enableLoginSolver();
-    }
-
-    public void setCtxGameStyle() {
-        if (nextDateChangeGameStyle == null) {
-            nextDateChangeGameStyle = Util.dateAddSeconds(new Date(), Calculations.random(30 * 60, 80 * 60));
-            return;
-        }
-
-        if (new Date().after(nextDateChangeGameStyle)) {
-            boolean playingDurationGreaterThen3h30 = new Date().after(Util.dateAddSeconds(ctx.getStartDate(), (int) (3.5 * 60 * 60)));
-            if (playingDurationGreaterThen3h30) {
-                if (ctx.getGameStyle() != GameStyle.Lazy && ctx.getGameStyle() != GameStyle.VeryLazy) {
-                    ctx.setGameStyle(GameStyle.Lazy);
-                }
-                nextDateChangeGameStyle = new Date(Long.MAX_VALUE);
-            } else {
-                int randomGameStyleIndex = Calculations.random(GameStyle.values().length);
-                GameStyle randomGameStyle = GameStyle.values()[randomGameStyleIndex];
-                logScript("Changing gamestyle from " + ctx.getGameStyle() + " to " + randomGameStyle);
-                ctx.setGameStyle(randomGameStyle);
-                nextDateChangeGameStyle = Util.dateAddSeconds(new Date(), Calculations.random(30 * 60, 80 * 60));
-            }
-        }
+        sharedService.enableLoginSolver();
     }
 
     public void antibanRandomAction() {

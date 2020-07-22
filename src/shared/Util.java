@@ -20,6 +20,10 @@ public class Util {
     }
     /** DATE METHODS */
 
+    public static Long diffDatesInMillis(Date date1, Date date2) {
+        return date1.getTime() - date2.getTime();
+    }
+
     public static Date dateAddSeconds(Date date, int seconds) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);

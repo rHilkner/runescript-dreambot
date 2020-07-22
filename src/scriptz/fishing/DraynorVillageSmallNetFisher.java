@@ -22,8 +22,4 @@ public class DraynorVillageSmallNetFisher extends FishingAbstractScript {
         return 0;
     }
 
-    @Override
-    public void onPaint(Graphics graphics) {
-
-    }
 }

@@ -37,32 +37,62 @@ public class SharedService extends AbstractService {
 
     /** STATIC FUNCTIONS */
 
-    public void walkTo(Areas area) {
+    public boolean walkTo(Areas area) {
 
-        if (area == null) return;
+        if (area == null) return false;
 
-        walkTo(area.getArea());
+        return walkTo(area.getArea());
     }
 
-    public void walkTo(Area area) {
+    public boolean walkTo(Area area) {
 
-        if (area == null) return;
+        if (area == null) return false;
 
         Tile randomTile = area.getRandomTile();
 
         logScript("Walking to: " + randomTile);
         if (!area.contains(ctx.getLocalPlayer())) {
-            ctx.getWalking().walk(randomTile);
+            if (ctx.getWalking().walk(randomTile)) {
+                antibanService.antibanSleep(AntibanActionType.Walking);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void walkToRandomTile(Area area) {
+
+        if (area == null) return;
+
+        Tile randomTile = area.getRandomTile();
+
+        if (ctx.getMap().canReach(randomTile) && ctx.getWalking().walk(randomTile)) {
+            logScript("Walking to: " + randomTile);
+            sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.Walking);
+        }
+    }
+
+    public void walkToTile(Tile tile) {
+
+        if (tile == null) return;
+
+        if (ctx.getMap().canReach(tile) && ctx.getWalking().walk(tile)) {
+            logScript("Walking to: " + tile);
+            sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.Walking);
         }
     }
 
     public void takeLoot(GroundItem loot) {
-        logScript("Getting loot from the ground");
-        loot.interact("Take");
-        sleep(RunescriptAbstractContext.getLatency());
-        sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
-        antibanService.antibanSleep(AntibanActionType.FastPace);
+        logScript("Getting loot from the ground: " + loot.getName() + " on " + loot.getTile());
+        if (loot.interact("Take")) {
+            sleep(RunescriptAbstractContext.getLatency());
+            sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+        } else {
+            ctx.getWalking().walk(loot.getTile());
+        }
     }
 
     public GameObject getObjectOnTileWithName(Tile tile, String objectName) {
@@ -93,5 +123,9 @@ public class SharedService extends AbstractService {
     public void disableLoginSolver() {
         ctx.getRandomManager().disableSolver(RandomEvent.LOGIN);
     }
-    
+
+    public void logout() {
+        disableLoginSolver();
+        ctx.getTabs().logout();
+    }
 }

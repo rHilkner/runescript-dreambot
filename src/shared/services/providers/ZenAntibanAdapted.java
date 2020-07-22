@@ -1,4 +1,4 @@
-package shared.services;
+package shared.services.providers;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.map.Area;

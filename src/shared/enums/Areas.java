@@ -20,11 +20,13 @@ public enum Areas {
 
     PortSarimToKaramja(new Area(3026, 3225, 3029, 3213, 0)),
     PortSarimDepositBox(new Area(3041, 3236, 3046, 3234, 0)),
+    PortSarimToKaramjaBoat(new Area(2957, 3142, 2955, 3143, 1)),
 
+    KaramjaToPortSarimBoat(new Area(3033, 3218, 3032, 3215, 1)),
     KaramjaToPortSarim(new Area(2950, 3146, 2955, 3149, 0)),
-    KaramjaVolcano(new Area(2828, 3185, 2835, 3158, 0)),
+    KaramjaVolcanoWest(new Area(2821, 3188, 2836, 3158, 0)),
 
-    GrandExchange(new Area(3159, 3794, 3170, 3484, 0));
+    GrandExchange(new Area(3160, 3494, 3170, 3484, 0));
 
     private final Area area;
 

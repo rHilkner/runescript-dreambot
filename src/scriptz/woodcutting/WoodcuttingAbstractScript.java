@@ -50,7 +50,7 @@ public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContex
         } else {
             if (bankArea.getArea().contains(getLocalPlayer())) {
                 setGameStyle(GameStyle.Normal);
-                bankService.bankAllExcept("axe");
+                bankService.bankAllExcept(true, "axe");
             } else {
                 sharedService.walkTo(bankArea);
             }

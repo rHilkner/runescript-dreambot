@@ -1,5 +1,6 @@
 package shared.services;
 
+import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.GroundItem;
 import shared.Constants;
@@ -21,7 +22,7 @@ public class CombatService extends AbstractService {
         super();
         sharedService = SharedService.getInstance();
         inventoryService = InventoryService.getInstance();
-        this.antibanService = XptZenAntibanService.getInstance();
+        antibanService = XptZenAntibanService.getInstance();
     }
 
     public static CombatService getInstance() {
@@ -30,7 +31,7 @@ public class CombatService extends AbstractService {
         return instance;
     }
 
-    public void combatLoot(String[] targets, String[] lootItems, boolean prioritizeLoot, boolean buryBones) {
+    public void combatLoot(String[] targets, String[] lootItems, Area area, boolean prioritizeLoot, boolean buryBones) {
 
         if (ctx.getLocalPlayer().isInCombat()) {
             // Sleep until player is not in combat
@@ -48,9 +49,11 @@ public class CombatService extends AbstractService {
             inventoryService.buryBones(null);
         }
 
-        // If nearest target exists and player is not in combat (double check here)
         NPC target = closestTargetNotInCombat(targets);
-        if (target != null && ctx.getMap().canReach(target) && !ctx.getLocalPlayer().isInCombat()) {
+        if (target == null || !ctx.getMap().canReach(target)) {
+            ctx.getWalking().walk(area.getRandomTile());
+        } else if (!ctx.getLocalPlayer().isInCombat()) {
+            // If nearest target exists and player is not in combat (double check here)
             attackTarget(target);
         }
     }
@@ -80,7 +83,7 @@ public class CombatService extends AbstractService {
     }
 
     private void takeLootLoop(String[] lootItems) {
-        GroundItem loot = ctx.getGroundItems().closest((String[]) lootItems);
+        GroundItem loot = ctx.getGroundItems().closest(lootItems);
 
         while (loot != null && ctx.getMap().canReach(loot)) {
             sharedService.takeLoot(loot);
@@ -89,12 +92,22 @@ public class CombatService extends AbstractService {
     }
 
     private void attackTarget(NPC target) {
-        logScript("Attacking target: " + target.getName());
+
+        while (ctx.getDialogues().inDialogue() && ctx.getDialogues().canContinue()) {
+            ctx.getDialogues().continueDialogue();
+        }
+
         if (target.interact("Attack")) {
+            logScript("Attacking target: " + target.getName() + " on " + target.getTile());
             sleepUntil(() -> ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
             sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.SlowPace);
+            antibanService.antibanSleep(AntibanActionType.SlowPace);
+            // TODO: fix - sleep until target is dead and droped its loots before continuing - double sleeping is a gambiarra
+        } else {
+            logScript("Walking to attack target: " + target.getName() + " on " + target.getTile());
+            sharedService.walkToTile(target.getTile());
         }
-        antibanService.antibanSleep(AntibanActionType.SlowPace);
     }
 
 

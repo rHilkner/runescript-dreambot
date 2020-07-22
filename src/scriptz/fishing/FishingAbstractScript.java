@@ -46,7 +46,7 @@ public abstract class FishingAbstractScript extends RunescriptAbstractContext {
         } else {
             if (bankArea.getArea().contains(getLocalPlayer())) {
                 setGameStyle(GameStyle.Normal);
-                bankService.bankAllExcept(fish.getEquipmentName(), "Feather", "Bait");
+                bankService.bankAllExcept(true, fish.getEquipmentName(), "Feather", "Bait");
             } else {
                 sharedService.walkTo(bankArea);
             }

@@ -8,10 +8,6 @@ import shared.enums.Areas;
 import shared.services.CombatService;
 import shared.services.XptZenAntibanService;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 @ScriptManifest(author = "xpt", name = "Chicken Killer", category = Category.COMBAT, version = 1.0, description = "Kills chickens and bury their bonesId")
 public class ChickenKiller extends RunescriptAbstractContext {
     
@@ -34,11 +30,11 @@ public class ChickenKiller extends RunescriptAbstractContext {
         super.onLoop();
         logScript("Loop of killing chicken");
 
-        List<String> targets = Collections.singletonList("Chicken");
-        List<String> lootItems = Arrays.asList("Feathers", "Bones");
+        String[] targets = new String[]{"Chicken"};
+        String[] lootItems = new String[]{"Feathers", "Bones"};
 
         if (Areas.FaladorSouthChickens.getArea().contains(ctx.getLocalPlayer())) {
-            combatService.combatLoot((String[]) targets.toArray(), (String[]) lootItems.toArray(), false, true);
+            combatService.combatLoot(targets, lootItems, Areas.FaladorSouthChickens.getArea(), false, true);
         } else {
             sharedService.walkTo(Areas.FaladorSouthChickens);
         }

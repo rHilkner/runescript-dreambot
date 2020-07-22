@@ -14,10 +14,6 @@ import shared.services.BankService;
 import shared.services.CombatService;
 import shared.services.XptZenAntibanService;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 @ScriptManifest(author = "xpt", name = "Imp Killer ¡Karamja!", category = Category.COMBAT, version = 1.0, description = "Kills imps in Karamja and deposit the beads in Port Sarim")
 public class ImpKiller extends RunescriptAbstractContext {
 
@@ -53,16 +49,19 @@ public class ImpKiller extends RunescriptAbstractContext {
     }
 
     private void goKillImps() {
-        if (Areas.KaramjaVolcano.getArea().contains(getLocalPlayer())) {
-            List<String> targets = Collections.singletonList("Imp");
-            List<String> lootItems = Arrays.asList("Black bead", "White bead", "Yellow bead", "Blue bead", "Red");
-            combatService.combatLoot((String[]) targets.toArray(), (String[]) lootItems.toArray(), true, false);
-        } else if (ctx.getMap().canReach(Areas.KaramjaVolcano.getArea().getRandomTile())) {
-            sharedService.walkTo(Areas.KaramjaVolcano);
+        if (Areas.KaramjaVolcanoWest.getArea().contains(getLocalPlayer())) {
+            String[] targets = new String[]{"Imp"};
+            String[] lootItems = new String[]{"Black bead", "White bead", "Yellow bead", "Blue bead", "Red bead", "Mind talisman"};
+            combatService.combatLoot(targets, lootItems, Areas.KaramjaVolcanoWest.getArea(), true, false);
+        } else if (sharedService.walkTo(Areas.KaramjaVolcanoWest)) {
+            logScript("Going to volcano");
         } else {
             if (Areas.PortSarimToKaramja.getArea().contains(getLocalPlayer())) {
+                payFare(true);
+            } else if (Areas.PortSarimToKaramjaBoat.getArea().contains(getLocalPlayer())) {
                 crossNearestPlank();
             } else {
+                logScript("Going to get boat to Karamja");
                 sharedService.walkTo(Areas.PortSarimToKaramja);
             }
         }
@@ -70,19 +69,23 @@ public class ImpKiller extends RunescriptAbstractContext {
 
     private void goBank() {
         if (Areas.PortSarimDepositBox.getArea().contains(getLocalPlayer())) {
-            bankService.depositAllExcept("Air rune", "Mind rune", "Coins");
-        } else if (ctx.getMap().canReach(Areas.PortSarimDepositBox.getArea().getRandomTile())) {
-            sharedService.walkTo(Areas.PortSarimDepositBox);
+            bankService.depositAllExcept(true, "Air rune", "Mind rune", "Coins");
+        } else if (sharedService.walkTo(Areas.PortSarimDepositBox)) {
+            logScript("Going to deposit box");
         } else {
             if (Areas.KaramjaToPortSarim.getArea().contains(getLocalPlayer())) {
-                payFare(true);
+                payFare(false);
+            } else if (Areas.KaramjaToPortSarimBoat.getArea().contains(getLocalPlayer())) {
+                crossNearestPlank();
             } else {
+                logScript("Going to get boat to Port Sarim");
                 sharedService.walkTo(Areas.KaramjaToPortSarim);
             }
         }
     }
 
     private void crossNearestPlank() {
+        logScript("Crossing nearest plank");
         GameObject plank = getGameObjects().closest(p -> p != null && p.hasAction("Cross"));
         if (plank.exists()) {
             plank.interact("Cross");
@@ -93,35 +96,34 @@ public class ImpKiller extends RunescriptAbstractContext {
 
     private void payFare(boolean toKaramja) {
         NPC sailor;
-        String interactionOption;
+        String[] interactionOptions;
         if (toKaramja) {
+            logScript("Paying fare to Karamja");
             sailor = getNpcs().closest("Seaman Lorris", "Seaman Thresnor", "Captain Tobias");
-            interactionOption = "Yes, please";
+            interactionOptions = new String[]{"Yes please."};
         } else {
+            logScript("Paying fare to Port Sarim");
             sailor = getNpcs().closest("Customs officer");
-            interactionOption = "Can I journey on this ship?";
+            interactionOptions = new String[]{"Can I journey on this ship?", "Search away, I have nothing to hide.", "Ok."};
         }
 
         if (sailor == null) {
             crossNearestPlank();
-            antibanService.antibanSleep(AntibanActionType.FastPace);
-        }
-
-        if (Areas.PortSarimToKaramja.getArea().contains(getLocalPlayer()) && sailor != null) {
+        } else {
             if (getDialogues().inDialogue()) {
                 if (getDialogues().canContinue()) {
                     getDialogues().spaceToContinue();
                 } else {
-                    getDialogues().chooseOption(interactionOption);
+                    for (String interactionOption : interactionOptions) {
+                        getDialogues().chooseOption(interactionOption);
+                    }
                 }
-                antibanService.antibanSleep(AntibanActionType.FastPace);
             } else {
-                NPC sailor2 = getNpcs().closest("Customs officer");
-                sailor2.interact("Pay-fare");
+                sailor.interact("Pay-fare");
                 sleepUntil(() -> getDialogues().inDialogue(), 8000);
-                antibanService.antibanSleep(AntibanActionType.FastPace);
             }
         }
+        antibanService.antibanSleep(AntibanActionType.FastPace);
     }
 
 }

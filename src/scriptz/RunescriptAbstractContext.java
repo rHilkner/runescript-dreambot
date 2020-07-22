@@ -21,7 +21,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
 
     protected XptZenAntibanService antibanService;
     protected SharedService sharedService;
-    private Date startDate;
+    protected Date startDate;
 
     public static void logScript(String str) {
         Date currentDate = new Date();
@@ -33,7 +33,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     public void onStart() {
         super.onStart();
         RunescriptAbstractContext.ctx = this;
-        setGameStyle(GameStyle.Normal);
+        setGameStyle(GameStyle.HardCore);
         this.antibanService = XptZenAntibanService.getInstance();
         this.sharedService = SharedService.getInstance();
         this.startDate = new Date();
