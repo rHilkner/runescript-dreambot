@@ -98,13 +98,42 @@ public class BankService extends AbstractService {
         }
     }
 
-    public void depositAllExcept(boolean close, String... exceptItems) {
+    public void openDepositBox() {
         if (!ctx.getDepositBox().isOpen()) {
             sleepUntil(() -> ctx.getDepositBox().openClosest(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
-        } else {
+        }
+    }
+
+    public void closeDepositBox() {
+        if (ctx.getDepositBox().isOpen()) {
+            sleepUntil(() -> ctx.getDepositBox().close(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+        }
+    }
+
+    public void depositAllExcept(boolean close, String... exceptItems) {
+        openDepositBox();
+
+        if (ctx.getDepositBox().isOpen()) {
             sleepUntil(() -> ctx.getDepositBox().depositAllExcept(exceptItems), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
+
+            if (close) {
+                closeDepositBox();
+            }
+        }
+    }
+
+    public void depositAll(boolean close) {
+        if (!ctx.getDepositBox().isOpen()) {
+            sleepUntil(() -> ctx.getDepositBox().openClosest(), Constants.MAX_SLEEP_UNTIL);
+        } else {
+            sleepUntil(() -> ctx.getDepositBox().depositAllItems(), Constants.MAX_SLEEP_UNTIL);
+        }
+        antibanService.antibanSleep(AntibanActionType.FastPace);
+
+        if (close) {
             sleepUntil(() -> ctx.getDepositBox().close(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }

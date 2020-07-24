@@ -1,12 +1,12 @@
-package scriptz.cooking;
+package scriptz.money_making;
 
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
-import shared.Util;
 import shared.services.BankService;
 import shared.services.GrandExchangeService;
 import shared.services.InteractService;
+import shared.services.providers.GELookupResult;
 
 import java.util.Date;
 
@@ -21,17 +21,17 @@ public class ChocolateDust extends RunescriptAbstractContext {
 
     private boolean spamChocolateBars = true;
     private boolean rebuy = false;
+    private int initialMoney = -1;
+    private int totalCoins = -1;
+    private int totalChocolateBars = -1;
+    private int totalChocolateDust = -1;
 
     private final String KNIFE = "Knife";
     private final String CHOCOLATE_BAR = "Chocolate bar";
+    private final int CHOCOLATE_BAR_ID = 1973;
     private final String CHOCOLATE_DUST = "Chocolate dust";
+    private final int CHOCOLATE_DUST_ID = 1975;
     private final String COINS = "Coins";
-    private int initialMoney = -1;
-    private int totalMoney = -1;
-    private int totalChocolateBars = -1;
-    private int totalChocolateDust = -1;
-    private int moneyPerHour = -1;
-    private Date lastMoneyPerHourLog;
 
     public void onStart() {
         super.onStart();
@@ -39,7 +39,7 @@ public class ChocolateDust extends RunescriptAbstractContext {
         interactService = InteractService.getInstance();
         grandExchangeService = GrandExchangeService.getInstance();
 
-        log("Starting chocolate script!");
+        logScript("Starting chocolate script!");
     }
 
     public void onExit() {
@@ -55,7 +55,7 @@ public class ChocolateDust extends RunescriptAbstractContext {
         }
 
         // Initialize all statuses
-        if (initialMoney == -1 || totalChocolateBars == -1 || totalChocolateDust == -1 || totalMoney == -1) {
+        if (initialMoney == -1 || totalChocolateBars == -1 || totalChocolateDust == -1 || totalCoins == -1) {
             return State.BANK;
         }
         
@@ -73,6 +73,23 @@ public class ChocolateDust extends RunescriptAbstractContext {
         return State.BANK;
     }
 
+    public void printPlayerTotals() {
+        GELookupResult geChocolateBar = grandExchangeService.getApi().lookup(CHOCOLATE_BAR_ID);
+        GELookupResult geChocolateDust = grandExchangeService.getApi().lookup(CHOCOLATE_DUST_ID);
+        int chocolateBarMoney = totalChocolateBars * geChocolateBar.price;
+        int chocolateDustMoney = totalChocolateDust * geChocolateDust.price;
+
+        int playerTotalMoney = totalCoins + chocolateBarMoney + chocolateDustMoney;
+        double hoursSinceBeginning = (new Date().getTime() - startDate.getTime()) / (1000 * 60 * 60.0);
+        int moneyPerHour = (int) ((playerTotalMoney - initialMoney) / (hoursSinceBeginning));
+
+        logScript("-- Player has a total of" +
+                "\n\t- gp = " + playerTotalMoney/1000 + "k" +
+                "\n\t- gp/h = " + moneyPerHour/1000 + "k/h" +
+                "\n\t- pot of flour = " + totalChocolateBars + " [ " + chocolateBarMoney + "k]" +
+                "\n\t- jug of water = " + totalChocolateDust + " [ " + chocolateDustMoney + "k]");
+    }
+
     @Override
     public int onLoop() {
         super.onLoop();
@@ -80,38 +97,29 @@ public class ChocolateDust extends RunescriptAbstractContext {
         State currentState = getState();
 
         logScript("-- Current state: " + currentState.name());
-
-        logScript("-- Player has a total of" +
-                "\n\t[money = " + totalMoney + "]" +
-                "\n\t[money = " + moneyPerHour + "]" +
-                "\n\t[chocolate bars = " + totalChocolateBars + "]" +
-                "\n\t[chocolate dust = " + totalChocolateDust + "]");
-
-        // log about money per hour every ... minutes
-        int logEveryXSeconds = 60;
-        if (lastMoneyPerHourLog == null || lastMoneyPerHourLog.after(Util.dateAddSeconds(new Date(), logEveryXSeconds))) {
-            logScript("-- Money per hour: " + moneyPerHour);
-            lastMoneyPerHourLog = new Date();
-        }
+        printPlayerTotals();
 
         switch (currentState) {
             case SELL:
                 bankService.withdraw(CHOCOLATE_DUST, null, false, true);
                 bankService.withdraw(COINS, null, true, false);
-                grandExchangeService.addSellExchange(null, CHOCOLATE_DUST, null, 0.78, false);
-                totalChocolateDust = 0;
+
+                GELookupResult geChocolateDust = grandExchangeService.getApi().lookup(CHOCOLATE_DUST_ID);
+                grandExchangeService.addSellExchange(CHOCOLATE_DUST);
                 grandExchangeService.collect(false);
-                totalMoney = getInventory().count(COINS) + 1;
-                double hoursSinceBeginning = (new Date().getTime() - startDate.getTime()) / (1000 * 60 * 60.0);
-                moneyPerHour = (int) ((totalMoney - initialMoney) / (hoursSinceBeginning));
+
+                totalChocolateDust = 0;
+                totalCoins = getInventory().count(COINS) + 1;
                 break;
             case BUY:
                 if (getInventory().count("Coins") < 100) {
                     bankService.withdraw(COINS, null, true, false);
+                    bankService.closeBank(); // just making sure bank is closed
                 }
-                bankService.closeBank(); // just making sure bank is closed
-                grandExchangeService.addBuyExchange("choco", CHOCOLATE_BAR, null, 1.21, false);
-                totalMoney = getInventory().count(COINS) + 1;
+
+                GELookupResult geChocolateBar = grandExchangeService.getApi().lookup(CHOCOLATE_BAR_ID);
+                grandExchangeService.addBuyExchange("choco", CHOCOLATE_BAR);
+                totalCoins = getInventory().count(COINS) + 1;
                 grandExchangeService.collect(true);
                 totalChocolateBars = getInventory().count(CHOCOLATE_BAR);
                 break;
@@ -133,9 +141,9 @@ public class ChocolateDust extends RunescriptAbstractContext {
                 // update variables
                 totalChocolateBars = getBank().count(CHOCOLATE_BAR) + getInventory().count(CHOCOLATE_BAR);
                 totalChocolateDust = getBank().count(CHOCOLATE_DUST) + getInventory().count(CHOCOLATE_DUST);
-                totalMoney = getBank().count(COINS) + getInventory().count(COINS);
+                totalCoins = getBank().count(COINS) + getInventory().count(COINS);
                 if (initialMoney == -1) {
-                    initialMoney = totalMoney;
+                    initialMoney = totalCoins;
                 }
 
                 break;

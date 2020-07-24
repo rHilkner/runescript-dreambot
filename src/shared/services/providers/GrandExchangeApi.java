@@ -1,6 +1,9 @@
 package shared.services.providers;
 
+import scriptz.RunescriptAbstractContext;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +16,9 @@ import java.util.regex.Pattern;
  */
 public class GrandExchangeApi {
 
+    private static GrandExchangeApi instance;
+    private static RunescriptAbstractContext ctx;
+
     private static final String API_LOCATION = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=%d";
     private static final long TEN_MINUTES = 600000;
     private final Map<Integer, GELookupResult> cache;
@@ -20,8 +26,9 @@ public class GrandExchangeApi {
     /**
      * Caching-enabled default constructor
      */
-    public GrandExchangeApi() {
+    private GrandExchangeApi() {
         this(true);
+        ctx = RunescriptAbstractContext.ctx;
     }
 
     /**
@@ -33,6 +40,12 @@ public class GrandExchangeApi {
         this.cache = cache ? new HashMap<>() : null;
     }
 
+    public static GrandExchangeApi getInstance() {
+        if (instance == null)
+            instance = new GrandExchangeApi();
+        return instance;
+    }
+
     /**
      * Looks up an item using the Grand Exchange API. This method blocks while waiting for the API result.
      *
@@ -40,26 +53,41 @@ public class GrandExchangeApi {
      * @return the result returned by the api. May be null if an error has occurred.
      */
     public GELookupResult lookup(int itemId) {
+
         flushCache();
         if (cache != null && !cache.isEmpty()) {
             GELookupResult result = cache.get(itemId);
             if (result != null) {
+                ctx.logScript("Found result for item with id [" + itemId + "] on GE API: " + result);
                 return result;
             }
         }
-        String json;
+
+
+        String json = null;
         try {
             URL url = new URL(String.format(API_LOCATION, itemId));
-            Scanner scan = new Scanner(url.openStream()).useDelimiter("\\A");
-            json = scan.next();
+            InputStream inputStream = url.openStream();
+            Scanner scan = new Scanner(inputStream).useDelimiter("\\A");
+            ctx.logScript("inputStream: " + inputStream);
+            if (scan.hasNext()) {
+                json = scan.next();
+            }
             scan.close();
         } catch (IOException e) {
             return null;
         }
-        GELookupResult result = parse(itemId, json);
-        if (cache != null) {
+
+        GELookupResult result = null;
+        if (json != null) {
+            result = parse(itemId, json);
+        }
+
+        if (cache != null && result != null) {
             cache.put(itemId, result);
         }
+
+        ctx.logScript("Found result for item with id [" + itemId + "] on GE API: " + result);
         return result;
     }
 
@@ -67,14 +95,16 @@ public class GrandExchangeApi {
      * If caching is enabled, clears the cache so that new results are fetched on lookup.
      */
     private void flushCache() {
-        long currentTime = System.currentTimeMillis();
-        if (cache != null) {
-            cache.forEach((id, geLookupResult) -> {
-                if ((currentTime - TEN_MINUTES) > geLookupResult.lastUpdatedAt) {
-                    cache.remove(id); // item is old. it needs to be refreshed
-                }
-            });
+        if (cache == null) {
+            return;
         }
+
+        long currentTime = System.currentTimeMillis();
+        cache.forEach((id, geLookupResult) -> {
+            if ((currentTime - TEN_MINUTES) > geLookupResult.lastUpdatedAt) {
+                cache.remove(id); // item is old. it needs to be refreshed
+            }
+        });
     }
 
     /**
@@ -86,51 +116,20 @@ public class GrandExchangeApi {
      */
     private static GELookupResult parse(int itemId, String json) {
         Pattern pattern = Pattern.compile("\"(?<key>[^\"]+)\":\"(?<value>[^\"]+)\"");
-        Matcher m = pattern.matcher(json);
+        Matcher matcher = pattern.matcher(json);
         Map<String, String> results = new HashMap<>();
-        while (m.find()) {
-            results.put(m.group("key"), m.group("value"));
+
+        while (matcher.find()) {
+            results.put(matcher.group("key"), matcher.group("value"));
         }
+
         int price = 0;
         Matcher priceMatcher = Pattern.compile("\"price\":(?<price>\\d+)").matcher(json);
         if (priceMatcher.find()) {
             price = Integer.parseInt(priceMatcher.group("price"));
         }
-        return new GELookupResult(
-                results.get("icon"),
-                results.get("icon_large"),
-                results.get("type"),
-                results.get("typeIcon"),
-                results.get("name"),
-                results.get("description"),
-                Boolean.parseBoolean(results.get("members")),
-                itemId,
-                price
-        );
-    }
 
-    /**
-     * A class representing a result from an API lookup.
-     */
-    public static final class GELookupResult {
-
-        final String smallIconUrl, largeIconUrl, type, typeIcon, name, itemDescription;
-        final boolean isMembers;
-        final int id, price;
-        final long lastUpdatedAt;
-
-        private GELookupResult(String smallIconUrl, String largeIconUrl, String type, String typeIcon, String name, String itemDescription,
-                               boolean isMembers, int id, int price) {
-            this.smallIconUrl = smallIconUrl;
-            this.largeIconUrl = largeIconUrl;
-            this.type = type;
-            this.typeIcon = typeIcon;
-            this.name = name;
-            this.itemDescription = itemDescription;
-            this.isMembers = isMembers;
-            this.id = id;
-            this.price = price;
-            this.lastUpdatedAt = System.currentTimeMillis();
-        }
+        return new GELookupResult(results.get("icon"), results.get("icon_large"), results.get("type"), results.get("typeIcon"),
+                results.get("name"), results.get("description"), Boolean.parseBoolean(results.get("members")), itemId, price);
     }
 }
