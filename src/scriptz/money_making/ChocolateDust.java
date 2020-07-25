@@ -118,7 +118,7 @@ public class ChocolateDust extends RunescriptAbstractContext {
                 }
 
                 GELookupResult geChocolateBar = grandExchangeService.getApi().lookup(CHOCOLATE_BAR_ID);
-                grandExchangeService.addBuyExchange("choco", CHOCOLATE_BAR);
+                grandExchangeService.addBuyExchange("choco", CHOCOLATE_BAR, false, false, false);
                 totalCoins = getInventory().count(COINS) + 1;
                 grandExchangeService.collect(true);
                 totalChocolateBars = getInventory().count(CHOCOLATE_BAR);

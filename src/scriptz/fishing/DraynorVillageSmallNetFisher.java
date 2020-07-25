@@ -5,8 +5,6 @@ import org.dreambot.api.script.ScriptManifest;
 import shared.enums.Areas;
 import shared.enums.FishingType;
 
-import java.awt.*;
-
 @ScriptManifest(category = Category.WOODCUTTING, name = "Draynor Village small-net fisher", author = "XpT", version = 1.0)
 public class DraynorVillageSmallNetFisher extends FishingAbstractScript {
 

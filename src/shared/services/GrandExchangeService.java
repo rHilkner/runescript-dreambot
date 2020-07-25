@@ -7,6 +7,8 @@ import shared.Constants;
 import shared.enums.AntibanActionType;
 import shared.services.providers.GrandExchangeApi;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
@@ -39,10 +41,14 @@ public class GrandExchangeService extends AbstractService {
         return api;
     }
 
+    private boolean isGEOpen() {
+        return ctx.getGrandExchange().isOpen() || ctx.getGrandExchange().isGeneralOpen() || ctx.getGrandExchange().isBuyOpen() || ctx.getGrandExchange().isSellOpen();
+    }
+
     public boolean openGE() {
         int counter = 0;
 
-        while (!ctx.getGrandExchange().isOpen() && counter < 20) {
+        while (!isGEOpen() && counter < 20) {
             logScript("Opening GE");
             sleepUntil(() -> ctx.getGrandExchange().open(), Constants.MAX_SLEEP_UNTIL);
             sleepUntil(() -> ctx.getGrandExchange().isOpen(), Constants.MAX_SLEEP_UNTIL);
@@ -50,19 +56,20 @@ public class GrandExchangeService extends AbstractService {
             counter++;
         }
 
-        return ctx.getGrandExchange().isOpen();
+        return isGEOpen();
     }
 
     public boolean closeGE() {
         int counter = 0;
-        while (ctx.getGrandExchange().isOpen() && counter < 20) {
+
+        while (isGEOpen() && counter < 20) {
             logScript("Closing GE");
             sleepUntil(() -> ctx.getGrandExchange().close(), Constants.MAX_SLEEP_UNTIL);
             sleepUntil(() -> !ctx.getGrandExchange().isOpen(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
         }
-        return ctx.getGrandExchange().isOpen();
+        return !isGEOpen();
     }
 
     public void collect(boolean close) {
@@ -76,15 +83,111 @@ public class GrandExchangeService extends AbstractService {
         }
     }
 
-    public boolean addBuyExchange(String searchString, String itemName) {
-        return addExchange(searchString, itemName, ExchangeType.BUY);
+    public boolean addBuyExchange(String searchString, String itemName, boolean confirm, boolean closeBuy, boolean closeGE) {
+
+        if (!openGE()) {
+            return false;
+        }
+
+        if (!openBuyScreen()) {
+            return false;
+        }
+
+        WidgetChild itemWidget = null;
+        Item currentItem = ctx.getGrandExchange().getCurrentChosenItem();
+
+        int counter = 0;
+        boolean objectFound = currentItem != null && Objects.equals(currentItem.getName(), itemName);
+        while (!objectFound && counter < 20) {
+            int counter1 = 0;
+            logScript("Searching for item: " + searchString);
+
+            // searching for the item
+            while (!objectFound && itemWidget == null && counter1 < 20) {
+                logScript("Getting item widget: " + searchString);
+                ctx.getGrandExchange().searchItem(searchString);
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+                itemWidget = ctx.getGrandExchange().getItemChildInSearch(itemName);
+                objectFound = currentItem != null && Objects.equals(currentItem.getName(), itemName);
+                counter1++;
+            }
+
+            if (itemWidget != null) {
+                // interacting with the item
+                interactService.interactWithWidget(itemWidget);
+            }
+
+            currentItem = ctx.getGrandExchange().getCurrentChosenItem();
+            objectFound = currentItem != null && Objects.equals(currentItem.getName(), itemName);
+            counter++;
+        }
+
+        if (currentItem == null) {
+            logScript("Added buy exchange for item " + itemName + " and found no item in response");
+        } else if (currentItem.getName() != null && !currentItem.getName().equals(itemName)) {
+            logScript("Added buy exchange for item " + itemName + " and found " + currentItem.getName());
+        } else {
+            logScript("Added buy exchange for item " + itemName + " and found this item!");
+        }
+
+        counter = 0;
+        boolean isItemConfirmed = false;
+        while (confirm && !isItemConfirmed && counter < 20) {
+            ctx.getGrandExchange().confirm();
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+            counter++;
+            isItemConfirmed = Arrays.stream(ctx.getGrandExchange().getItems()).anyMatch(i -> Objects.equals(i.getName(), itemName));
+        }
+
+        if (isItemConfirmed && ctx.getGrandExchange().isReadyToCollect()) {
+            collect(closeGE);
+        }
+
+        if (closeBuy) {
+            logScript("Going back");
+            ctx.getGrandExchange().goBack();
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+        }
+
+        return Arrays.stream(ctx.getGrandExchange().getItems()).anyMatch(i -> Objects.equals(i.getName(), itemName));
     }
 
     public boolean addSellExchange(String itemName) {
-        return addExchange(null, itemName, ExchangeType.SELL);
+        if (!openGE()) {
+            return false;
+        }
+
+        Item currentItem = ctx.getGrandExchange().getCurrentChosenItem();
+
+        int counter = 0;
+        while ((currentItem == null || !Objects.equals(currentItem.getName(), itemName)) && counter < 20) {
+            sleepUntil(() -> ctx.getGrandExchange().addSellItem(itemName), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+            currentItem = ctx.getGrandExchange().getCurrentChosenItem();
+            counter++;
+        }
+
+        return currentItem != null && Objects.equals(currentItem.getName(), itemName);
     }
 
-    public boolean setPriceQuantityConfirm(String itemName, Integer price, Integer amount, boolean close) {
+    private boolean openBuyScreen() {
+        if (!openGE()) {
+            return false;
+        }
+
+        int counter = 0;
+        while (!ctx.getGrandExchange().isBuyOpen() && counter < 20) {
+            logScript("Opening buy screen");
+            ctx.getGrandExchange().openBuyScreen(ctx.getGrandExchange().getFirstOpenSlot());
+            sleepUntil(() -> ctx.getGrandExchange().isBuyOpen(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+            counter++;
+        }
+
+        return ctx.getGrandExchange().isBuyOpen();
+    }
+
+    public boolean setPriceQuantityConfirm(String itemName, Integer price, Integer amount, boolean closeGE) {
         ExchangeType type;
 
         if (ctx.getGrandExchange().isBuyOpen()) {
@@ -110,95 +213,13 @@ public class GrandExchangeService extends AbstractService {
                 "\n\t- price: " + currentPrice + " gp" +
                 "\n\t- amount: " + currentAmount);
 
-        confirm();
+        boolean didConfirm = confirm();
 
-        if (close) {
+        if (didConfirm && closeGE) {
             closeGE();
         }
 
-        return true;
-    }
-
-    private boolean addExchange(String searchString, String itemName, ExchangeType type) {
-
-        if (!openGE()) {
-            return false;
-        }
-
-        if (type == ExchangeType.BUY && !addBuyItem(searchString, itemName)) {
-            return false;
-        } else if (type == ExchangeType.SELL && !addSellItem(itemName)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean openBuyScreen() {
-        if (!ctx.getGrandExchange().isOpen() && !openGE()) {
-            return false;
-        }
-
-        int counter = 0;
-        while (!ctx.getGrandExchange().isBuyOpen() && counter < 20) {
-            logScript("Opening buy screen");
-            sleepUntil(() -> ctx.getGrandExchange().openBuyScreen(0), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.FastPace);
-            counter++;
-        }
-
-        return ctx.getGrandExchange().isBuyOpen();
-    }
-
-    private boolean addBuyItem(String searchString, String itemName) {
-        WidgetChild itemWidget = null;
-
-        if (!openBuyScreen()) {
-            return false;
-        }
-
-        Item currentItem = ctx.getGrandExchange().getCurrentChosenItem();
-
-        int counter = 0;
-        while ((currentItem == null || !Objects.equals(currentItem.getName(), itemName)) && counter < 20) {
-            int counter1 = 0;
-
-            // searching for the item
-            while (itemWidget == null && counter1 < 20) {
-                logScript("Searching for item: " + searchString);
-                sleepUntil(() -> ctx.getGrandExchange().searchItem(searchString), Constants.MAX_SLEEP_UNTIL);
-                antibanService.antibanSleep(AntibanActionType.FastPace);
-                itemWidget = ctx.getGrandExchange().getItemChildInSearch(itemName);
-                counter1++;
-            }
-
-            if (itemWidget != null) {
-                interactService.interactWithWidget(itemWidget);
-            }
-
-            // interacting with the item
-            currentItem = ctx.getGrandExchange().getCurrentChosenItem();
-            counter++;
-        }
-
-        return currentItem == null || !Objects.equals(currentItem.getName(), itemName);
-    }
-
-    private boolean addSellItem(String itemName) {
-        if (!ctx.getGrandExchange().isOpen() && !openGE()) {
-            return false;
-        }
-        Item currentItem = ctx.getGrandExchange().getCurrentChosenItem();
-
-        int counter = 0;
-        while ((currentItem == null || !Objects.equals(currentItem.getName(), itemName)) && counter < 20) {
-            sleepUntil(() -> ctx.getGrandExchange().addSellItem(itemName), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.FastPace);
-            currentItem = ctx.getGrandExchange().getCurrentChosenItem();
-            counter++;
-        }
-
-        return currentItem != null && Objects.equals(currentItem.getName(), itemName);
+        return ctx.getGrandExchange().isBuyOpen() || ctx.getGrandExchange().isSellOpen();
     }
 
     private boolean setPrice(int price) {
@@ -246,14 +267,17 @@ public class GrandExchangeService extends AbstractService {
         return finalAmount == ctx.getGrandExchange().getCurrentAmount();
     }
 
-    private void confirm() {
+    private boolean confirm() {
         int counter = 0;
+
         while ((ctx.getGrandExchange().isBuyOpen() || ctx.getGrandExchange().isSellOpen()) && counter < 20) {
             logScript("GE confirming");
             sleepUntil(() -> ctx.getGrandExchange().confirm(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
         }
+
+        return ctx.getGrandExchange().isBuyOpen() || ctx.getGrandExchange().isSellOpen();
     }
 
 }

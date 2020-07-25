@@ -2,7 +2,6 @@ package shared.services;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.skills.Skill;
-import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.AntibanDistractionType;
 import shared.enums.GameStyle;

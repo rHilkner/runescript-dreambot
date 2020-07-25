@@ -2,7 +2,6 @@ package shared.services;
 
 import org.dreambot.api.methods.container.impl.bank.BankMode;
 import shared.Constants;
-import shared.Util;
 import shared.enums.AntibanActionType;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
