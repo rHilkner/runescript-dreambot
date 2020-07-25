@@ -138,26 +138,30 @@ public class PizzaDough extends RunescriptAbstractContext {
                 while (lastPotOfFlourPrice == -1) {
                     if (grandExchangeService.addBuyExchange("pot of", POT_OF_FLOUR, false, true, false)) {
                         lastPotOfFlourPrice = getGrandExchange().getCurrentPrice();
+                        logScript("lastPotOfFlourPrice = " + lastPotOfFlourPrice);
                     }
                 }
 
                 while (lastJugOfWaterPrice == -1) {
                     if (grandExchangeService.addBuyExchange("jug o", JUG_OF_WATER, false, true, false)) {
                         lastJugOfWaterPrice = getGrandExchange().getCurrentPrice();
+                        logScript("lastJugOfWaterPrice = " + lastJugOfWaterPrice);
                     }
                 }
 
                 int potOfFlourFinalPrice = (int) (lastPotOfFlourPrice * 1.21);
                 int jugOfWaterFinalPrice = (int) (lastJugOfWaterPrice * 1.21);
-                int amount = totalCoins / (potOfFlourFinalPrice + jugOfWaterFinalPrice);
+                int amount = (int) (totalCoins  * 0.95) / (potOfFlourFinalPrice + jugOfWaterFinalPrice);
 
                 if (grandExchangeService.addBuyExchange("pot of", POT_OF_FLOUR, false, false, false)) {
                     lastPotOfFlourPrice = getGrandExchange().getCurrentPrice();
+                    logScript("lastPotOfFlourPrice = " + lastPotOfFlourPrice);
                     grandExchangeService.setPriceQuantityConfirm(POT_OF_FLOUR, potOfFlourFinalPrice, amount, false);
                 }
 
                 if (grandExchangeService.addBuyExchange("jug o", JUG_OF_WATER, false, false, false)) {
                     lastJugOfWaterPrice = getGrandExchange().getCurrentPrice();
+                    logScript("lastJugOfWaterPrice = " + lastJugOfWaterPrice);
                     grandExchangeService.setPriceQuantityConfirm(JUG_OF_WATER, jugOfWaterFinalPrice, amount, false);
                 }
 

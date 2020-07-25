@@ -139,7 +139,11 @@ public class GrandExchangeService extends AbstractService {
             isItemConfirmed = Arrays.stream(ctx.getGrandExchange().getItems()).anyMatch(i -> Objects.equals(i.getName(), itemName));
         }
 
-        if (isItemConfirmed && ctx.getGrandExchange().isReadyToCollect()) {
+        if (confirm && !isItemConfirmed) {
+            return false;
+        }
+
+        if (ctx.getGrandExchange().isReadyToCollect()) {
             collect(closeGE);
         }
 
@@ -198,6 +202,12 @@ public class GrandExchangeService extends AbstractService {
             return false;
         }
 
+
+        logScript("Trying to add exchange [" + type.name() + "] for:" +
+                "\n\t- item: " + itemName +
+                "\n\t- price: " + price + " gp" +
+                "\n\t- amount: " + amount);
+
         if (!setPrice(price)) {
             return false;
         }
@@ -213,9 +223,7 @@ public class GrandExchangeService extends AbstractService {
                 "\n\t- price: " + currentPrice + " gp" +
                 "\n\t- amount: " + currentAmount);
 
-        boolean didConfirm = confirm();
-
-        if (didConfirm && closeGE) {
+        if (confirm() && closeGE) {
             closeGE();
         }
 
