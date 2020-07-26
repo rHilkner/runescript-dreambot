@@ -2,6 +2,7 @@ package scriptz.money_making;
 
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
+import org.dreambot.api.wrappers.items.Item;
 import scriptz.RunescriptAbstractContext;
 import shared.enums.Items;
 import shared.services.BankService;
@@ -9,18 +10,20 @@ import shared.services.GrandExchangeService;
 import shared.services.InteractService;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 @ScriptManifest(author = "Xpt", name = "Chocolate dust", version = 1.0, description = "Makes chocolate dust", category = Category.MONEYMAKING)
 public class ChocolateDust extends RunescriptAbstractContext {
 
-    enum State { SELL, BUY, MAKE_DUST, BANK, STOP }
+    enum State { SELL, BUY, MAKE_DUST, BANK, STOP, EAT_LAST_CHOCOLATE }
 
     private BankService bankService;
     private InteractService interactService;
     private GrandExchangeService grandExchangeService;
 
     private boolean spamChocolateBars = true;
-    private boolean rebuy = true;
+    private boolean rebuy = false;
 
     private int initialMoney = -1;
     private int totalCoins = -1;
@@ -46,6 +49,12 @@ public class ChocolateDust extends RunescriptAbstractContext {
     }
     
     private State getState() {
+
+        int random100 = new Random().nextInt(100);
+
+        if (random100 < 2) {
+            return State.EAT_LAST_CHOCOLATE;
+        }
 
         if (getInventory().contains(KNIFE) && getInventory().contains(Items.ChocolateBar.name)) {
             if (!getInventory().get(Items.ChocolateBar.name).isNoted()) {
@@ -111,6 +120,19 @@ public class ChocolateDust extends RunescriptAbstractContext {
         printPlayerTotals();
 
         switch (currentState) {
+
+            case EAT_LAST_CHOCOLATE:
+                List<Item> itemList = getInventory().getCollection();
+                // sort starting by last position of inventory
+                itemList.sort((a, b) -> b.getSlot() - a.getSlot());
+                for (Item item : itemList) {
+                    if (Items.ChocolateBar.name.equals(item.getName())) {
+                        interactService.interactInventoryItem(item.getSlot(), "Eat");
+                        break;
+                    }
+                }
+
+                break;
 
             case SELL:
                 bankService.withdraw(Items.ChocolateDust.name, null, false, true);

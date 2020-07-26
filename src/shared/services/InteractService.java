@@ -41,6 +41,12 @@ public class InteractService extends AbstractService {
         return false;
     }
 
+    public void interactInventoryItem(int slot, String action) {
+        Item item = ctx.getInventory().get(slot);
+        item.interact(action);
+        antibanService.antibanSleep(AntibanActionType.FastPace);
+    }
+
     public void interactInventoryItems(String itemName1, String itemName2, boolean spam, boolean interactWithLast) {
         Item item1 = ctx.getInventory().get(itemName1);
         Item item2 = interactWithLast ? inventoryService.getLastItem(itemName2) : ctx.getInventory().get(itemName2);
