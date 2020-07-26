@@ -13,25 +13,23 @@ import static org.dreambot.api.methods.MethodProvider.sleep;
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
 
-public class XptZenAntibanService extends  AbstractService {
+public class AntibanService extends  AbstractService {
 
-    private static XptZenAntibanService instance;
+    private static AntibanService instance;
 
     private final ZenAntibanAdapted zenAntibanAdapted;
     private SharedService sharedService;
 
-    private Date nextDateChangeGameStyle;
-
     /** SINGLETON METHODS */
 
-    private XptZenAntibanService() {
+    private AntibanService() {
         super();
         zenAntibanAdapted = new ZenAntibanAdapted(ctx);
     }
 
-    public static XptZenAntibanService getInstance() {
+    public static AntibanService getInstance() {
         if (instance == null)
-            instance = new XptZenAntibanService();
+            instance = new AntibanService();
         return instance;
     }
 
@@ -101,6 +99,10 @@ public class XptZenAntibanService extends  AbstractService {
                 logScript("antiban Walking: sleepUntil(!localPlayer.isMoving(), " + sleepTime + ")");
                 sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), sleepTime);
                 break;
+            case Latency:
+                sleepTime = getSleepDuration(AntibanActionType.Latency);
+                logScript("antiban SlowPace: sleep(" + sleepTime + ")");
+                break;
         }
     }
 
@@ -150,6 +152,8 @@ public class XptZenAntibanService extends  AbstractService {
                 }
                 scale = (int) Calculations.random(minScale, maxScale); // P(X < 3s) = 0.5 - shape = 2; scale = 1.8k
                 break;
+            case Latency:
+                return Calculations.random(8, 50);
         }
 
         if (antibanActionType == AntibanActionType.Walking) {

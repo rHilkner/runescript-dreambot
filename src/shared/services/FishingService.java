@@ -11,11 +11,11 @@ public class FishingService extends AbstractService {
 
     private static FishingService instance;
 
-    private final XptZenAntibanService antibanService;
+    private final AntibanService antibanService;
 
     private FishingService() {
         super();
-        this.antibanService = XptZenAntibanService.getInstance();
+        this.antibanService = AntibanService.getInstance();
     }
 
     public static FishingService getInstance() {

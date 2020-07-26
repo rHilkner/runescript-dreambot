@@ -5,7 +5,7 @@ import org.dreambot.api.script.AbstractScript;
 import shared.enums.AntibanDistractionType;
 import shared.enums.GameStyle;
 import shared.services.SharedService;
-import shared.services.XptZenAntibanService;
+import shared.services.AntibanService;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,7 +19,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
     private GameStyle gameStyle;
     private List<AntibanDistractionType> distractions;
 
-    protected XptZenAntibanService antibanService;
+    protected AntibanService antibanService;
     protected SharedService sharedService;
     protected Date startDate;
 
@@ -34,7 +34,7 @@ public abstract class RunescriptAbstractContext extends AbstractScript {
         super.onStart();
         RunescriptAbstractContext.ctx = this;
         setGameStyle(GameStyle.HardCore);
-        this.antibanService = XptZenAntibanService.getInstance();
+        this.antibanService = AntibanService.getInstance();
         this.sharedService = SharedService.getInstance();
         this.startDate = new Date();
         this.distractions = Arrays.asList(AntibanDistractionType.PhoneNotification, AntibanDistractionType.TalkingToSomeone, AntibanDistractionType.LittleLogout);

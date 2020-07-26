@@ -7,7 +7,6 @@ import shared.Constants;
 import shared.enums.AntibanActionType;
 import shared.services.providers.GrandExchangeApi;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -21,12 +20,12 @@ public class GrandExchangeService extends AbstractService {
     private static GrandExchangeService instance;
 
     private final GrandExchangeApi api;
-    private final XptZenAntibanService antibanService;
+    private final AntibanService antibanService;
     private final InteractService interactService;
 
     private GrandExchangeService() {
         super();
-        antibanService = XptZenAntibanService.getInstance();
+        antibanService = AntibanService.getInstance();
         interactService = InteractService.getInstance();
         api = GrandExchangeApi.getInstance();
     }
@@ -83,7 +82,7 @@ public class GrandExchangeService extends AbstractService {
         }
     }
 
-    public boolean addBuyExchange(String searchString, String itemName, boolean confirm, boolean closeBuy, boolean closeGE) {
+    public boolean addBuyExchange(String searchString, String itemName, boolean confirm, boolean closeGE) {
 
         if (!openGE()) {
             return false;
@@ -147,13 +146,11 @@ public class GrandExchangeService extends AbstractService {
             collect(closeGE);
         }
 
-        if (closeBuy) {
-            logScript("Going back");
-            ctx.getGrandExchange().goBack();
-            antibanService.antibanSleep(AntibanActionType.FastPace);
-        }
-
-        return Arrays.stream(ctx.getGrandExchange().getItems()).anyMatch(i -> Objects.equals(i.getName(), itemName));
+        currentItem = ctx.getGrandExchange().getCurrentChosenItem();
+        logScript("DEBUG: Current item = " + (currentItem == null? "null " : currentItem.getName()));
+        isItemConfirmed = Arrays.stream(ctx.getGrandExchange().getItems()).anyMatch(i -> Objects.equals(i.getName(), itemName));
+        logScript("DEBUG: isItemConfirmed = " + isItemConfirmed);
+        return (currentItem != null && currentItem.getName() != null && currentItem.getName().equals(itemName)) || (isItemConfirmed);
     }
 
     public boolean addSellExchange(String itemName) {
@@ -172,6 +169,11 @@ public class GrandExchangeService extends AbstractService {
         }
 
         return currentItem != null && Objects.equals(currentItem.getName(), itemName);
+    }
+
+    public boolean goBack() {
+        logScript("Going back");
+        return ctx.getGrandExchange().goBack();
     }
 
     private boolean openBuyScreen() {
@@ -227,7 +229,7 @@ public class GrandExchangeService extends AbstractService {
             closeGE();
         }
 
-        return ctx.getGrandExchange().isBuyOpen() || ctx.getGrandExchange().isSellOpen();
+        return !ctx.getGrandExchange().isBuyOpen() && !ctx.getGrandExchange().isSellOpen();
     }
 
     private boolean setPrice(int price) {

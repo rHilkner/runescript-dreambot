@@ -20,13 +20,13 @@ public class SharedService extends AbstractService {
 
     private static SharedService instance;
 
-    private final XptZenAntibanService antibanService;
+    private final AntibanService antibanService;
 
     /** SINGLETON METHODS */
 
     private SharedService() {
         super();
-        this.antibanService = XptZenAntibanService.getInstance();
+        this.antibanService = AntibanService.getInstance();
     }
 
     public static SharedService getInstance() {

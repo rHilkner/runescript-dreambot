@@ -12,14 +12,14 @@ import shared.enums.Areas;
 import shared.enums.GameStyle;
 import shared.services.BankService;
 import shared.services.CombatService;
-import shared.services.XptZenAntibanService;
+import shared.services.AntibanService;
 
 @ScriptManifest(author = "xpt", name = "Imp Killer ¡Karamja!", category = Category.COMBAT, version = 1.0, description = "Kills imps in Karamja and deposit the beads in Port Sarim")
 public class ImpKiller extends RunescriptAbstractContext {
 
     private CombatService combatService;
     private BankService bankService;
-    private XptZenAntibanService antibanService;
+    private AntibanService antibanService;
     private int loopCount = 0;
 
     @Override
@@ -28,7 +28,7 @@ public class ImpKiller extends RunescriptAbstractContext {
         setGameStyle(GameStyle.Normal);
         this.combatService = CombatService.getInstance();
         this.bankService = BankService.getInstance();
-        this.antibanService = XptZenAntibanService.getInstance();
+        this.antibanService = AntibanService.getInstance();
         antibanService.setSkillsToHover(Skill.MAGIC);
         logScript("Imp Killer ¡Karamja! - creditz to XpT ø*ø");
     }

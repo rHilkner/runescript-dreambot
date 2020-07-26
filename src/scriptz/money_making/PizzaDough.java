@@ -5,6 +5,7 @@ import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.widgets.WidgetChild;
 import scriptz.RunescriptAbstractContext;
 import shared.enums.AntibanActionType;
+import shared.enums.Items;
 import shared.services.BankService;
 import shared.services.GrandExchangeService;
 import shared.services.InteractService;
@@ -20,16 +21,8 @@ public class PizzaDough extends RunescriptAbstractContext {
     private InteractService interactService;
     private GrandExchangeService grandExchangeService;
 
+    private boolean rebuy = false;
 
-    private final String COINS = "Coins";
-    private final String POT_OF_FLOUR = "Pot of flour";
-    private final int POT_OF_FLOUR_ID = 1933;
-    private final String JUG_OF_WATER = "Jug of water";
-    private final int JUG_OF_WATER_ID = 1937;
-    private final String PIZZA_BASE = "Pizza base";
-    private final int PIZZA_BASE_ID = 2283;
-
-    private boolean rebuy = true;
     private int initialMoney = -1;
     private int totalCoins = -1;
     private int totalPotOfFlour = -1;
@@ -40,6 +33,7 @@ public class PizzaDough extends RunescriptAbstractContext {
     private int lastJugOfWaterPrice = -1;
     private int lastPizzaBasePrice = -1;
 
+    @Override
     public void onStart() {
         super.onStart();
         bankService = BankService.getInstance();
@@ -48,7 +42,8 @@ public class PizzaDough extends RunescriptAbstractContext {
 
         logScript("Starting dough script!");
     }
-
+    
+    @Override
     public void onExit() {
         log("Ending dough script!");
     }
@@ -60,8 +55,8 @@ public class PizzaDough extends RunescriptAbstractContext {
             return State.BANK;
         }
 
-        if (getInventory().contains(POT_OF_FLOUR) && getInventory().contains(JUG_OF_WATER)) {
-            if (!getInventory().get(POT_OF_FLOUR).isNoted() && !getInventory().get(JUG_OF_WATER).isNoted()) {
+        if (getInventory().contains(Items.PotOfFlour.name) && getInventory().contains(Items.JugOfWater.name)) {
+            if (!getInventory().get(Items.PotOfFlour.name).isNoted() && !getInventory().get(Items.JugOfWater.name).isNoted()) {
                 logScript("-- Current state: [" + State.MAKE_DOUGH + "] inventory contains flour and water");
                 return State.MAKE_DOUGH;
             }
@@ -98,21 +93,21 @@ public class PizzaDough extends RunescriptAbstractContext {
             int jugOfWaterMoney = totalJugOfWater * lastJugOfWaterPrice;
             int pizzaBaseMoney = totalPizzaBase * lastPizzaBasePrice;
 
-            int playerTotalMoney = totalCoins + potOfFlourMoney + jugOfWaterMoney;
+            int playerTotalMoney = totalCoins + potOfFlourMoney + jugOfWaterMoney + pizzaBaseMoney;
 
             if (initialMoney == -1) {
-                initialMoney = totalCoins;
+                initialMoney = playerTotalMoney;
             }
 
             double hoursSinceBeginning = (new Date().getTime() - startDate.getTime()) / (1000 * 60 * 60.0);
             int moneyPerHour = (int) ((playerTotalMoney - initialMoney) / (hoursSinceBeginning));
 
             logScript("-- Player has a total equivalent of" +
-                    "\n\t- gp = " + playerTotalMoney / 1000 + "k" +
-                    "\n\t- gp/h = " + moneyPerHour / 1000 + "k/h" +
-                    "\n\t- pot of flour = " + totalPotOfFlour + " [ " + potOfFlourMoney + "k]" +
-                    "\n\t- jug of water = " + totalJugOfWater + " [ " + jugOfWaterMoney + "k]" +
-                    "\n\t- pizza bases = " + totalPizzaBase + " [ " + pizzaBaseMoney + "k]");
+                    "\n\t- gp = " + playerTotalMoney/1000 + "k" +
+                    "\n\t- gp/h = " + moneyPerHour/1000 + "k/h" +
+                    "\n\t- pot of flour = " + totalPotOfFlour + " [ " + potOfFlourMoney/1000 + "k]" +
+                    "\n\t- jug of water = " + totalJugOfWater + " [ " + jugOfWaterMoney/1000 + "k]" +
+                    "\n\t- pizza bases = " + totalPizzaBase + " [ " + pizzaBaseMoney/1000 + "k]");
         }
     }
 
@@ -128,24 +123,26 @@ public class PizzaDough extends RunescriptAbstractContext {
         switch (currentState) {
 
             case BUY:
-                if (getInventory().count("Coins") < 1000) {
-                    bankService.withdraw(COINS, null, true, false);
-                    totalCoins = getInventory().count(COINS);
+                if (getInventory().count(Items.Coins.name) < 1000) {
+                    bankService.withdraw(Items.Coins.name, null, true, false);
+                    totalCoins = getInventory().count(Items.Coins.name);
                 }
 
                 bankService.closeBank(); // just making sure bank is closed
 
                 while (lastPotOfFlourPrice == -1) {
-                    if (grandExchangeService.addBuyExchange("pot of", POT_OF_FLOUR, false, true, false)) {
+                    if (grandExchangeService.addBuyExchange("pot of", Items.PotOfFlour.name, false, false)) {
                         lastPotOfFlourPrice = getGrandExchange().getCurrentPrice();
                         logScript("lastPotOfFlourPrice = " + lastPotOfFlourPrice);
+                        grandExchangeService.goBack();
                     }
                 }
 
                 while (lastJugOfWaterPrice == -1) {
-                    if (grandExchangeService.addBuyExchange("jug o", JUG_OF_WATER, false, true, false)) {
+                    if (grandExchangeService.addBuyExchange("jug o", Items.JugOfWater.name, false, false)) {
                         lastJugOfWaterPrice = getGrandExchange().getCurrentPrice();
                         logScript("lastJugOfWaterPrice = " + lastJugOfWaterPrice);
+                        grandExchangeService.goBack();
                     }
                 }
 
@@ -153,43 +150,43 @@ public class PizzaDough extends RunescriptAbstractContext {
                 int jugOfWaterFinalPrice = (int) (lastJugOfWaterPrice * 1.21);
                 int amount = (int) (totalCoins  * 0.95) / (potOfFlourFinalPrice + jugOfWaterFinalPrice);
 
-                if (grandExchangeService.addBuyExchange("pot of", POT_OF_FLOUR, false, false, false)) {
+                if (grandExchangeService.addBuyExchange("pot of", Items.PotOfFlour.name, false, false)) {
                     lastPotOfFlourPrice = getGrandExchange().getCurrentPrice();
                     logScript("lastPotOfFlourPrice = " + lastPotOfFlourPrice);
-                    grandExchangeService.setPriceQuantityConfirm(POT_OF_FLOUR, potOfFlourFinalPrice, amount, false);
+                    grandExchangeService.setPriceQuantityConfirm(Items.PotOfFlour.name, potOfFlourFinalPrice, amount, false);
                 }
 
-                if (grandExchangeService.addBuyExchange("jug o", JUG_OF_WATER, false, false, false)) {
+                if (grandExchangeService.addBuyExchange("jug o", Items.JugOfWater.name, false, false)) {
                     lastJugOfWaterPrice = getGrandExchange().getCurrentPrice();
                     logScript("lastJugOfWaterPrice = " + lastJugOfWaterPrice);
-                    grandExchangeService.setPriceQuantityConfirm(JUG_OF_WATER, jugOfWaterFinalPrice, amount, false);
+                    grandExchangeService.setPriceQuantityConfirm(Items.JugOfWater.name, jugOfWaterFinalPrice, amount, false);
                 }
 
                 grandExchangeService.collect(true);
 
-                totalCoins = getInventory().count(COINS);
-                totalPotOfFlour = getInventory().count(POT_OF_FLOUR);
-                totalJugOfWater = getInventory().count(JUG_OF_WATER);
+                totalCoins = getInventory().count(Items.Coins.name);
+                totalPotOfFlour = getInventory().count(Items.PotOfFlour.name);
+                totalJugOfWater = getInventory().count(Items.JugOfWater.name);
                 break;
 
             case SELL:
-                bankService.withdraw(PIZZA_BASE, null, false, true);
-                bankService.withdraw(COINS, null, true, false);
+                bankService.withdraw(Items.PizzaBase.name, null, false, true);
+                bankService.withdraw(Items.Coins.name, null, true, false);
 
-                if (grandExchangeService.addSellExchange(PIZZA_BASE)) {
+                if (grandExchangeService.addSellExchange(Items.PizzaBase.name)) {
                     lastPizzaBasePrice = getGrandExchange().getCurrentPrice();
-                    if (grandExchangeService.setPriceQuantityConfirm(PIZZA_BASE, (int) (lastPizzaBasePrice * 0.79), null, false)) {
+                    if (grandExchangeService.setPriceQuantityConfirm(Items.PizzaBase.name, (int) (lastPizzaBasePrice * 0.79), null, false)) {
                         grandExchangeService.collect(false);
                         totalPizzaBase = 0;
-                        totalCoins = getInventory().count(COINS);
+                        totalCoins = getInventory().count(Items.Coins.name);
                     }
                 }
 
                 break;
 
             case MAKE_DOUGH:
-                if (!getInventory().isFull() && getInventory().contains(POT_OF_FLOUR) && getInventory().contains(JUG_OF_WATER)) {
-                    interactService.interactInventoryItems(POT_OF_FLOUR, JUG_OF_WATER, false, false);
+                if (!getInventory().isFull() && getInventory().contains(Items.PotOfFlour.name) && getInventory().contains(Items.JugOfWater.name)) {
+                    interactService.interactInventoryItems(Items.PotOfFlour.name, Items.JugOfWater.name, false, false);
 
                     WidgetChild pizzaBaseWidget = getWidgets().getWidgetChild(270, 16, 38);
 
@@ -204,7 +201,7 @@ public class PizzaDough extends RunescriptAbstractContext {
 
                     // counter variable is there to make sure script doesn't get stuck if dough isn't being made
                     int counter = 0;
-                    while (!getInventory().isFull() && getInventory().contains(POT_OF_FLOUR) && getInventory().contains(JUG_OF_WATER) && counter < 20) {
+                    while (!getInventory().isFull() && getInventory().contains(Items.PotOfFlour.name) && getInventory().contains(Items.JugOfWater.name) && counter < 20) {
                         logScript("Still interacting with widget");
                         antibanService.antibanSleep(AntibanActionType.SlowPace);
                         counter++;
@@ -216,20 +213,26 @@ public class PizzaDough extends RunescriptAbstractContext {
                 bankService.bankAll(false);
 
                 // update variables
-                totalPotOfFlour = getBank().count(POT_OF_FLOUR);
-                totalJugOfWater = getBank().count(JUG_OF_WATER);
-                totalPizzaBase = getBank().count(PIZZA_BASE);
-                totalCoins = getBank().count(COINS);
+                totalPotOfFlour = getBank().count(Items.PotOfFlour.name);
+                totalJugOfWater = getBank().count(Items.JugOfWater.name);
+                totalPizzaBase = getBank().count(Items.PizzaBase.name);
+                totalCoins = getBank().count(Items.Coins.name);
+
+                logScript("updated variables:" +
+                        "\n- #coins: " + totalCoins +
+                        "\n- #pot of flour: " + totalPotOfFlour +
+                        "\n- #jug of water: " + totalJugOfWater +
+                        "\n- #pizza base: " + totalPizzaBase);
 
                 int counter = 0;
-                while (totalPotOfFlour > 0 && getInventory().count(POT_OF_FLOUR) == 0 && counter < 20) {
-                    bankService.withdraw(POT_OF_FLOUR, 9, false, false);
+                while (totalPotOfFlour > 0 && getInventory().count(Items.PotOfFlour.name) == 0 && counter < 20) {
+                    bankService.withdraw(Items.PotOfFlour.name, 9, false, false);
                     counter++;
                 }
 
                 counter = 0;
-                while (totalJugOfWater > 0 && getInventory().count(JUG_OF_WATER) == 0 && counter < 20) {
-                    bankService.withdraw(JUG_OF_WATER, 9, true, false);
+                while (totalJugOfWater > 0 && getInventory().count(Items.JugOfWater.name) == 0 && counter < 20) {
+                    bankService.withdraw(Items.JugOfWater.name, 9, true, false);
                     counter++;
                 }
 

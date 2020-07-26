@@ -15,11 +15,11 @@ public class InventoryService extends AbstractService {
 
     private static InventoryService instance;
 
-    private final XptZenAntibanService antibanService;
+    private final AntibanService antibanService;
 
     private InventoryService() {
         super();
-        this.antibanService = XptZenAntibanService.getInstance();
+        this.antibanService = AntibanService.getInstance();
     }
 
     public static InventoryService getInstance() {
