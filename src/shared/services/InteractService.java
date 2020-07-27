@@ -28,6 +28,23 @@ public class InteractService extends AbstractService {
         return instance;
     }
 
+    public boolean interactInventoryItemWithGameObject(String itemName, String gameObjectName) {
+        Item item = ctx.getInventory().get(itemName);
+        GameObject gameObject = ctx.getGameObjects().closest(gameObjectName);
+
+        ctx.logScript("Trying to interact item " + itemName + " with object " + gameObjectName);
+
+        if (item != null && gameObject != null && gameObject.exists()) {
+            gameObject.interact();
+            item.interact();
+            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean interactWithGameObject(String gameObjectName, String action) {
         GameObject gameObject = ctx.getGameObjects().closest(gameObjectName);
 
@@ -41,10 +58,26 @@ public class InteractService extends AbstractService {
         return false;
     }
 
+    public boolean interactWithGameObject(String gameObjectName) {
+        GameObject gameObject = ctx.getGameObjects().closest(gameObjectName);
+
+        if (gameObject != null && gameObject.exists()) {
+            gameObject.interact();
+            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+            return true;
+        }
+
+        return false;
+    }
+
     public void interactInventoryItem(int slot, String action) {
         Item item = ctx.getInventory().get(slot);
-        item.interact(action);
-        antibanService.antibanSleep(AntibanActionType.FastPace);
+        if (item != null ) {
+            if (item.interact(action)) {
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+            }
+        }
     }
 
     public void interactInventoryItems(String itemName1, String itemName2, boolean spam, boolean interactWithLast) {

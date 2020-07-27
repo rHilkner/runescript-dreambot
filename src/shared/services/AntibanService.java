@@ -101,7 +101,7 @@ public class AntibanService extends  AbstractService {
                 break;
             case Latency:
                 sleepTime = getSleepDuration(AntibanActionType.Latency);
-                logScript("antiban SlowPace: sleep(" + sleepTime + ")");
+                logScript("antiban Latency: sleep(" + sleepTime + ")");
                 break;
         }
     }

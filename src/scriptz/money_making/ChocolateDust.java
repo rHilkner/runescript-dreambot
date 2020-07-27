@@ -33,8 +33,7 @@ public class ChocolateDust extends RunescriptAbstractContext {
     private int lastChocolateBarPrice = -1;
     private int lastChocolateDustPrice = -1;
 
-    private final String KNIFE = "Knife";
-
+    @Override
     public void onStart() {
         super.onStart();
         bankService = BankService.getInstance();
@@ -44,19 +43,20 @@ public class ChocolateDust extends RunescriptAbstractContext {
         logScript("Starting chocolate script!");
     }
 
+    @Override
     public void onExit() {
         log("Ending chocolate script!");
     }
     
     private State getState() {
 
+        // random 2% chance of eating chocolate, but only if not animating (aka doing another action)
         int random100 = new Random().nextInt(100);
-
-        if (random100 < 2) {
+        if (!getLocalPlayer().isAnimating() && random100 < 2) {
             return State.EAT_LAST_CHOCOLATE;
         }
 
-        if (getInventory().contains(KNIFE) && getInventory().contains(Items.ChocolateBar.name)) {
+        if (getInventory().contains(Items.Knife.name) && getInventory().contains(Items.ChocolateBar.name)) {
             if (!getInventory().get(Items.ChocolateBar.name).isNoted()) {
                 logScript("-- Current state: [" + State.MAKE_DUST + "] inventory contains chocolate bar");
                 return State.MAKE_DUST;
@@ -113,6 +113,10 @@ public class ChocolateDust extends RunescriptAbstractContext {
     @Override
     public int onLoop() {
         super.onLoop();
+
+        if (getInventory().isItemSelected()) {
+            getInventory().deselect();
+        }
         
         State currentState = getState();
 
@@ -170,15 +174,15 @@ public class ChocolateDust extends RunescriptAbstractContext {
             case MAKE_DUST:
                 bankService.closeBank(); // just making sure bank is closed
                 if (!getLocalPlayer().isAnimating()) {
-                    interactService.interactInventoryItems(KNIFE, Items.ChocolateBar.name, spamChocolateBars, true);
+                    interactService.interactInventoryItems(Items.Knife.name, Items.ChocolateBar.name, spamChocolateBars, true);
                 }
                 break;
 
             case BANK:
-                bankService.bankAllExcept(false, KNIFE);
+                bankService.bankAllExcept(false, Items.Knife.name);
 
-                if (getInventory().count(KNIFE) == 0) {
-                    bankService.withdraw(KNIFE, 1, false, false);
+                if (getInventory().count(Items.Knife.name) == 0) {
+                    bankService.withdraw(Items.Knife.name, 1, false, false);
                 }
 
                 bankService.withdraw(Items.ChocolateBar.name, null, false, false);

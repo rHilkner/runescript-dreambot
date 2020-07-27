@@ -20,6 +20,9 @@ public enum Areas {
     DwarvenMineDrogoShop(new Area(3025, 9847, 3039, 9844, 0)),
 
     EdgevilleBank(new Area(3091, 3488, 3098, 3496, 0)),
+    EdgevilleFurnace(new Area(3107, 3500, 3109, 3497, 0)),
+    EdgevilleBankNorth(new Area(3095, 3496, 3098, 3494, 0)),
+    EdgevilleBankToFurnace(new Area(3110, 3501, 3094, 3494, 0)),
 
     FaladorSouthChickens(new Area(3014, 3294, 3020, 3282, 0)),
     FaladorSouthCowPen(new Area(3265, 3296, 3253, 3255, 0)),

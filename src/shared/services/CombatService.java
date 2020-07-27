@@ -74,7 +74,7 @@ public class CombatService extends AbstractService {
         // while loot is closer than target, take loot
         while (loot != null && ctx.getMap().canReach(loot) && (target == null || lootDistance < targetDistance)) {
             sharedService.takeLoot(loot);
-            antibanService.antibanSleep(AntibanActionType.SlowPace);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
 
             loot = ctx.getGroundItems().closest(lootItems);
             target = closestTargetNotInCombat(targets);
@@ -101,9 +101,7 @@ public class CombatService extends AbstractService {
             logScript("Attacking target: " + target.getName() + " on " + target.getTile());
             sleepUntil(() -> ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
             sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.SlowPace);
-            antibanService.antibanSleep(AntibanActionType.SlowPace);
-            // TODO: fix - sleep until target is dead and droped its loots before continuing - double sleeping is a gambiarra
+            antibanService.antibanSleep(AntibanActionType.FastPace);
         } else {
             logScript("Walking to attack target: " + target.getName() + " on " + target.getTile());
             sharedService.walkToTile(target.getTile());

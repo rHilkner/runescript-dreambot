@@ -162,9 +162,12 @@ public class GrandExchangeService extends AbstractService {
 
         int counter = 0;
         while ((currentItem == null || !Objects.equals(currentItem.getName(), itemName)) && counter < 20) {
-            sleepUntil(() -> ctx.getGrandExchange().addSellItem(itemName), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.FastPace);
-            currentItem = ctx.getGrandExchange().getCurrentChosenItem();
+            if (ctx.getGrandExchange().addSellItem(itemName)) {
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+                currentItem = ctx.getGrandExchange().getCurrentChosenItem();
+            } else if (ctx.getGrandExchange().isReadyToCollect()) {
+                ctx.getGrandExchange().collect();
+            }
             counter++;
         }
 
@@ -184,9 +187,16 @@ public class GrandExchangeService extends AbstractService {
         int counter = 0;
         while (!ctx.getGrandExchange().isBuyOpen() && counter < 20) {
             logScript("Opening buy screen");
-            ctx.getGrandExchange().openBuyScreen(ctx.getGrandExchange().getFirstOpenSlot());
-            sleepUntil(() -> ctx.getGrandExchange().isBuyOpen(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.FastPace);
+            int firstOpenSlot = ctx.getGrandExchange().getFirstOpenSlot();
+            if (firstOpenSlot < 0 || firstOpenSlot > 3) {
+                if (ctx.getGrandExchange().isReadyToCollect()) {
+                    ctx.getGrandExchange().collect();
+                }
+            } else {
+                ctx.getGrandExchange().openBuyScreen(firstOpenSlot);
+                sleepUntil(() -> ctx.getGrandExchange().isBuyOpen(), Constants.MAX_SLEEP_UNTIL);
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+            }
             counter++;
         }
 

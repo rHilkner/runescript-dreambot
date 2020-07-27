@@ -7,7 +7,13 @@ public enum Items {
     PizzaBase("Pizza base"),
     ChocolateBar("Chocolate bar"),
     ChocolateDust("Chocolate dust"),
-    GoldBar("Gold bar");
+    Knife("Knife"),
+    GoldBar("Gold bar"),
+    GoldNecklace("Gold necklace"),
+    Emerald("Emerald"),
+    EmeraldAmulet("Emerald amulet"),
+    NecklaceMould("Necklace mould"),
+    AmuletMould("Amulet mould");
 
     public final String name;
     public final Integer id;

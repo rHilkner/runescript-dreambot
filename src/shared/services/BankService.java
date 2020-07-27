@@ -5,6 +5,7 @@ import org.dreambot.api.wrappers.items.Item;
 import shared.Constants;
 import shared.enums.AntibanActionType;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
@@ -28,6 +29,7 @@ public class BankService extends AbstractService {
     public boolean openBank() {
         int counter = 0;
         while (!ctx.getBank().isOpen() && counter < 20) {
+            ctx.logScript("Opening bank");
             sleepUntil(() -> ctx.getBank().openClosest(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
@@ -37,6 +39,7 @@ public class BankService extends AbstractService {
 
     public void closeBank() {
         if (ctx.getBank().isOpen()) {
+            ctx.logScript("Closing bank");
             sleepUntil(() -> ctx.getBank().close(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
@@ -46,9 +49,13 @@ public class BankService extends AbstractService {
      * @param quantity null means All and -1 means AllButOne
      */
     public void withdraw(String itemName, Integer quantity, boolean closeBank, boolean noted) {
-        openBank();
+        if (openBank()) {
 
-        if (ctx.getBank().isOpen()) {
+            if (!noted) {
+                ctx.logScript("Trying to withdraw " + quantity + " of " + itemName);
+            } else {
+                ctx.logScript("Trying to withdraw " + quantity + " of " + itemName + " (noted)");
+            }
 
             if (noted && ctx.getBank().getWithdrawMode() != BankMode.NOTE) {
                 sleepUntil(() -> ctx.getBank().setWithdrawMode(BankMode.NOTE), Constants.MAX_SLEEP_UNTIL);
@@ -80,9 +87,8 @@ public class BankService extends AbstractService {
     }
 
     public boolean bankAllExcept(boolean closeBank, String... exceptItems) {
-        openBank();
-
-        if (ctx.getBank().isOpen()) {
+        if (openBank()) {
+            ctx.logScript("Trying to bank all except " + Arrays.toString(exceptItems));
             sleepUntil(() -> ctx.getBank().depositAllExcept(exceptItems), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             if (closeBank) {
@@ -102,6 +108,7 @@ public class BankService extends AbstractService {
 
     public boolean bankAll(boolean close) {
         if (openBank()) {
+            ctx.logScript("Trying to bank all");
             int counter = 0;
             while (!ctx.getInventory().isEmpty() && counter < 20) {
                 ctx.getBank().depositAllItems();
@@ -119,6 +126,7 @@ public class BankService extends AbstractService {
     public boolean openDepositBox() {
         int counter = 0;
         while (!ctx.getDepositBox().isOpen() && counter < 20) {
+            ctx.logScript("Opening deposit box");
             sleepUntil(() -> ctx.getDepositBox().openClosest(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
@@ -129,15 +137,15 @@ public class BankService extends AbstractService {
 
     public void closeDepositBox() {
         if (ctx.getDepositBox().isOpen()) {
+            ctx.logScript("Closing deposit box");
             sleepUntil(() -> ctx.getDepositBox().close(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
     }
 
     public void depositAllExcept(boolean close, String... exceptItems) {
-        openDepositBox();
-
-        if (ctx.getDepositBox().isOpen()) {
+        if (openDepositBox()) {
+            ctx.logScript("Depositing all except " + Arrays.toString(exceptItems));
             sleepUntil(() -> ctx.getDepositBox().depositAllExcept(exceptItems), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
 
@@ -148,6 +156,7 @@ public class BankService extends AbstractService {
     }
 
     public void depositAll(boolean close) {
+        ctx.logScript("Depositing all");
         if (!ctx.getDepositBox().isOpen()) {
             sleepUntil(() -> ctx.getDepositBox().openClosest(), Constants.MAX_SLEEP_UNTIL);
         } else {

@@ -54,10 +54,10 @@ public class SharedService extends AbstractService {
         if (!area.contains(ctx.getLocalPlayer())) {
             if (ctx.getWalking().walk(randomTile)) {
                 antibanService.antibanSleep(AntibanActionType.Walking);
-                return true;
             }
         }
-        return false;
+
+        return area.contains(ctx.getLocalPlayer());
     }
 
     public void walkToRandomTile(Area area) {
