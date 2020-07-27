@@ -4,8 +4,8 @@ import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.script.AbstractScript;
 import shared.enums.AntibanDistractionType;
 import shared.enums.GameStyle;
-import shared.services.SharedService;
 import shared.services.AntibanService;
+import shared.services.SharedService;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

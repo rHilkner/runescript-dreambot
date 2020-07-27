@@ -5,8 +5,8 @@ import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
 import shared.enums.Areas;
-import shared.services.CombatService;
 import shared.services.AntibanService;
+import shared.services.CombatService;
 
 @ScriptManifest(author = "xpt", name = "Chicken Killer", category = Category.COMBAT, version = 1.0, description = "Kills chickens and bury their bonesId")
 public class ChickenKiller extends RunescriptAbstractContext {

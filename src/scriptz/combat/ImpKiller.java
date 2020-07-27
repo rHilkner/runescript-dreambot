@@ -10,9 +10,9 @@ import shared.Constants;
 import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.GameStyle;
+import shared.services.AntibanService;
 import shared.services.BankService;
 import shared.services.CombatService;
-import shared.services.AntibanService;
 
 @ScriptManifest(author = "xpt", name = "Imp Killer ¡Karamja!", category = Category.COMBAT, version = 1.0, description = "Kills imps in Karamja and deposit the beads in Port Sarim")
 public class ImpKiller extends RunescriptAbstractContext {
