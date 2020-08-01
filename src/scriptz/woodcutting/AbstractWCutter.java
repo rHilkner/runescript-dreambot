@@ -4,6 +4,7 @@ import org.dreambot.api.methods.skills.Skill;
 import scriptz.RunescriptAbstractContext;
 import shared.enums.Areas;
 import shared.enums.GameStyle;
+import shared.enums.Items;
 import shared.enums.Trees;
 import shared.services.BankService;
 import shared.services.WoodcuttingService;
@@ -26,7 +27,7 @@ public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContex
 
     public void onStart(Trees tree, Areas treeArea, Areas bankArea) {
         super.onStart();
-        logScript("Starting WoodcuttingAbstractScript");
+        logScript("Starting WoodcuttingAbstractScript for cutting " + tree.getTreeName() + " at " + treeArea.name());
         this.tree = tree;
         this.treeArea = treeArea;
         this.bankArea = bankArea;
@@ -50,7 +51,8 @@ public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContex
         } else {
             if (bankArea.getArea().contains(getLocalPlayer())) {
                 setGameStyle(GameStyle.Normal);
-                bankService.bankAllExcept(true, "axe");
+                bankService.bankAllExcept(true, Items.BronzeAxe.name, Items.IronAxe.name, Items.SteelAxe.name,
+                        Items.BlackAxe.name, Items.MithrilAxe.name, Items.AdamantAxe.name, Items.RuneAxe.name, Items.DragonAxe.name);
             } else {
                 sharedService.walkTo(bankArea);
             }
