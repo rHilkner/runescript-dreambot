@@ -64,7 +64,7 @@ public class ChocolateDust extends RunescriptAbstractContext {
         }
 
         // Initialize all statuses
-        if (initialMoney == -1 || totalChocolateBars == -1 || totalChocolateDust == -1 || totalCoins == -1) {
+        if (totalChocolateBars == -1 || totalChocolateDust == -1 || totalCoins == -1) {
             logScript("-- Current state: [" + State.BANK + "] initialize variable counts");
             return State.BANK;
         }
@@ -191,9 +191,6 @@ public class ChocolateDust extends RunescriptAbstractContext {
                 totalChocolateBars = getBank().count(Items.ChocolateBar.name) + getInventory().count(Items.ChocolateBar.name);
                 totalChocolateDust = getBank().count(Items.ChocolateDust.name) + getInventory().count(Items.ChocolateDust.name);
                 totalCoins = getBank().count(Items.Coins.name) + getInventory().count(Items.Coins.name);
-                if (initialMoney == -1) {
-                    initialMoney = totalCoins;
-                }
 
                 break;
 

@@ -5,6 +5,7 @@ import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
 import shared.enums.Areas;
+import shared.enums.Items;
 import shared.services.AntibanService;
 import shared.services.CombatService;
 
@@ -31,10 +32,12 @@ public class ChickenKiller extends RunescriptAbstractContext {
         logScript("Loop of killing chicken");
 
         String[] targets = new String[]{"Chicken"};
-        String[] lootItems = new String[]{"Feathers", "Bones"};
 
         if (Areas.FaladorSouthChickens.getArea().contains(ctx.getLocalPlayer())) {
-            combatService.combatLoot(targets, lootItems, Areas.FaladorSouthChickens.getArea(), false, true);
+            combatService.combatLoot(targets,
+                    new String[]{Items.Feather.name, Items.Bones.name},
+                    Areas.FaladorSouthChickens.getArea(),
+                    false, true);
         } else {
             sharedService.walkTo(Areas.FaladorSouthChickens);
         }

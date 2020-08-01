@@ -9,7 +9,7 @@ import shared.enums.Trees;
 import java.awt.*;
 
 @ScriptManifest(category = Category.WOODCUTTING, name = "Edgeville willow woodcutter", author = "XpT", version = 1.0)
-public class EdgevilleWillowCutter extends WoodcuttingAbstractScript {
+public class EdgevilleWillowCutter extends AbstractWCutter {
 
     @Override
     public void onStart() {

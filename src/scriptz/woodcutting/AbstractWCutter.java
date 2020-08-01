@@ -9,7 +9,7 @@ import shared.enums.Trees;
 import shared.services.BankService;
 import shared.services.WoodcuttingService;
 
-public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContext {
+public abstract class AbstractWCutter extends RunescriptAbstractContext {
 
     private Trees tree;
     private Areas treeArea;
@@ -19,7 +19,7 @@ public abstract class WoodcuttingAbstractScript extends RunescriptAbstractContex
     private WoodcuttingService woodcuttingService;
     private BankService bankService;
 
-    public WoodcuttingAbstractScript() {
+    public AbstractWCutter() {
 
     }
 

@@ -7,12 +7,15 @@ import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.interactive.NPC;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.GameStyle;
 import shared.services.AntibanService;
 import shared.services.BankService;
 import shared.services.CombatService;
+
+import java.util.Date;
 
 @ScriptManifest(author = "xpt", name = "Imp Killer ¡Karamja!", category = Category.COMBAT, version = 1.0, description = "Kills imps in Karamja and deposit the beads in Port Sarim")
 public class ImpKiller extends RunescriptAbstractContext {
@@ -38,6 +41,11 @@ public class ImpKiller extends RunescriptAbstractContext {
 
         super.onLoop();
         logScript("Loop " + loopCount++ + " of killing imps");
+
+        if (new Date().after(Util.dateAddSeconds(startDate, 60*60*2))) {
+            stop();
+            return 0;
+        }
 
         if (getInventory().isFull()) {
             goBank();

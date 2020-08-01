@@ -29,9 +29,12 @@ public class FishingService extends AbstractService {
         if (fishNpc != null && fishNpc.interact(fish.getInteractionType())) {
             ctx.logScript("Fishing with " + fish.getEquipmentName());
             antibanService.antibanSleep(AntibanActionType.SlowPace);
-            if (!ctx.getLocalPlayer().isAnimating()) {
+
+            int counter = 0;
+            while (ctx.getLocalPlayer().isAnimating() || counter < 4) {
                 sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
+                counter = ctx.getLocalPlayer().isAnimating() ? 0 : counter + 1;
             }
         }
     }

@@ -2,18 +2,43 @@ package shared.enums;
 
 public enum Items {
     Coins("Coins"),
+    Bones("Bones"),
+    Feather("Feather"),
+
+    BronzeAxe("Bronze axe"),
+    IronAxe("Iron axe"),
+    SteelAxe("Steel axe"),
+    BlackAxe("Black axe"),
+    MithrilAxe("Mithril axe"),
+    AdamantAxe("Adamant axe"),
+    RuneAxe("Rune axe"),
+    DragonAxe("Dragon axe"),
+
     PotOfFlour("Pot of flour"),
     JugOfWater("Jug of water"),
     PizzaBase("Pizza base"),
+
     ChocolateBar("Chocolate bar"),
     ChocolateDust("Chocolate dust"),
     Knife("Knife"),
+
     GoldBar("Gold bar"),
-    GoldNecklace("Gold necklace"),
+
     Emerald("Emerald"),
+
+    GoldNecklace("Gold necklace"),
     EmeraldAmulet("Emerald amulet"),
+    EmeraldAmuletU("Emerald amulet (u)"),
     NecklaceMould("Necklace mould"),
-    AmuletMould("Amulet mould");
+    AmuletMould("Amulet mould"),
+
+    Tinderbox("Tinderbox"),
+    Logs("Logs"),
+    OakLogs("Oak logs"),
+    WillowLogs("Willow logs"),
+    MapleLogs("Maple logs"),
+    YewLogs("Yew logs"),
+    MagicLogs("Magic logs");
 
     public final String name;
     public final Integer id;

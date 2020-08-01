@@ -138,16 +138,18 @@ public class GrandExchangeService extends AbstractService {
             isItemConfirmed = Arrays.stream(ctx.getGrandExchange().getItems()).anyMatch(i -> Objects.equals(i.getName(), itemName));
         }
 
-        if (confirm && !isItemConfirmed) {
-            return false;
-        }
-
-        if (ctx.getGrandExchange().isReadyToCollect()) {
-            collect(closeGE);
+        if (confirm) {
+            if (isItemConfirmed) {
+                if (ctx.getGrandExchange().isReadyToCollect()) {
+                    collect(closeGE);
+                }
+            } else {
+                return false;
+            }
         }
 
         currentItem = ctx.getGrandExchange().getCurrentChosenItem();
-        logScript("DEBUG: Current item = " + (currentItem == null? "null " : currentItem.getName()));
+        logScript("DEBUG: Current item = " + (currentItem == null ? "null " : currentItem.getName()));
         isItemConfirmed = Arrays.stream(ctx.getGrandExchange().getItems()).anyMatch(i -> Objects.equals(i.getName(), itemName));
         logScript("DEBUG: isItemConfirmed = " + isItemConfirmed);
         return (currentItem != null && currentItem.getName() != null && currentItem.getName().equals(itemName)) || (isItemConfirmed);

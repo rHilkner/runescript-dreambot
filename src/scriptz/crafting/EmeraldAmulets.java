@@ -25,7 +25,8 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
     private InteractService interactService;
     private GrandExchangeService grandExchangeService;
 
-    private boolean rebuy = true;
+    private boolean rebuy = false;
+    private final int MAX_BUY = 800;
 
     private int initialMoney = -1;
     private int totalCoins = -1;
@@ -63,23 +64,24 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
         }
 
         // Initialize all statuses
-        if (initialMoney == -1 || totalGoldBars == -1 || totalEmeralds == -1 || totalEmeraldAmulets == -1 || totalCoins == -1) {
+        if (totalGoldBars == -1 || totalEmeralds == -1 || totalEmeraldAmulets == -1 || totalCoins == -1) {
             logScript("-- Current state: [" + State.BANK + "] initialize variable counts");
             return State.BANK;
         }
 
         if (totalGoldBars == 0 || totalEmeralds == 0) {
-            if (totalEmeraldAmulets > 0) {
-                logScript("-- Current state: [" + State.SELL + "] going to sell");
-                return State.SELL;
-            }
             if (rebuy) {
+
+                if (totalEmeraldAmulets > 0) {
+                    logScript("-- Current state: [" + State.SELL + "] going to sell");
+                    return State.SELL;
+                }
+
                 logScript("-- Current state: [" + State.BUY + "] going to buy");
                 return State.BUY;
-            } else {
-                logScript("-- Current state: [" + State.STOP + "] stopping");
-                return State.STOP;
             }
+            logScript("-- Current state: [" + State.STOP + "] stopping");
+            return State.STOP;
         }
 
         logScript("-- Current state: [" + State.BANK + "] nothing interesting happens");
@@ -131,12 +133,16 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
         switch (currentState) {
 
             case SELL:
-                bankService.withdraw(Items.EmeraldAmulet.name, null, false, true);
+                if (!sharedService.walkTo(Areas.GrandExchange)) {
+                    break;
+                }
+
+                bankService.withdraw(Items.EmeraldAmuletU.name, null, false, true);
                 bankService.withdraw(Items.Coins.name, null, true, false);
 
-                if (grandExchangeService.addSellExchange(Items.EmeraldAmulet.name)) {
+                if (grandExchangeService.addSellExchange(Items.EmeraldAmuletU.name)) {
                     lastEmeraldAmuletPrice = getGrandExchange().getCurrentPrice();
-                    if (grandExchangeService.setPriceQuantityConfirm(Items.PizzaBase.name, (int) (lastEmeraldAmuletPrice * 0.79), null, false)) {
+                    if (grandExchangeService.setPriceQuantityConfirm(Items.EmeraldAmuletU.name, (int) (lastEmeraldAmuletPrice * 0.79), null, false)) {
                         grandExchangeService.collect(false);
                         totalEmeraldAmulets = 0;
                         totalCoins = getInventory().count(Items.Coins.name);
@@ -146,30 +152,33 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
                 break;
 
             case BUY:
-                if (sharedService.walkTo(Areas.GrandExchange)) {
-                    if (getInventory().count("Coins") < 100) {
-                        bankService.withdraw(Items.Coins.name, null, true, false);
-                        bankService.closeBank(); // just making sure bank is closed
-                    }
-
-                    if (grandExchangeService.addBuyExchange("gold b", Items.GoldBar.name, false, false)) {
-                        lastGoldBarsPrice = getGrandExchange().getCurrentPrice();
-                        logScript("lastGoldBarsPrice = " + lastGoldBarsPrice);
-                        grandExchangeService.setPriceQuantityConfirm(Items.GoldBar.name, (int) (lastGoldBarsPrice * 1.21), 500, false);
-                    }
-
-                    if (grandExchangeService.addBuyExchange("emerald", Items.Emerald.name, false, false)) {
-                        lastEmeraldPrice = getGrandExchange().getCurrentPrice();
-                        logScript("lastEmeraldPrice = " + lastEmeraldPrice);
-                        grandExchangeService.setPriceQuantityConfirm(Items.Emerald.name, (int) (lastEmeraldPrice * 1.21), 500, false);
-                    }
-
-                    grandExchangeService.collect(true);
-
-                    totalCoins = getInventory().count(Items.Coins.name);
-                    totalGoldBars = getInventory().count(Items.GoldBar.name);
-                    totalEmeralds = getInventory().count(Items.Emerald.name);
+                if (!sharedService.walkTo(Areas.GrandExchange)) {
+                    break;
                 }
+
+                if (getInventory().count("Coins") < 100) {
+                    bankService.withdraw(Items.Coins.name, null, true, false);
+                    bankService.closeBank(); // just making sure bank is closed
+                }
+
+                if (grandExchangeService.addBuyExchange("gold b", Items.GoldBar.name, false, false)) {
+                    lastGoldBarsPrice = getGrandExchange().getCurrentPrice();
+                    logScript("lastGoldBarsPrice = " + lastGoldBarsPrice);
+                    grandExchangeService.setPriceQuantityConfirm(Items.GoldBar.name, (int) (lastGoldBarsPrice * 1.21), MAX_BUY - totalGoldBars, false);
+                }
+
+                if (grandExchangeService.addBuyExchange("emerald", Items.Emerald.name, false, false)) {
+                    lastEmeraldPrice = getGrandExchange().getCurrentPrice();
+                    logScript("lastEmeraldPrice = " + lastEmeraldPrice);
+                    grandExchangeService.setPriceQuantityConfirm(Items.Emerald.name, (int) (lastEmeraldPrice * 1.21), MAX_BUY - totalEmeralds, false);
+                }
+
+                grandExchangeService.collect(true);
+
+                totalCoins = getInventory().count(Items.Coins.name);
+                totalGoldBars = getInventory().count(Items.GoldBar.name);
+                totalEmeralds = getInventory().count(Items.Emerald.name);
+
                 break;
 
             case MAKE_AMULETS:
@@ -223,11 +232,13 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
                     // update variables
                     totalGoldBars = getBank().count(Items.GoldBar.name) + getInventory().count(Items.GoldBar.name);
                     totalEmeralds = getBank().count(Items.Emerald.name) + getInventory().count(Items.Emerald.name);
-                    totalEmeraldAmulets = getBank().count(Items.EmeraldAmulet.name) + getInventory().count(Items.EmeraldAmulet.name);
+                    totalEmeraldAmulets = getBank().count(Items.EmeraldAmuletU.name) + getInventory().count(Items.EmeraldAmuletU.name);
                     totalCoins = getBank().count(Items.Coins.name) + getInventory().count(Items.Coins.name);
-                    if (initialMoney == -1) {
-                        initialMoney = totalCoins;
-                    }
+                    logScript("Updated local variables:" +
+                                    "\n\t- totalGoldBars = " + totalGoldBars +
+                                    "\n\t- totalEmeralds = " + totalEmeralds +
+                                    "\n\t- totalEmeraldAmulets = " + totalEmeraldAmulets +
+                                    "\n\t- totalCoins = " + totalCoins);
 
                     if (getInventory().count(Items.AmuletMould.name) == 0) {
                         bankService.withdraw(Items.AmuletMould.name, 1, false, false);

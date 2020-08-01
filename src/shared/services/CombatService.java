@@ -52,6 +52,7 @@ public class CombatService extends AbstractService {
         NPC target = closestTargetNotInCombat(targets);
         if (target == null || !ctx.getMap().canReach(target)) {
             ctx.getWalking().walk(area.getRandomTile());
+            antibanService.antibanSleep(AntibanActionType.SlowPace);
         } else if (!ctx.getLocalPlayer().isInCombat()) {
             // If nearest target exists and player is not in combat (double check here)
             attackTarget(target);

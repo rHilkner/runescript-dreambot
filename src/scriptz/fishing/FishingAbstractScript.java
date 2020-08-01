@@ -37,15 +37,15 @@ public abstract class FishingAbstractScript extends RunescriptAbstractContext {
         super.onLoop();
 
         if (!getInventory().isFull()) {
-            setGameStyle(originalGameStyle);
             if (fishArea.getArea().contains(getLocalPlayer())) {
-                fishingService.fish(fish);
+                if (!getLocalPlayer().isAnimating()) {
+                    fishingService.fish(fish);
+                }
             } else {
                 sharedService.walkTo(fishArea);
             }
         } else {
             if (bankArea.getArea().contains(getLocalPlayer())) {
-                setGameStyle(GameStyle.Normal);
                 bankService.bankAllExcept(true, fish.getEquipmentName(), "Feather", "Bait");
             } else {
                 sharedService.walkTo(bankArea);
