@@ -28,7 +28,8 @@ public enum Areas {
     FaladorSouthCowPen(new Area(3265, 3296, 3253, 3255, 0)),
 
     GrandExchange(new Area(3160, 3494, 3170, 3484, 0)),
-    GrandExchangeNorthFiremake(new Area(3157, 3494, 3158, 3497, 0)),
+    GrandExchangeCloseToEastBank(new Area(3172, 3488, 3173, 3491, 0)),
+    GrandExchangeNorthFiremake(new Area(3176, 3496, 3177, 3497, 0)),
 
     KaramjaToPortSarimBoat(new Area(3033, 3218, 3032, 3215, 1)),
     KaramjaToPortSarim(new Area(2950, 3146, 2955, 3149, 0)),

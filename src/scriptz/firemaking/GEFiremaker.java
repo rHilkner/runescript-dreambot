@@ -11,8 +11,8 @@ public class GEFiremaker extends AbstractFiremaker {
 
     @Override
     public void onStart() {
-        super.onStart(Items.Logs, Areas.GrandExchangeNorthFiremake, null);
-        RunescriptAbstractContext.logScript("Starting EdgevilleTreeCutter - all creditz to Xpt º*º");
+        super.onStart(Items.WillowLogs, Areas.GrandExchangeNorthFiremake);
+        RunescriptAbstractContext.logScript("Starting GE Firemaker - all creditz to Xpt º*º");
     }
 
     @Override

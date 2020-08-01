@@ -38,7 +38,13 @@ public enum Items {
     WillowLogs("Willow logs"),
     MapleLogs("Maple logs"),
     YewLogs("Yew logs"),
-    MagicLogs("Magic logs");
+    MagicLogs("Magic logs"),
+
+    RawShrimps("Raw shrimps"),
+    RawAnchovies("Raw anchovies"),
+    RawTrout("Raw trout"),
+    RawSalmon("Raw salmon"),
+    ;
 
     public final String name;
     public final Integer id;

@@ -1,6 +1,7 @@
 package scriptz.firemaking;
 
 import org.dreambot.api.methods.skills.Skill;
+import org.dreambot.api.methods.tabs.Tab;
 import scriptz.RunescriptAbstractContext;
 import shared.enums.Areas;
 import shared.enums.GameStyle;
@@ -12,7 +13,8 @@ public abstract class AbstractFiremaker extends RunescriptAbstractContext {
 
     private Items logs;
     private Areas fireStartArea;
-    private Areas bankArea;
+
+    private boolean didPlayerJustBank = true;
 
     GameStyle originalGameStyle;
     private FiremakingService firemakingService;
@@ -20,35 +22,45 @@ public abstract class AbstractFiremaker extends RunescriptAbstractContext {
 
     /** LOOP FUNCTIONS */
 
-    public void onStart(Items logs, Areas fireStartArea, Areas bankArea) {
+    public void onStart(Items logs, Areas fireStartArea) {
         super.onStart();
         logScript("Starting AbstractFiremaker for fireing " + logs.name + " at " + fireStartArea.name());
         this.logs = logs;
         this.fireStartArea = fireStartArea;
-        this.bankArea = bankArea;
         originalGameStyle = ctx.getGameStyle();
         firemakingService = FiremakingService.getInstance();
         bankService = BankService.getInstance();
-        antibanService.setSkillsToHover(Skill.WOODCUTTING);
+        antibanService.setSkillsToHover(Skill.FIREMAKING);
     }
 
     @Override
     public int onLoop() {
         super.onLoop();
 
-        if (!getInventory().contains(logs.name)) {
-            if (fireStartArea.getArea().contains(getLocalPlayer())) {
-                firemakingService.fireLogs(logs.name, true);
+        if (!getTabs().isOpen(Tab.INVENTORY)) {
+            getTabs().open(Tab.INVENTORY);
+        }
+
+        if (getInventory().contains(logs.name)) {
+            if (didPlayerJustBank) {
+                if (sharedService.walkTo(fireStartArea)) {
+                    didPlayerJustBank = false;
+                }
             } else {
-                sharedService.walkTo(fireStartArea);
+                firemakingService.fireLogs(logs.name, false);
             }
         } else {
-            if (bankArea.getArea().contains(getLocalPlayer()) && !getInventory().isFull()) {
-                bankService.bankAllExcept(false, Items.Tinderbox.name);
-                bankService.withdraw(logs.name, null, true, false);
-            } else {
-                sharedService.walkTo(bankArea);
+            bankService.openBank();
+            if (getBank().count(logs.name) == 0) {
+                stop();
             }
+
+            if (!getInventory().contains(Items.Tinderbox.name)) {
+                bankService.withdraw(Items.Tinderbox.name, 1, false, false);
+            }
+
+            bankService.withdraw(logs.name, null, true, false);
+            didPlayerJustBank = true;
         }
 
         return 0;
