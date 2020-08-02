@@ -50,6 +50,14 @@ public enum Items {
     Anchovies("Anchovies"),
     Trout("Trout"),
     Salmon("Salmon"),
+
+    Egg("Egg"),
+    Pot("Pot"),
+    Flour("Flour"),
+    Bucket("Bucket"),
+    BucketOfMilk("Bucket of milk"),
+    Wheat("Wheat"),
+    Grain("Grain"),
     ;
 
     public final String name;
