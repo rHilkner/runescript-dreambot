@@ -1,85 +1,191 @@
-//package scriptz.cow_killer;
-//
-//import shared.enums.ActionType;
-//import shared.services.SharedServices;
-//import shared.Util;
-//import org.dreambot.api.methods.Calculations;
-//import org.dreambot.api.methods.map.Area;
-//import org.dreambot.api.methods.map.Tile;
-//import org.dreambot.api.script.AbstractScript;
-//import org.dreambot.api.script.Category;
-//import org.dreambot.api.script.ScriptManifest;
-//import org.dreambot.api.wrappers.interactive.GameObject;
-//import org.dreambot.api.wrappers.interactive.NPC;
-//import org.dreambot.api.wrappers.items.GroundItem;
-//
-//@ScriptManifest(author = "fractal", name = "FractalCowKiller", category = Category.COMBAT, version = 1.0, description = "Kills cows, loots their hides, and banks")
-//
-//public class scriptz.cow_killer extends AbstractScript {
-//
-//    int walkingShape;
-//    int runningShape;
-//    int interactiveShape;
-//    int spamShape;
-//    int scale;
-//    int reaction;   // minimum wait between actions
-//    int patience;   // minimum wait between running to a new spot while still running. patience is doubled while Walking
-//    int latency = 250;  // how long does it take the game to register your actions? change this depending on CPU/RAM/lag
-//    Area cowPen = new Area(new Tile(3265, 3296), new Tile(3253, 3255));
-//    int cowHide = 1739;
-//    int gate = 1558;
-//
-//    @Override
-//    public int onLoop() {
-//        farmHides();
-//        return 0;
-//    }
-//
-//    public void onStart(){
-//        reaction = Calculations.random(200,400);
-//        patience = Calculations.random(1500, 3000);
-//        walkingShape = Calculations.random(2,5);
-//        runningShape = Calculations.random(2,4);
-//        interactiveShape = Calculations.random(2,4);
-//        spamShape = 1;
-//        scale = Calculations.random(400,1000);  // proxy for variables in your physical environment affecting your attention
-//    }
-//
-//    public int farmHides() {
-//        String[] targets = {"Cow", "Cow calf"};
-//        Integer[] loot = {cowHide};
-//        if (getInventory().isFull()) {
-//            SharedServices.bankItems(loot, false);
-//        } else {
-//            combatLoot(targets, loot, cowPen);
-//        }
-//        return 1;
-//    }
-//
-//    public void combatLoot(String[] targets, Integer[] loot, Area area) {
-//        if (!area.contains(getLocalPlayer())) {
-//            SharedServices.walkTo(area);
-//        } else if (!getLocalPlayer().isInCombat()){
-//            NPC target = getNpcs().closest(t -> t!= null && !t.isInCombat() && Util.isElementInArray(t.getName(), targets));
-//            GroundItem prize = getGroundItems().closest(loot);
-//            if (prize != null && target != null && prize.distance(getLocalPlayer()) < target.distance(getLocalPlayer())) {
-//                prize.interact("Take");
-//                sleep(latency);
-//                sleepUntil(()-> !getLocalPlayer().isMoving(), 60000);
-//                SharedServices.antibanSleep(ActionType.FastPace);
-//            } else if (target != null && !getLocalPlayer().isInCombat()) {
-//                GameObject g = getGameObjects().closest(o -> o.getID() == gate);
-//                if (!area.contains(target) && g.hasAction("Open")) {
-//                    g.interact("Open");
-//                } else if (target.interact("Attack")) {
-//                    sleepUntil(() -> getLocalPlayer().isInCombat(), 60000);
-//                    sleepUntil(() -> !getLocalPlayer().isInCombat(), 60000);
+package scriptz.combat;
+
+import org.dreambot.api.methods.skills.Skill;
+import org.dreambot.api.methods.tabs.Tab;
+import org.dreambot.api.script.Category;
+import org.dreambot.api.script.ScriptManifest;
+import org.dreambot.api.wrappers.items.Item;
+import scriptz.RunescriptAbstractContext;
+import shared.enums.AntibanActionType;
+import shared.enums.Areas;
+import shared.enums.GameObjects;
+import shared.enums.Items;
+import shared.services.AntibanService;
+import shared.services.BankService;
+import shared.services.CombatService;
+import shared.services.InteractService;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+@ScriptManifest(author = "xpt", name = "Cow Killer", category = Category.COMBAT, version = 1.0, description = "Kills cow and loot their bones and ")
+public class CowKiller extends RunescriptAbstractContext {
+
+    enum State { BANK, GO_TO_COW_PEN, KILL_COW, KEEP_KILLING_COW, EAT, STOP }
+
+    private int initialHitpointsXp = -1;
+    private int initialAttackXp = -1;
+    private int initialStrengthXp = -1;
+    private int initialDefenceXp = -1;
+    private int initialMagicXp = -1;
+    private int initialRangedXp = -1;
+    private int initialPrayerXp = -1;
+
+    private final String[] targets = new String[]{GameObjects.Cow.name};
+    private final String[] loot = new String[]{};
+    private final List<String> itemsToEat = Arrays.asList(Items.Shrimps.name, Items.Trout.name);
+
+    private CombatService combatService;
+    private AntibanService antibanService;
+    private BankService bankService;
+    private InteractService interactService;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.combatService = CombatService.getInstance();
+        this.antibanService = AntibanService.getInstance();
+        this.bankService = BankService.getInstance();
+        this.interactService = InteractService.getInstance();
+        antibanService.setSkillsToHover(Skill.ATTACK, Skill.STRENGTH, Skill.HITPOINTS);
+        logScript("Cow Killer starting - creditz to XpT º*º");
+    }
+
+    private State getState() {
+
+        if (getLocalPlayer().getHealthPercent() < 15) {
+            return State.STOP;
+        }
+
+        logScript("health % = " + getLocalPlayer().getHealthPercent());
+        boolean inventoryContainsItemsToEat = false;
+        for (Item item : getInventory().getCollection()) {
+            if (item != null && itemsToEat.contains(item.getName())) {
+                inventoryContainsItemsToEat = true;
+            }
+        }
+
+        if (inventoryContainsItemsToEat && getLocalPlayer().getHealthPercent() < 60) {
+            return State.EAT;
+        }
+
+        if (!getInventory().contains(i -> i!= null && itemsToEat.contains(i.getName()))) {
+            return State.BANK;
+        }
+
+        if (!Areas.LumbridgeEastCowPen.getArea().contains(getLocalPlayer())) {
+            return State.GO_TO_COW_PEN;
+        }
+
+        if (getLocalPlayer().isInCombat()) {
+            return State.KEEP_KILLING_COW;
+        }
+
+        return State.KILL_COW;
+    }
+
+    @Override
+    public int onLoop() {
+
+        super.onLoop();
+
+        if (!getTabs().isOpen(Tab.INVENTORY)) {
+            getTabs().open(Tab.INVENTORY);
+        }
+
+        if (getInventory().isItemSelected()) {
+            getInventory().deselect();
+        }
+
+        State currentState = getState();
+        logScript("-- Current state: " + currentState.name());
+
+        printPlayerStats();
+
+        switch (currentState) {
+
+            case BANK:
+//                if (sharedService.walkTo(Areas.LumbridgeBank)) {
+                bankService.bankAll(false);
+
+                for (int i = 0; i < itemsToEat.size(); i++) {
+                    String fishName = itemsToEat.get(i);
+                    if (getInventory().isEmpty() && getBank().count(fishName) > 0) {
+                        bankService.withdraw(fishName, null, false, false);
+                        break;
+                    }
+                }
+
+                bankService.closeBank();
 //                }
-//                SharedServices.antibanSleep(ActionType.FastPace);
-//            }
-//        } else {
-//            sleepUntil(() -> !getLocalPlayer().isInCombat(), 60000);
-//        }
-//    }
-//
-//}
+                break;
+
+            case GO_TO_COW_PEN:
+                bankService.closeBank(); // just to be sure
+                sharedService.walkTo(Areas.LumbridgeEastCowPen);
+                break;
+
+            case KILL_COW:
+                combatService.combatLoot(targets, loot,
+                        Areas.LumbridgeEastCowPen.getArea(),
+                        false, false);
+                break;
+
+            case KEEP_KILLING_COW:
+                int counter = 0;
+                while (getLocalPlayer().isInCombat() || counter < 4) {
+                    antibanService.antibanSleep(AntibanActionType.FastPace);
+                    if (getLocalPlayer().isAnimating() || getLocalPlayer().isInCombat()) {
+                        counter = 0;
+                    } else {
+                        counter++;
+                    }
+                }
+                break;
+
+            case EAT:
+                List<Item> itemList = getInventory().getCollection().stream().filter(Objects::nonNull).sorted(Comparator.comparingInt(Item::getSlot)).collect(Collectors.toList());
+                for (Item item : itemList) {
+                    logScript("Item name: " + item.getName());
+                    if (itemsToEat.contains(item.getName())) {
+                        interactService.interactInventoryItem(item.getSlot(), "Eat");
+                        break;
+                    }
+                }
+                break;
+
+            case STOP:
+                if (!getWalking().isRunEnabled()) {
+                    getWalking().toggleRun();
+                }
+                sharedService.walkTo(Areas.LumbridgeBank);
+                sharedService.logout();
+                stop();
+                break;
+        }
+
+        return 0;
+    }
+
+    private void printPlayerStats() {
+
+        if (initialAttackXp == -1) {
+            initialAttackXp = getSkills().getExperience(Skill.ATTACK);
+        }
+
+        if (initialStrengthXp == -1) {
+            initialStrengthXp = getSkills().getExperience(Skill.STRENGTH);
+        }
+
+        if (initialDefenceXp == -1) {
+            initialDefenceXp = getSkills().getExperience(Skill.DEFENCE);
+        }
+
+        int attackXpGained = getSkills().getExperience(Skill.ATTACK) - initialAttackXp;
+        int strengthXpGained = getSkills().getExperience(Skill.ATTACK) - initialAttackXp;
+        int defenceXpGained = getSkills().getExperience(Skill.ATTACK) - initialAttackXp;
+    }
+}

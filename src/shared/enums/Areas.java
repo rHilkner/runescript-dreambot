@@ -25,10 +25,9 @@ public enum Areas {
     EdgevilleBankToFurnace(new Area(3110, 3501, 3094, 3494, 0)),
 
     FaladorSouthChickens(new Area(3014, 3294, 3020, 3282, 0)),
-    FaladorSouthCowPen(new Area(3265, 3296, 3253, 3255, 0)),
 
     GrandExchange(new Area(3160, 3494, 3170, 3484, 0)),
-    GrandExchangeCloseToEastBank(new Area(3172, 3488, 3173, 3491, 0)),
+    GrandExchangeCloseToEastBank(new Area(3169, 3488, 3170, 3491, 0)),
     GrandExchangeNorthFiremake(new Area(3176, 3496, 3177, 3497, 0)),
 
     KaramjaToPortSarimBoat(new Area(3033, 3218, 3032, 3215, 1)),
@@ -36,6 +35,7 @@ public enum Areas {
     KaramjaVolcanoWest(new Area(2821, 3188, 2836, 3158, 0)),
 
     LumbridgeBank(new Area(3208, 3220, 3209, 3216, 2)),
+    LumbridgeEastCowPen(new Area(3253, 3255, 3265, 3296, 0)),
 
     PortSarimToKaramja(new Area(3026, 3225, 3029, 3213, 0)),
     PortSarimDepositBox(new Area(3041, 3236, 3046, 3234, 0)),

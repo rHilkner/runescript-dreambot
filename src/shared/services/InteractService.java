@@ -36,13 +36,11 @@ public class InteractService extends AbstractService {
 
         if (item != null && gameObject != null && gameObject.exists()) {
             if (itemFirst) {
-                item.interact();
-                gameObject.interact();
+                item.useOn(gameObject);
             } else {
                 gameObject.interact();
                 item.interact();
             }
-            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return true;
         }
@@ -77,11 +75,14 @@ public class InteractService extends AbstractService {
     }
 
     public void interactInventoryItem(int slot, String action) {
-        Item item = ctx.getInventory().get(slot);
-        if (item != null ) {
+        Item item = ctx.getInventory().get(i -> i != null && i.getSlot() == slot);
+        if (item != null) {
+            logScript("Interacting with item in inventory: " + item.getName() + " on slot " + slot);
             if (item.interact(action)) {
                 antibanService.antibanSleep(AntibanActionType.FastPace);
             }
+        } else {
+            logScript("item fucking null?");
         }
     }
 

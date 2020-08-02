@@ -29,8 +29,9 @@ public class BankService extends AbstractService {
     public boolean openBank() {
         int counter = 0;
         while (!ctx.getBank().isOpen() && counter < 20) {
-            ctx.logScript("Opening bank");
+            ctx.logScript("Trying to open bank");
             sleepUntil(() -> ctx.getBank().openClosest(), Constants.MAX_SLEEP_UNTIL);
+            ctx.logScript("Opening bank");
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
         }
@@ -39,8 +40,9 @@ public class BankService extends AbstractService {
 
     public void closeBank() {
         if (ctx.getBank().isOpen()) {
-            ctx.logScript("Closing bank");
+            ctx.logScript("Trying to close bank");
             sleepUntil(() -> ctx.getBank().close(), Constants.MAX_SLEEP_UNTIL);
+            ctx.logScript("Closing bank");
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
     }

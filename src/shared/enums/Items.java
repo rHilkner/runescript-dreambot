@@ -3,6 +3,7 @@ package shared.enums;
 public enum Items {
     Coins("Coins"),
     Bones("Bones"),
+    Cowhide("Cowhide"),
     Feather("Feather"),
 
     BronzeAxe("Bronze axe"),
@@ -44,6 +45,11 @@ public enum Items {
     RawAnchovies("Raw anchovies"),
     RawTrout("Raw trout"),
     RawSalmon("Raw salmon"),
+
+    Shrimps("Shrimps"),
+    Anchovies("Anchovies"),
+    Trout("Trout"),
+    Salmon("Salmon"),
     ;
 
     public final String name;

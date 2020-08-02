@@ -50,8 +50,10 @@ public class SharedService extends AbstractService {
 
         Tile randomTile = area.getRandomTile();
 
-        logScript("Walking to: " + randomTile);
-        if (!area.contains(ctx.getLocalPlayer())) {
+        if (area.contains(ctx.getLocalPlayer())) {
+            logScript("Player already in area on tile: " + ctx.getLocalPlayer().getTile());
+        } else {
+            logScript("Walking to: " + randomTile);
             if (ctx.getWalking().walk(randomTile)) {
                 antibanService.antibanSleep(AntibanActionType.Walking);
             }

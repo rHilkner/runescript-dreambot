@@ -1,7 +1,10 @@
 package shared.enums;
 
 public enum GameObjects {
-    Fire("Fire");
+    Fire("Fire"),
+    Cow("Cow"),
+    Furnace("Furnace"),
+    ;
 
     public String name;
 
