@@ -134,9 +134,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
             if (!sharedService.walkTo(eggArea)) {
                 return false;
             }
-            if (!interactService.takeClosestGroundItem(Items.Egg.name)) {
-                return false;
-            }
+            return interactService.takeClosestGroundItem(Items.Egg.name);
         }
         return true;
     }
@@ -146,9 +144,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
             if (!sharedService.walkTo(cookArea)) {
                 return false;
             }
-            if (!interactService.takeClosestGroundItem(Items.Pot.name)) {
-                return false;
-            }
+            return interactService.takeClosestGroundItem(Items.Pot.name);
         }
         return true;
     }

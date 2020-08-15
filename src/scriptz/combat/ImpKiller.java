@@ -60,7 +60,7 @@ public class ImpKiller extends RunescriptAbstractContext {
         if (Areas.KaramjaVolcanoWest.getArea().contains(getLocalPlayer())) {
             String[] targets = new String[]{"Imp"};
             String[] lootItems = new String[]{"Black bead", "White bead", "Yellow bead", "Blue bead", "Red bead", "Mind talisman"};
-            combatService.combatLoot(targets, lootItems, Areas.KaramjaVolcanoWest.getArea(), true, false);
+            combatService.combatLoot(targets, lootItems, Areas.KaramjaVolcanoWest.getArea(), null, false, true);
         } else if (sharedService.walkTo(Areas.KaramjaVolcanoWest)) {
             logScript("Going to volcano");
         } else {

@@ -26,7 +26,7 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
     private GrandExchangeService grandExchangeService;
 
     private boolean rebuy = false;
-    private final int MAX_BUY = 800;
+    private final int MAX_BUY = 1000;
 
     private int initialMoney = -1;
     private int totalCoins = -1;

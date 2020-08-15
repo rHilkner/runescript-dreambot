@@ -3,6 +3,7 @@ package shared.enums;
 public enum GameObjects {
     Fire("Fire"),
     Cow("Cow"),
+    HillGiant("Hill Giant"),
     Furnace("Furnace"),
     DairyCow("Dairy cow"),
     FlourBin("Flour bin"),

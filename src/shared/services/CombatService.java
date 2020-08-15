@@ -31,7 +31,7 @@ public class CombatService extends AbstractService {
         return instance;
     }
 
-    public void combatLoot(String[] targets, String[] lootItems, Area area, boolean prioritizeLoot, boolean buryBones) {
+    public void combatLoot(String[] targets, String[] lootItems, Area area, Integer minQuantity, boolean buryBones, boolean prioritizeLoot) {
 
         if (ctx.getLocalPlayer().isInCombat()) {
             // Sleep until player is not in combat
@@ -40,9 +40,9 @@ public class CombatService extends AbstractService {
         }
 
         if (prioritizeLoot) {
-            takeLootLoop(lootItems);
+            takeLootLoop(lootItems, minQuantity);
         } else {
-            takeLootIfCloseEnough(targets, lootItems);
+            takeLootIfCloseEnough(targets, lootItems, minQuantity);
         }
 
         if (buryBones) {
@@ -63,7 +63,7 @@ public class CombatService extends AbstractService {
         return ctx.getNpcs().closest(t -> t != null && !t.isInCombat() && Util.isElementInArray(t.getName(), targets));
     }
 
-    private void takeLootIfCloseEnough(String[] targets, String[] lootItems) {
+    private void takeLootIfCloseEnough(String[] targets, String[] lootItems, Integer minQuantity) {
         // Getting nearest target that is not in a combat
         NPC target = closestTargetNotInCombat(targets);
         // Getting nearest loots in the ground
@@ -73,7 +73,7 @@ public class CombatService extends AbstractService {
         Double targetDistance = target != null ? target.distance(ctx.getLocalPlayer()) : null;
 
         // while loot is closer than target, take loot
-        while (loot != null && ctx.getMap().canReach(loot) && (target == null || lootDistance < targetDistance)) {
+        while (loot != null && ctx.getMap().canReach(loot) && (minQuantity == null || loot.getAmount() >= minQuantity) && (target == null || lootDistance < targetDistance)) {
             sharedService.takeLoot(loot);
             antibanService.antibanSleep(AntibanActionType.FastPace);
 
@@ -83,7 +83,7 @@ public class CombatService extends AbstractService {
         }
     }
 
-    private void takeLootLoop(String[] lootItems) {
+    private void takeLootLoop(String[] lootItems, Integer minQuantity) {
         GroundItem loot = ctx.getGroundItems().closest(lootItems);
 
         while (loot != null && ctx.getMap().canReach(loot) && !ctx.getInventory().isFull()) {

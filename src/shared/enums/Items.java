@@ -58,6 +58,25 @@ public enum Items {
     BucketOfMilk("Bucket of milk"),
     Wheat("Wheat"),
     Grain("Grain"),
+
+    Cake("Cake"),
+    ChocolateCake("Chocolate cake"),
+
+    IronArrow("Iron arrow"),
+
+    NatureRune("Nature rune"),
+    LawRune("Law rune"),
+    CosmicRune("Cosmic rune"),
+    ChaosRune("Chaos rune"),
+    DeathRune("Death rune"),
+
+    UncutSapphire("Uncut sapphire"),
+    UncutEmerald("Uncut emerald"),
+    UncutRuby("Uncut ruby"),
+    UncutDiamond("Uncut diamond"),
+
+    BrassKey("Brass key"),
+    GiantKey("Giant key"),
     ;
 
     public final String name;

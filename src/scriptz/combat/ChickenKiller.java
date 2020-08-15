@@ -3,7 +3,9 @@ package scriptz.combat;
 import org.dreambot.api.methods.skills.Skill;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
+import org.dreambot.api.wrappers.items.Item;
 import scriptz.RunescriptAbstractContext;
+import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.Items;
 import shared.services.AntibanService;
@@ -15,6 +17,8 @@ public class ChickenKiller extends RunescriptAbstractContext {
     private CombatService combatService;
     private AntibanService antibanService;
 
+    String[] targets = new String[]{"Chicken"};
+    String[] loots = new String[]{Items.Feather.name, Items.IronArrow.name};
 
     @Override
     public void onStart() {
@@ -31,13 +35,18 @@ public class ChickenKiller extends RunescriptAbstractContext {
         super.onLoop();
         logScript("Loop of killing chicken");
 
-        String[] targets = new String[]{"Chicken"};
+        if (getInventory().contains(i -> i != null && Items.IronArrow.name.equals(i.getName()))) {
+            Item ironArrow = getInventory().get(Items.IronArrow.name);
+            ironArrow.interact();
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+        }
+
 
         if (Areas.FaladorSouthChickens.getArea().contains(ctx.getLocalPlayer())) {
             combatService.combatLoot(targets,
-                    new String[]{Items.Feather.name, Items.Bones.name},
+                    loots,
                     Areas.FaladorSouthChickens.getArea(),
-                    false, true);
+                    null, true, false);
         } else {
             sharedService.walkTo(Areas.FaladorSouthChickens);
         }

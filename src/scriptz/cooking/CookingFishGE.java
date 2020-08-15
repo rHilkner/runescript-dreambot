@@ -123,7 +123,6 @@ public class CookingFishGE extends RunescriptAbstractContext {
                 Item fish = getInventory().get(i -> i != null && fishesToFry.contains(i.getName()));
                 interactService.interactGameObjectWithInventoryItem(fish.getName(), GameObjects.Fire.name, true);
                 sleepUntil(() -> !getLocalPlayer().isAnimating() && !getLocalPlayer().isMoving() && getLocalPlayer().isStandingStill(), 3000);
-                antibanService.antibanSleep(AntibanActionType.FastPace);
                 getKeyboard().type(" ");
                 sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
                 antibanService.antibanSleep(AntibanActionType.FastPace);

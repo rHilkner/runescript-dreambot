@@ -35,7 +35,7 @@ public class CowKiller extends RunescriptAbstractContext {
     private int initialPrayerXp = -1;
 
     private final String[] targets = new String[]{GameObjects.Cow.name};
-    private final String[] loot = new String[]{};
+    private final String[] loot = new String[]{Items.IronArrow.name};
     private final List<String> itemsToEat = Arrays.asList(Items.Shrimps.name, Items.Trout.name);
 
     private CombatService combatService;
@@ -114,7 +114,7 @@ public class CowKiller extends RunescriptAbstractContext {
                 for (int i = 0; i < itemsToEat.size(); i++) {
                     String fishName = itemsToEat.get(i);
                     if (getInventory().isEmpty() && getBank().count(fishName) > 0) {
-                        bankService.withdraw(fishName, null, false, false);
+                        bankService.withdraw(fishName, 24, false, false);
                         break;
                     }
                 }
@@ -129,9 +129,11 @@ public class CowKiller extends RunescriptAbstractContext {
                 break;
 
             case KILL_COW:
+                equipIronArrows();
                 combatService.combatLoot(targets, loot,
                         Areas.LumbridgeEastCowPen.getArea(),
-                        false, false);
+                        null, false, false);
+                equipIronArrows();
                 break;
 
             case KEEP_KILLING_COW:
@@ -168,6 +170,15 @@ public class CowKiller extends RunescriptAbstractContext {
         }
 
         return 0;
+    }
+
+    public void equipIronArrows() {
+        if (getInventory().contains(i -> i != null && Items.IronArrow.name.equals(i.getName()))) {
+            logScript("Equiping iron arrows");
+            Item ironArrow = getInventory().get(Items.IronArrow.name);
+            ironArrow.interact();
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+        }
     }
 
     private void printPlayerStats() {

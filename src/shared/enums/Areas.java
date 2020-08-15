@@ -24,6 +24,12 @@ public enum Areas {
     EdgevilleBankNorth(new Area(3095, 3494, 3098, 3496, 0)),
     EdgevilleBankToFurnace(new Area(3110, 3501, 3094, 3494, 0)),
 
+    EdgevilleDungeonTop(new Area(3093, 3468, 3097, 3471, 0)),
+    EdgevilleDungeonVarrockTop(new Area(3115, 3450, 3117, 3453, 0)),
+    EdgevilleDungeonVarrockTopOutside(new Area(3114, 3449, 3119, 3446, 0)),
+    EdgevilleDungeonHillGiants(new Area(3095, 9824, 3125, 9860, 0)),
+    EdgevilleDungeonHillGiantsLadder(new Area(3115, 9850, 3118, 9853, 0)),
+
     FaladorSouthChickens(new Area(3014, 3294, 3020, 3282, 0)),
 
     GrandExchange(new Area(3160, 3494, 3170, 3484, 0)),
