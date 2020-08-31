@@ -1,7 +1,6 @@
 package shared.services;
 
 import org.dreambot.api.methods.map.Tile;
-import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.Item;
 import shared.Constants;
 import shared.enums.AntibanActionType;

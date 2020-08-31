@@ -34,7 +34,7 @@ public enum Areas {
 
     GrandExchange(new Area(3160, 3494, 3170, 3484, 0)),
     GrandExchangeCloseToEastBank(new Area(3169, 3488, 3170, 3491, 0)),
-    GrandExchangeNorthFiremake(new Area(3176, 3496, 3177, 3497, 0)),
+    GrandExchangeNorthFiremake(new Area(3176, 3501, 3177, 3506, 0)),
 
     KaramjaToPortSarimBoat(new Area(3033, 3218, 3032, 3215, 1)),
     KaramjaToPortSarim(new Area(2950, 3146, 2955, 3149, 0)),
@@ -45,7 +45,14 @@ public enum Areas {
 
     PortSarimToKaramja(new Area(3026, 3225, 3029, 3213, 0)),
     PortSarimDepositBox(new Area(3041, 3236, 3046, 3234, 0)),
-    PortSarimToKaramjaBoat(new Area(2957, 3142, 2955, 3143, 1));
+    PortSarimToKaramjaBoat(new Area(2957, 3142, 2955, 3143, 1)),
+
+    VarrockWestBank(new Area(3180, 3433, 3185, 3445, 0)),
+    VarrockSouthWestMineClay(new Area(3179, 3371, 3180, 3372, 0)),
+    VarrockSouthWestMineTin(new Area(3181, 3375, 3182, 3377, 0)),
+    VarrockSouthWestMineIron(new Area(3174, 3366, 3175, 3368, 0)),
+
+    ;
 
     private final Area area;
 

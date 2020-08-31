@@ -57,7 +57,20 @@ public class InteractService extends AbstractService {
             } else {
                 gameObject.interact();
                 item.interact();
+                antibanService.antibanSleep(AntibanActionType.FastPace);
             }
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean interactWithGameObject(GameObject gameObject) {
+
+        if (gameObject != null && gameObject.exists()) {
+            logScript("Interacting with game-object [" + gameObject.getName() + "]");
+            gameObject.interact();
+            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return true;
         }
@@ -69,7 +82,7 @@ public class InteractService extends AbstractService {
         GameObject gameObject = ctx.getGameObjects().closest(gameObjectName);
 
         if (gameObject != null && gameObject.exists() && gameObject.hasAction(action)) {
-            logScript("Interacting with game-object " + gameObjectName + " with action " + action);
+            logScript("Interacting with game-object [" + gameObjectName + "] with action [" + action + "]");
             gameObject.interact(action);
             sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
@@ -83,14 +96,26 @@ public class InteractService extends AbstractService {
         GameObject gameObject = ctx.getGameObjects().closest(gameObjectName);
 
         if (gameObject != null && gameObject.exists()) {
-            logScript("Interacting with game-object " + gameObjectName);
+            logScript("Interacting with game-object [" + gameObjectName + "]");
             gameObject.interact();
-            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return true;
         }
 
         return false;
+    }
+
+    public void interactInventoryItem(String name, String action) {
+        Item item = ctx.getInventory().get(i -> i != null && i.getName() == name);
+        if (item != null) {
+            logScript("Interacting with item in inventory: " + item.getName());
+            if (item.interact(action)) {
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+            }
+        } else {
+            logScript("item fucking null?");
+        }
     }
 
     public void interactInventoryItem(int slot, String action) {
@@ -115,22 +140,13 @@ public class InteractService extends AbstractService {
                 Item finalItem = item1;
                 Item finalItem1 = item2;
                 finalItem.useOn(finalItem1);
-                antibanService.antibanSleep(AntibanActionType.Latency);
                 item1 = ctx.getInventory().get(itemName1);
                 item2 = interactWithLast ? inventoryService.getLastItem(itemName2) : ctx.getInventory().get(itemName2);
             }
-        } else {
-
-            if (item1 != null && item2 != null) {
-                Item finalItem = item1;
-                Item finalItem1 = item2;
-                sleepUntil(() -> finalItem.useOn(finalItem1), Constants.MAX_SLEEP_UNTIL);
-                antibanService.antibanSleep(AntibanActionType.FastPace);
-            }
-
-            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.FastPace);
+        } else if (item1 != null && item2 != null) {
+            item1.useOn(item2);
         }
+        antibanService.antibanSleep(AntibanActionType.FastPace);
     }
 
     public void interactWithWidget(WidgetChild widgetChild) {

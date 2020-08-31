@@ -20,8 +20,6 @@ public abstract class AbstractFiremaker extends RunescriptAbstractContext {
     private FiremakingService firemakingService;
     private BankService bankService;
 
-    /** LOOP FUNCTIONS */
-
     public void onStart(Items logs, Areas fireStartArea) {
         super.onStart();
         logScript("Starting AbstractFiremaker for fireing " + logs.name + " at " + fireStartArea.name());

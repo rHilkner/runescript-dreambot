@@ -15,6 +15,15 @@ public enum Items {
     RuneAxe("Rune axe"),
     DragonAxe("Dragon axe"),
 
+    BronzePickaxe("Bronze pickaxe"),
+    IronPickaxe("Iron pickaxe"),
+    SteelPickaxe("Steel pickaxe"),
+    BlackPickaxe("Black pickaxe"),
+    MithrilPickaxe("Mithril pickaxe"),
+    AdamantPickaxe("Adamant pickaxe"),
+    RunePickaxe("Rune pickaxe"),
+    DragonPickaxe("Dragon pickaxe"),
+
     PotOfFlour("Pot of flour"),
     JugOfWater("Jug of water"),
     PizzaBase("Pizza base"),
