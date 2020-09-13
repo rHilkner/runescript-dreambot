@@ -156,7 +156,7 @@ public class AntibanService extends  AbstractService {
                 scale = (int) Calculations.random(minScale, maxScale); // P(X < 3s) = 0.5 - shape = 2; scale = 1.8k
                 break;
             case Latency:
-                return Calculations.random(8, 50);
+                return Calculations.random(70, 120);
         }
 
         if (antibanActionType == AntibanActionType.Walking) {

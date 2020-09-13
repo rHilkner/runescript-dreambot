@@ -112,7 +112,7 @@ public class BankService extends AbstractService {
         if (openBank()) {
             ctx.logScript("Trying to bank all");
             int counter = 0;
-            while (!ctx.getInventory().isEmpty() && counter < 20) {
+            while (!ctx.getInventory().isEmpty() && counter < 8) {
                 ctx.getBank().depositAllItems();
                 antibanService.antibanSleep(AntibanActionType.FastPace);
                 counter++;

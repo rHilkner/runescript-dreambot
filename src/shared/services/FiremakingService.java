@@ -75,7 +75,7 @@ public class FiremakingService extends AbstractService {
             Item logs = ctx.getInventory().get(logsName);
             if (tinderbox == null || logs == null) {
                 ctx.logScript("No tinderbox or logs found");
-                continue;
+                return;
             }
 
             int logsOriginalSlot = logs.getSlot();

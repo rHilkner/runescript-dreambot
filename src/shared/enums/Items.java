@@ -86,6 +86,13 @@ public enum Items {
 
     BrassKey("Brass key"),
     GiantKey("Giant key"),
+
+    ArrowShaft("Arrow shaft"),
+    HeadlessArrow("Headless arrow"),
+    BowString("Bow string"),
+
+    MapleLongbowU("Maple longbow (u)"),
+
     ;
 
     public final String name;

@@ -45,9 +45,9 @@ public abstract class AbstractFiremaker extends RunescriptAbstractContext {
                     didPlayerJustBank = false;
                 }
             } else {
-                firemakingService.fireLogs(logs.name, false);
+                firemakingService.fireLogs(logs.name, true);
             }
-        } else {
+        } else if (!getLocalPlayer().isMoving()) {
             bankService.openBank();
             if (getBank().count(logs.name) == 0) {
                 stop();

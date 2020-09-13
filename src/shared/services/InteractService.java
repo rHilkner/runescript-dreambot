@@ -8,6 +8,8 @@ import org.dreambot.api.wrappers.widgets.WidgetChild;
 import shared.Constants;
 import shared.enums.AntibanActionType;
 
+import java.util.Objects;
+
 import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
 
@@ -107,7 +109,7 @@ public class InteractService extends AbstractService {
     }
 
     public void interactInventoryItem(String name, String action) {
-        Item item = ctx.getInventory().get(i -> i != null && i.getName() == name);
+        Item item = ctx.getInventory().get(i -> i != null && Objects.equals(i.getName(), name));
         if (item != null) {
             logScript("Interacting with item in inventory: " + item.getName());
             if (item.interact(action)) {

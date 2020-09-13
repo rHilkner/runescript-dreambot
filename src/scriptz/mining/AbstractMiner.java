@@ -16,6 +16,7 @@ import shared.services.InteractService;
 import shared.services.MiningService;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractMiner extends RunescriptAbstractContext {
@@ -89,14 +90,7 @@ public abstract class AbstractMiner extends RunescriptAbstractContext {
 
             case BANK:
 
-                Item playersPickaxe = null;
-                if (getTabs().open(Tab.EQUIPMENT)) {
-                    if (ctx.getEquipment() == null) {
-                        logScript("wtf equip is null");
-                        stop();
-                    }
-                    playersPickaxe = getEquipment().get(i -> i != null && i.getName() != null && i.getName().endsWith("pickaxe"));
-                }
+                Item playersPickaxe = getEquipment().get(i -> i != null && i.getName() != null && i.getName().endsWith("pickaxe"));
 
                 if (!sharedService.walkTo(bankArea)) {
                     break;
@@ -104,30 +98,25 @@ public abstract class AbstractMiner extends RunescriptAbstractContext {
 
                 bankService.bankAll(false);
 
-                for (Item item : getEquipment().getCollection()) {
-                    logScript("Item name " + item.getName());
-                }
-
-
                 // Getting best pickaxe possible in bank
                 int miningLvl = getSkills().getRealLevel(Skill.MINING);
                 String playersBestPickaxe = null;
 
-                if (miningLvl >= 51 && getBank().contains(Items.DragonPickaxe.name)) {
+                if (miningLvl >= 51 && (getBank().contains(Items.DragonPickaxe.name) || (playersPickaxe != null && Objects.equals(playersPickaxe.getName(), Items.DragonPickaxe.name)))) {
                     playersBestPickaxe = Items.DragonPickaxe.name;
-                } else if (miningLvl >= 41 && getBank().contains(Items.RunePickaxe.name)) {
+                } else if (miningLvl >= 41 && (getBank().contains(Items.RunePickaxe.name) || (playersPickaxe != null && Objects.equals(playersPickaxe.getName(), Items.RunePickaxe.name)))) {
                     playersBestPickaxe = Items.RunePickaxe.name;
-                } else if (miningLvl >= 31 && getBank().contains(Items.AdamantPickaxe.name)) {
+                } else if (miningLvl >= 31 && (getBank().contains(Items.AdamantPickaxe.name) || (playersPickaxe != null && Objects.equals(playersPickaxe.getName(), Items.AdamantPickaxe.name)))) {
                     playersBestPickaxe = Items.AdamantPickaxe.name;
-                } else if (miningLvl >= 21 && getBank().contains(Items.MithrilPickaxe.name)) {
+                } else if (miningLvl >= 21 && (getBank().contains(Items.MithrilPickaxe.name) || (playersPickaxe != null && Objects.equals(playersPickaxe.getName(), Items.MithrilPickaxe.name)))) {
                     playersBestPickaxe = Items.MithrilPickaxe.name;
-                } else if (miningLvl >= 11 && getBank().contains(Items.BlackPickaxe.name)) {
+                } else if (miningLvl >= 11 && (getBank().contains(Items.BlackPickaxe.name) || (playersPickaxe != null && Objects.equals(playersPickaxe.getName(), Items.BlackPickaxe.name)))) {
                     playersBestPickaxe = Items.BlackPickaxe.name;
-                } else if (miningLvl >= 6 && getBank().contains(Items.SteelPickaxe.name)) {
+                } else if (miningLvl >= 6 && (getBank().contains(Items.SteelPickaxe.name) || (playersPickaxe != null && Objects.equals(playersPickaxe.getName(), Items.SteelPickaxe.name)))) {
                     playersBestPickaxe = Items.SteelPickaxe.name;
-                } else if (miningLvl >= 1 && getBank().contains(Items.IronPickaxe.name)) {
+                } else if (miningLvl >= 1 && (getBank().contains(Items.IronPickaxe.name) || (playersPickaxe != null && Objects.equals(playersPickaxe.getName(), Items.IronPickaxe.name)))) {
                     playersBestPickaxe = Items.IronPickaxe.name;
-                } else if (getBank().contains(Items.BronzePickaxe.name)) {
+                } else if (getBank().contains(Items.BronzePickaxe.name) || (playersPickaxe != null && Objects.equals(playersPickaxe.getName(), Items.BronzePickaxe.name))) {
                     playersBestPickaxe = Items.BronzePickaxe.name;
                 }
 
@@ -141,7 +130,9 @@ public abstract class AbstractMiner extends RunescriptAbstractContext {
                 if (playersPickaxe == null || !Objects.equals(playersPickaxe.getName(), playersBestPickaxe)) {
                     logScript("Going to equip pickaxe [" + playersBestPickaxe + "]");
                     bankService.withdraw(playersBestPickaxe, 1, true, false);
-                    interactService.interactInventoryItem(playersBestPickaxe, "Equip");
+                    if (getTabs().open(Tab.INVENTORY)) {
+                        interactService.interactInventoryItem(playersBestPickaxe, "Wield");
+                    }
                     bankService.bankAll(true);
                 }
 
