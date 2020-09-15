@@ -7,7 +7,6 @@ import org.dreambot.api.wrappers.items.Item;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
 import shared.Util;
-import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.Items;
 import shared.enums.RockTypes;
@@ -16,7 +15,6 @@ import shared.services.InteractService;
 import shared.services.MiningService;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractMiner extends RunescriptAbstractContext {

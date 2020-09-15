@@ -108,6 +108,18 @@ public class InteractService extends AbstractService {
         return false;
     }
 
+    public void interactInventoryItem(String name) {
+        Item item = ctx.getInventory().get(i -> i != null && Objects.equals(i.getName(), name));
+        if (item != null) {
+            logScript("Interacting with item in inventory: " + item.getName());
+            if (item.interact()) {
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+            }
+        } else {
+            logScript("item fucking null?");
+        }
+    }
+
     public void interactInventoryItem(String name, String action) {
         Item item = ctx.getInventory().get(i -> i != null && Objects.equals(i.getName(), name));
         if (item != null) {
@@ -162,6 +174,7 @@ public class InteractService extends AbstractService {
         if (npc != null && npc.hasAction(action)) {
             logScript("Interacting with closest NPC " + npcName + " with action " + action);
             boolean didInteract = npc.interact(action);
+            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return didInteract;
         }

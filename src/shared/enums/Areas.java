@@ -23,6 +23,7 @@ public enum Areas {
     EdgevilleFurnace(new Area(3109, 3500, 3105, 3498, 0)),
     EdgevilleBankNorth(new Area(3095, 3494, 3098, 3496, 0)),
     EdgevilleBankToFurnace(new Area(3110, 3501, 3094, 3494, 0)),
+    EdgevilleHayStacks(new Area(3091, 3507, 3100, 3513, 0)),
 
     EdgevilleDungeonTop(new Area(3093, 3468, 3097, 3471, 0)),
     EdgevilleDungeonVarrockTop(new Area(3115, 3450, 3117, 3453, 0)),

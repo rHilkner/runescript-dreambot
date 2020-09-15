@@ -61,7 +61,7 @@ public class MakingMapleBows extends RunescriptAbstractContext {
                 sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
 
                 int counter = 0;
-                while (counter < 5) {
+                while (getInventory().contains(Items.MapleLogs.name) && counter < 5) {
                     counter++;
                     antibanService.antibanSleep(AntibanActionType.SlowPace);
                     if (getLocalPlayer().isAnimating()) {

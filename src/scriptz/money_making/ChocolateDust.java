@@ -11,6 +11,7 @@ import shared.services.InteractService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 @ScriptManifest(author = "Xpt", name = "Chocolate dust", version = 1.0, description = "Makes chocolate dust", category = Category.MONEYMAKING)
@@ -126,7 +127,7 @@ public class ChocolateDust extends RunescriptAbstractContext {
         switch (currentState) {
 
             case EAT_LAST_CHOCOLATE:
-                List<Item> itemList = getInventory().getCollection();
+                List<Item> itemList = getInventory().all();
                 // sort starting by last position of inventory
                 itemList.sort((a, b) -> b.getSlot() - a.getSlot());
                 for (Item item : itemList) {

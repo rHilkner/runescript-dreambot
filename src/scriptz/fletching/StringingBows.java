@@ -61,7 +61,7 @@ public class StringingBows extends RunescriptAbstractContext {
                 sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
 
                 int counter = 0;
-                while (counter < 4) {
+                while (getInventory().count(Items.MapleLongbowU.name) > 0 && getInventory().count(Items.BowString.name) > 0 && counter < 8) {
                     counter++;
                     antibanService.antibanSleep(AntibanActionType.SlowPace);
                     if (getLocalPlayer().isAnimating()) {

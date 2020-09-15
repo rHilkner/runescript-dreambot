@@ -61,7 +61,7 @@ public class MakingHeadlessArrows extends RunescriptAbstractContext {
                 sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
 
                 int counter = 0;
-                while (counter < 3) {
+                while (getInventory().contains(Items.ArrowShaft.name) && getInventory().contains(Items.Feather.name) && counter < 8) {
                     counter++;
                     antibanService.antibanSleep(AntibanActionType.SlowPace);
                     if (getLocalPlayer().isAnimating()) {

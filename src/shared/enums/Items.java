@@ -2,6 +2,7 @@ package shared.enums;
 
 public enum Items {
     Coins("Coins"),
+    CoinPouch("Coin pouch"),
     Bones("Bones"),
     Cowhide("Cowhide"),
     Feather("Feather"),
@@ -92,6 +93,12 @@ public enum Items {
     BowString("Bow string"),
 
     MapleLongbowU("Maple longbow (u)"),
+
+    TinOre("Tin ore"),
+    CopperOre("Copper ore"),
+    IronOre("Iron ore"),
+
+    RingOfForging("Ring of forging"),
 
     ;
 

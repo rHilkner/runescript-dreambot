@@ -98,7 +98,7 @@ public class BankService extends AbstractService {
             }
         }
 
-        for (Item item : ctx.getInventory().getCollection()) {
+        for (Item item : ctx.getInventory().all()) {
             for (String itemName : exceptItems) {
                 if (item != null && !Objects.equals(item.getName(), itemName)) {
                     return false;

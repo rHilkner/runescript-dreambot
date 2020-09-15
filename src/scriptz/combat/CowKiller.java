@@ -62,7 +62,7 @@ public class CowKiller extends RunescriptAbstractContext {
 
         logScript("health % = " + getLocalPlayer().getHealthPercent());
         boolean inventoryContainsItemsToEat = false;
-        for (Item item : getInventory().getCollection()) {
+        for (Item item : getInventory().all()) {
             if (item != null && itemsToEat.contains(item.getName())) {
                 inventoryContainsItemsToEat = true;
             }
@@ -149,7 +149,7 @@ public class CowKiller extends RunescriptAbstractContext {
                 break;
 
             case EAT:
-                List<Item> itemList = getInventory().getCollection().stream().filter(Objects::nonNull).sorted(Comparator.comparingInt(Item::getSlot)).collect(Collectors.toList());
+                List<Item> itemList = getInventory().all().stream().filter(Objects::nonNull).sorted(Comparator.comparingInt(Item::getSlot)).collect(Collectors.toList());
                 for (Item item : itemList) {
                     logScript("Item name: " + item.getName());
                     if (itemsToEat.contains(item.getName())) {
