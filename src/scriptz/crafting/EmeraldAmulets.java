@@ -7,6 +7,7 @@ import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.widgets.WidgetChild;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.Items;
@@ -190,12 +191,12 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
                     break;
                 }
 
-                sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
 
                 WidgetChild widgetChild;
                 int counter = 0;
                 do {
-                    widgetChild = getWidgets().getWidget(446) == null ? null : getWidgets().getWidget(446).getChild(36);
+                    widgetChild = getWidgets().getWidgetChild(446, 36);
                     sleep(200);
                     counter++;
                 } while (widgetChild == null && counter < 20);

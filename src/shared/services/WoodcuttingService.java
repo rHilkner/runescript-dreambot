@@ -2,6 +2,7 @@ package shared.services;
 
 import org.dreambot.api.wrappers.interactive.GameObject;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Trees;
 
@@ -30,7 +31,7 @@ public class WoodcuttingService extends AbstractService {
             ctx.logScript("Chopping down " + tree.getTreeName());
             antibanService.antibanSleep(AntibanActionType.SlowPace);
             if (ctx.getLocalPlayer().isAnimating()) {
-                sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
             }
         }

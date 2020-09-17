@@ -2,6 +2,7 @@ package shared.services;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.skills.Skill;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.AntibanDistractionType;
 import shared.enums.GameStyle;
@@ -100,7 +101,7 @@ public class AntibanService extends  AbstractService {
             case Walking:
                 sleepTime = getSleepDuration(AntibanActionType.Walking);
                 logScript("antiban Walking: sleepUntil(!localPlayer.isMoving(), " + sleepTime + ")");
-                sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), sleepTime);
+                Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), sleepTime);
                 break;
             case Latency:
                 sleepTime = getSleepDuration(AntibanActionType.Latency);
@@ -157,6 +158,10 @@ public class AntibanService extends  AbstractService {
                 break;
             case Latency:
                 return Calculations.random(70, 120);
+            case Tick:
+                return Util.getGaussianBetween(490, 720);
+            case HalfTick:
+                return Util.getGaussianBetween(290, 310);
         }
 
         if (antibanActionType == AntibanActionType.Walking) {

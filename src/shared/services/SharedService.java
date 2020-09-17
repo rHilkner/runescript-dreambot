@@ -7,6 +7,7 @@ import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 
@@ -70,7 +71,7 @@ public class SharedService extends AbstractService {
 
         if (ctx.getMap().canReach(randomTile) && ctx.getWalking().walk(randomTile)) {
             logScript("Walking to: " + randomTile);
-            sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.Walking);
         }
     }
@@ -81,7 +82,7 @@ public class SharedService extends AbstractService {
 
         if (ctx.getMap().canReach(tile) && ctx.getWalking().walk(tile)) {
             logScript("Walking to: " + tile);
-            sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.Walking);
         }
     }
@@ -90,7 +91,7 @@ public class SharedService extends AbstractService {
         logScript("Getting loot from the ground: " + loot.getName() + " on " + loot.getTile());
         if (loot.interact("Take")) {
             sleep(RunescriptAbstractContext.getLatency());
-            sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         } else {
             ctx.getWalking().walk(loot.getTile());

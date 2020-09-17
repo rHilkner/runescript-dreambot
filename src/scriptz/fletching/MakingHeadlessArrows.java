@@ -6,6 +6,7 @@ import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Items;
 import shared.services.BankService;
@@ -58,7 +59,7 @@ public class MakingHeadlessArrows extends RunescriptAbstractContext {
                 interactService.interactInventoryItems(Items.ArrowShaft.name, Items.Feather.name, false, false);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
                 getKeyboard().type(" ");
-                sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
+                Util.sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
 
                 int counter = 0;
                 while (getInventory().contains(Items.ArrowShaft.name) && getInventory().contains(Items.Feather.name) && counter < 8) {

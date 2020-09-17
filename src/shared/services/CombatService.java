@@ -35,7 +35,7 @@ public class CombatService extends AbstractService {
 
         if (ctx.getLocalPlayer().isInCombat()) {
             // Sleep until player is not in combat
-            sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
             return;
         }
 
@@ -100,8 +100,8 @@ public class CombatService extends AbstractService {
 
         if (target.interact("Attack")) {
             logScript("Attacking target: " + target.getName() + " on " + target.getTile());
-            sleepUntil(() -> ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
-            sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         } else if (target.isInCombat()) {
             logScript("Target already in combat: " + target.getName() + " on " + target.getTile());

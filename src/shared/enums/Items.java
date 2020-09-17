@@ -37,6 +37,10 @@ public enum Items {
 
     Emerald("Emerald"),
 
+    EmeraldRing("Emerald ring"),
+    RingOfForging("Ring of forging"),
+    RingOfDueling8("Ring of dueling(8)"),
+
     GoldNecklace("Gold necklace"),
     EmeraldAmulet("Emerald amulet"),
     EmeraldAmuletU("Emerald amulet (u)"),
@@ -80,6 +84,11 @@ public enum Items {
     ChaosRune("Chaos rune"),
     DeathRune("Death rune"),
 
+    StaffOfAir("Staff of air"),
+    StaffOfEarth("Staff of earth"),
+    StaffOfWater("Staff of water"),
+    StaffOfFire("Staff of fire"),
+
     UncutSapphire("Uncut sapphire"),
     UncutEmerald("Uncut emerald"),
     UncutRuby("Uncut ruby"),
@@ -93,12 +102,14 @@ public enum Items {
     BowString("Bow string"),
 
     MapleLongbowU("Maple longbow (u)"),
+    YewShortbowU("Yew shortbow (u)"),
+    YewLongbowU("Yew longbow (u)"),
+
+    YewLongbow("Yew longbow"),
 
     TinOre("Tin ore"),
     CopperOre("Copper ore"),
     IronOre("Iron ore"),
-
-    RingOfForging("Ring of forging"),
 
     ;
 

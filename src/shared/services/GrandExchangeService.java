@@ -4,6 +4,7 @@ import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.wrappers.items.Item;
 import org.dreambot.api.wrappers.widgets.WidgetChild;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.services.providers.GrandExchangeApi;
 
@@ -49,8 +50,8 @@ public class GrandExchangeService extends AbstractService {
 
         while (!isGEOpen() && counter < 20) {
             logScript("Opening GE");
-            sleepUntil(() -> ctx.getGrandExchange().open(), Constants.MAX_SLEEP_UNTIL);
-            sleepUntil(() -> ctx.getGrandExchange().isOpen(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getGrandExchange().open(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getGrandExchange().isOpen(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
         }
@@ -63,8 +64,8 @@ public class GrandExchangeService extends AbstractService {
 
         while (isGEOpen() && counter < 20) {
             logScript("Closing GE");
-            sleepUntil(() -> ctx.getGrandExchange().close(), Constants.MAX_SLEEP_UNTIL);
-            sleepUntil(() -> !ctx.getGrandExchange().isOpen(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getGrandExchange().close(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getGrandExchange().isOpen(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
         }
@@ -73,7 +74,7 @@ public class GrandExchangeService extends AbstractService {
 
     public void collect(boolean close) {
         if (openGE()) {
-            sleepUntil(() -> ctx.getGrandExchange().collect(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getGrandExchange().collect(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
 
@@ -196,7 +197,7 @@ public class GrandExchangeService extends AbstractService {
                 }
             } else {
                 ctx.getGrandExchange().openBuyScreen(firstOpenSlot);
-                sleepUntil(() -> ctx.getGrandExchange().isBuyOpen(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> ctx.getGrandExchange().isBuyOpen(), Constants.MAX_SLEEP_UNTIL);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
             }
             counter++;
@@ -248,8 +249,8 @@ public class GrandExchangeService extends AbstractService {
         int counter = 0;
         while (price != ctx.getGrandExchange().getCurrentPrice() && counter < 20) {
             logScript("GE setting price: " + price);
-            sleepUntil(() -> ctx.getGrandExchange().setPrice(price), Constants.MAX_SLEEP_UNTIL);
-            sleepUntil(() -> ctx.getGrandExchange().getCurrentPrice() == price, Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getGrandExchange().setPrice(price), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getGrandExchange().getCurrentPrice() == price, Constants.MAX_SLEEP_UNTIL);
             logScript("GE current price: " + ctx.getGrandExchange().getCurrentPrice());
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
@@ -281,7 +282,7 @@ public class GrandExchangeService extends AbstractService {
             ctx.sleep(Calculations.random(2800, 6200));
 
             logScript("GE setting total amount: " + finalAmount);
-            sleepUntil(() -> ctx.getGrandExchange().setQuantity(finalAmount), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getGrandExchange().setQuantity(finalAmount), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
         }
@@ -294,7 +295,7 @@ public class GrandExchangeService extends AbstractService {
 
         while ((ctx.getGrandExchange().isBuyOpen() || ctx.getGrandExchange().isSellOpen()) && counter < 20) {
             logScript("GE confirming");
-            sleepUntil(() -> ctx.getGrandExchange().confirm(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getGrandExchange().confirm(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
         }

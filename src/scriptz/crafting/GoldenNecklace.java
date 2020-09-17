@@ -166,7 +166,7 @@ public class GoldenNecklace extends RunescriptAbstractContext {
                     if (sharedService.walkTo(Areas.EdgevilleBankToFurnace)) {
                         if (sharedService.walkTo(Areas.EdgevilleFurnace)) {
                              if (interactService.interactWithGameObject("Furnace")) {
-                                 WidgetChild widgetChild = getWidgets().getWidget(446).getChild(21);
+                                 WidgetChild widgetChild = getWidgets().getWidgetChild(446, 21);
                                  if (widgetChild != null) {
                                      logScript("Interacting with " + widgetChild.getText());
                                      widgetChild.interact();

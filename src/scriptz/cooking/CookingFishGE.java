@@ -8,6 +8,7 @@ import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.Item;
 import scriptz.RunescriptAbstractContext;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.GameObjects;
@@ -120,9 +121,9 @@ public class CookingFishGE extends RunescriptAbstractContext {
             case START_COOKING:
                 Item fish = getInventory().get(i -> i != null && fishesToFry.contains(i.getName()));
                 interactService.interactGameObjectWithInventoryItem(fish.getName(), GameObjects.Fire.name, true);
-                sleepUntil(() -> !getLocalPlayer().isAnimating() && !getLocalPlayer().isMoving() && getLocalPlayer().isStandingStill(), 3000);
+                Util.sleepUntil(() -> !getLocalPlayer().isAnimating() && !getLocalPlayer().isMoving() && getLocalPlayer().isStandingStill(), 3000);
                 getKeyboard().type(" ");
-                sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
+                Util.sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
                 antibanService.antibanSleep(AntibanActionType.FastPace);
                 break;
             case KEEP_COOKING:

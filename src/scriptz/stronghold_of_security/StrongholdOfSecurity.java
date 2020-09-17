@@ -5,6 +5,7 @@ import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 
 import java.util.Arrays;
@@ -85,7 +86,7 @@ public class StrongholdOfSecurity extends RunescriptAbstractContext {
             logScript("Interacting with game-object: " + gameObject);
             gameObject.interact(currentInteraction.interactionType);
             antibanService.antibanSleep(AntibanActionType.FastPace);
-            sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         } else {
             logScript("ERROR: Player is in interaction area, but is not finding GameObject with name " + currentInteraction.objectName);

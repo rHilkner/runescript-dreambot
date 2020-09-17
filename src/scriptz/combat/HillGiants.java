@@ -8,6 +8,7 @@ import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.items.Item;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.GameObjects;
@@ -119,10 +120,10 @@ public class HillGiants extends RunescriptAbstractContext {
 
                 if (dungeonLadderArea.getArea().contains(getLocalPlayer())) {
                     if (interactService.interactWithGameObject("Ladder", "Climb-up")) {
-                        sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                        Util.sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                         antibanService.antibanSleep(AntibanActionType.FastPace);
                         interactService.interactWithGameObject("Door", "Open");
-                        sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                        Util.sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                         antibanService.antibanSleep(AntibanActionType.FastPace);
                     }
                 }
@@ -155,13 +156,13 @@ public class HillGiants extends RunescriptAbstractContext {
                 bankService.closeBank(); // just to be sure
 
                 if (sharedService.walkTo(dungeonTopOutArea)) {
-                    sleepUntil(() -> !getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+                    Util.sleepUntil(() -> !getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
                     antibanService.antibanSleep(AntibanActionType.FastPace);
                     if (interactService.interactWithGameObject("Door", "Open")) {
-                        sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                        Util.sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                         antibanService.antibanSleep(AntibanActionType.FastPace);
                         interactService.interactWithGameObject("Ladder", "Climb-down");
-                        sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                        Util.sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                         antibanService.antibanSleep(AntibanActionType.FastPace);
                     }
                 }

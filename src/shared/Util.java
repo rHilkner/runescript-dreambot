@@ -1,5 +1,6 @@
 package shared;
 
+import org.dreambot.api.methods.Calculations;
 import scriptz.RunescriptAbstractContext;
 
 import java.text.DateFormat;
@@ -7,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import org.dreambot.api.utilities.impl.Condition;
 
 public class Util {
 
@@ -54,6 +56,25 @@ public class Util {
             RunescriptAbstractContext.logScript("ERROR: couldn't parse date: " + dateString);
             return null;
         }
+    }
+
+    public static int getGaussianBetween(double start, double end) {
+        // 99% of the chances for a gaussian distribution happens between (peak - 2 sigma) and (peak + 2 sigma)
+        double peak = (start + end) / 2.0;
+        double sigma = (peak - start) / 2.0;
+        return (int) Calculations.nextGaussianRandom(peak, sigma);
+    }
+
+    public static void sleep(int millis) {
+        RunescriptAbstractContext.logScript("Sleeping for " + millis + " ms");
+        RunescriptAbstractContext.sleep(millis);
+    }
+
+    public static void sleepUntil(Condition condition, int maxTime) {
+        Date start = new Date();
+        RunescriptAbstractContext.sleepUntil(condition, maxTime);
+        int timeDiff = (int) (new Date().getTime() - start.getTime());
+        RunescriptAbstractContext.logScript("Slept until for " + timeDiff + " ms");
     }
 
 }

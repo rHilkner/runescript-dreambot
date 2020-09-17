@@ -2,6 +2,7 @@ package shared.services;
 
 import org.dreambot.api.wrappers.interactive.NPC;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.FishingType;
 
@@ -32,7 +33,7 @@ public class FishingService extends AbstractService {
 
             int counter = 0;
             while (ctx.getLocalPlayer().isAnimating() || counter < 4) {
-                sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
                 counter = ctx.getLocalPlayer().isAnimating() ? 0 : counter + 1;
             }

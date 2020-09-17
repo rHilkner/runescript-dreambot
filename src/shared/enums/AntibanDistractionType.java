@@ -35,10 +35,7 @@ public enum AntibanDistractionType {
 
         nextDistractionDate = new Date();
 
-        // 99% of the chances for a gaussian distribution happens between (peak - 2 sigma) and (peak + 2 sigma)
-        double peak = (this.nextDistractionMin + this.nextDistractionMax) / 2.0;
-        double sigma = (peak - this.nextDistractionMin) / 2;
-        int millisToAdd = (int) Calculations.nextGaussianRandom(peak * 1000, sigma * 1000);
+        int millisToAdd = Util.getGaussianBetween(this.nextDistractionMin * 1000, this.nextDistractionMax * 1000);
         this.nextDistractionDate = Util.dateAddMillis(nextDistractionDate, millisToAdd);
 
         logScript("nextDistractionDate " + this.name() + ": " + nextDistractionDate);

@@ -6,6 +6,7 @@ import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Items;
 import shared.services.BankService;
@@ -15,25 +16,26 @@ import shared.services.InteractService;
 @ScriptManifest(author = "xpt", name = "Stringing Bows", version = 1.0, description = "Strings bows", category = Category.FLETCHING)
 public class StringingBows extends RunescriptAbstractContext {
 
-    enum State { BUY, STRING_BOWS, BANK }
+    enum State { STRING_BOWS, BANK }
 
     private BankService bankService;
     private InteractService interactService;
-    private GrandExchangeService grandExchangeService;
+
+    private final String BOW_NAME = Items.YewLongbowU.name;
+    private final String BOW_STRING = Items.BowString.name;
 
     @Override
     public void onStart() {
         super.onStart();
         bankService = BankService.getInstance();
         interactService = InteractService.getInstance();
-        grandExchangeService = GrandExchangeService.getInstance();
         antibanService.setSkillsToHover(Skill.FLETCHING);
 
         logScript("Starting stringing bows script!");
     }
 
     public State getState() {
-        if (getInventory().contains(Items.MapleLongbowU.name) && getInventory().contains(Items.BowString.name)) {
+        if (getInventory().contains(BOW_NAME) && getInventory().contains(BOW_STRING)) {
             return State.STRING_BOWS;
         }
         return State.BANK;
@@ -48,20 +50,18 @@ public class StringingBows extends RunescriptAbstractContext {
 
         switch (currentState) {
 
-            case BUY:
-                break;
             case STRING_BOWS:
                 bankService.closeBank();
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().open(Tab.INVENTORY);
                 }
-                interactService.interactInventoryItems(Items.MapleLongbowU.name, Items.BowString.name, false, false);
+                interactService.interactInventoryItems(BOW_NAME, BOW_STRING, false, false);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
                 getKeyboard().type(" ");
-                sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
+                Util.sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
 
                 int counter = 0;
-                while (getInventory().count(Items.MapleLongbowU.name) > 0 && getInventory().count(Items.BowString.name) > 0 && counter < 8) {
+                while (getInventory().count(BOW_NAME) > 0 && getInventory().count(BOW_STRING) > 0 && counter < 8) {
                     counter++;
                     antibanService.antibanSleep(AntibanActionType.SlowPace);
                     if (getLocalPlayer().isAnimating()) {
@@ -73,11 +73,12 @@ public class StringingBows extends RunescriptAbstractContext {
                 break;
             case BANK:
                 bankService.bankAll(false);
-                if (getBank().count(Items.MapleLongbowU.name) <= 0 || getBank().count(Items.BowString.name) <= 0) {
+                if (getBank().count(BOW_NAME) <= 0 || getBank().count(BOW_STRING) <= 0) {
+                    logScript("No more bows to string. Finishing execution.");
                     stop();
                 } else {
-                    bankService.withdraw(Items.MapleLongbowU.name, 14, false, false);
-                    bankService.withdraw(Items.BowString.name, 14, true, false);
+                    bankService.withdraw(BOW_NAME, 14, false, false);
+                    bankService.withdraw(BOW_STRING, 14, true, false);
                 }
                 break;
 

@@ -3,6 +3,7 @@ package shared.services;
 import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.wrappers.items.Item;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 
 import java.util.Comparator;
@@ -46,7 +47,7 @@ public class InventoryService extends AbstractService {
         while (ctx.getInventory().contains(bonesName)) {
             Item bones = ctx.getInventory().get(bonesName);
             bones.interact("Bury");
-            sleepUntil(() -> !ctx.getLocalPlayer().isStandingStill(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isStandingStill(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
         antibanService.antibanSleep(AntibanActionType.FastPace);

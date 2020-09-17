@@ -2,6 +2,7 @@ package shared.services;
 
 import org.dreambot.api.methods.world.World;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 
 import java.util.Comparator;
@@ -74,7 +75,7 @@ public class WorldHopService extends AbstractService {
 
         if (ctx.getWorldHopper().hopWorld(nextWorld) && ctx.getWorlds().getMyWorld().getWorld() == nextWorld) {
             ctx.logScript("Hopped to world " + ctx.getWorlds().getMyWorld().getWorld());
-            ctx.sleepUntil(() -> ctx.getLocalPlayer().isOnScreen(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getLocalPlayer().isOnScreen(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.SlowPace);
             return true;
         }

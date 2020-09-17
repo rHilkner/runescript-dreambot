@@ -3,6 +3,7 @@ package shared.services;
 import org.dreambot.api.methods.map.Tile;
 import org.dreambot.api.wrappers.items.Item;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Items;
 
@@ -43,12 +44,12 @@ public class FiremakingService extends AbstractService {
         int counter = 0;
         do {
             tinderbox.useOn(logs);
-            ctx.sleepUntil(() -> ctx.getInventory().isSlotEmpty(logsOriginalSlot), 5000);
+            Util.sleepUntil(() -> ctx.getInventory().isSlotEmpty(logsOriginalSlot), 5000);
             antibanService.antibanSleep(AntibanActionType.Latency);
 
             if (ctx.getInventory().isSlotEmpty(logsOriginalSlot)) {
                 ctx.logScript("Fireing logs: " + logsName);
-                ctx.sleepUntil(() -> ctx.getLocalPlayer().getTile() != playerOriginalTile && !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> ctx.getLocalPlayer().getTile() != playerOriginalTile && !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
                 antibanService.antibanSleep(AntibanActionType.Latency);
             } else {
                 ctx.logScript("Couldn't fire logs (" + logsName + ") - walking 1 tile north (or south if walking north fails)");
@@ -81,12 +82,12 @@ public class FiremakingService extends AbstractService {
             int logsOriginalSlot = logs.getSlot();
             Tile playerOriginalTile = ctx.getLocalPlayer().getTile();
             tinderbox.useOn(logs);
-            ctx.sleepUntil(() -> ctx.getInventory().isSlotEmpty(logsOriginalSlot), 5000);
+            Util.sleepUntil(() -> ctx.getInventory().isSlotEmpty(logsOriginalSlot), 5000);
             antibanService.antibanSleep(AntibanActionType.Latency);
 
             if (ctx.getInventory().isSlotEmpty(logsOriginalSlot)) {
                 ctx.logScript("Fireing logs: " + logsName);
-                ctx.sleepUntil(() -> ctx.getLocalPlayer().getTile() != playerOriginalTile && !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> ctx.getLocalPlayer().getTile() != playerOriginalTile && !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
                 antibanService.antibanSleep(AntibanActionType.Latency);
             } else if (walkIfFail) {
                 ctx.logScript("Couldn't fire logs (" + logsName + ") - walking 1 tile north (or south if walking north fails)");

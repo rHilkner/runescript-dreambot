@@ -97,7 +97,7 @@ public class ImpKiller extends RunescriptAbstractContext {
         GameObject plank = getGameObjects().closest(p -> p != null && p.hasAction("Cross"));
         if (plank.exists()) {
             plank.interact("Cross");
-            sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
     }
@@ -128,7 +128,7 @@ public class ImpKiller extends RunescriptAbstractContext {
                 }
             } else {
                 sailor.interact("Pay-fare");
-                sleepUntil(() -> getDialogues().inDialogue(), 8000);
+                Util.sleepUntil(() -> getDialogues().inDialogue(), 8000);
             }
         }
         antibanService.antibanSleep(AntibanActionType.FastPace);

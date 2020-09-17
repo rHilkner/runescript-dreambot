@@ -6,6 +6,7 @@ import org.dreambot.api.wrappers.items.GroundItem;
 import org.dreambot.api.wrappers.items.Item;
 import org.dreambot.api.wrappers.widgets.WidgetChild;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 
 import java.util.Objects;
@@ -40,7 +41,7 @@ public class InteractService extends AbstractService {
             if (item.interact("Take")) {
                 return true;
             }
-            sleepUntil(() -> ctx.getInventory().contains(itemName), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getInventory().contains(itemName), Constants.MAX_SLEEP_UNTIL);
             counter++;
         }
         return false;
@@ -72,7 +73,7 @@ public class InteractService extends AbstractService {
         if (gameObject != null && gameObject.exists()) {
             logScript("Interacting with game-object [" + gameObject.getName() + "]");
             gameObject.interact();
-            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return true;
         }
@@ -86,7 +87,7 @@ public class InteractService extends AbstractService {
         if (gameObject != null && gameObject.exists() && gameObject.hasAction(action)) {
             logScript("Interacting with game-object [" + gameObjectName + "] with action [" + action + "]");
             gameObject.interact(action);
-            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return true;
         }
@@ -100,7 +101,7 @@ public class InteractService extends AbstractService {
         if (gameObject != null && gameObject.exists()) {
             logScript("Interacting with game-object [" + gameObjectName + "]");
             gameObject.interact();
-            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return true;
         }
@@ -165,7 +166,7 @@ public class InteractService extends AbstractService {
 
     public void interactWithWidget(WidgetChild widgetChild) {
         logScript("Interacting with widget: " + widgetChild.getText());
-        sleepUntil(widgetChild::interact, Constants.MAX_SLEEP_UNTIL);
+        Util.sleepUntil(widgetChild::interact, Constants.MAX_SLEEP_UNTIL);
         antibanService.antibanSleep(AntibanActionType.FastPace);
     }
 
@@ -174,7 +175,7 @@ public class InteractService extends AbstractService {
         if (npc != null && npc.hasAction(action)) {
             logScript("Interacting with closest NPC " + npcName + " with action " + action);
             boolean didInteract = npc.interact(action);
-            sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return didInteract;
         }

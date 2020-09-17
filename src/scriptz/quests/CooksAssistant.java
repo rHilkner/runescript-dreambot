@@ -7,6 +7,7 @@ import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
+import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.GameObjects;
 import shared.enums.Items;
@@ -111,7 +112,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
             return false;
         }
 
-        sleepUntil(() -> getDialogues().inDialogue(), Constants.MAX_SLEEP_UNTIL);
+        Util.sleepUntil(() -> getDialogues().inDialogue(), Constants.MAX_SLEEP_UNTIL);
         String[] interactionOptions = new String[]{"What's wrong?", "I'm always happy to help a cook in distress.", "Actually I know where to find this stuff."};
 
         while (getDialogues().inDialogue()) {
@@ -177,7 +178,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
             if (!interactService.interactWithGameObject(GameObjects.DairyCow.name, "Milk")) {
                 return false;
             }
-            sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
         }
         return true;
     }
@@ -187,12 +188,12 @@ public class CooksAssistant extends RunescriptAbstractContext {
             if (!sharedService.walkTo(wheatArea)) {
                 return false;
             }
-            sleepUntil(() -> getLocalPlayer().isStandingStill(), Rand.nextInt(6000));
+            Util.sleepUntil(() -> getLocalPlayer().isStandingStill(), Rand.nextInt(6000));
             while (!getInventory().contains(Items.Grain.name)) {
                 if (!interactService.interactWithGameObject(GameObjects.Gate.name, "Open")) {
                     return false;
                 }
-                sleepUntil(() -> getLocalPlayer().isStandingStill(), 1000 + Rand.nextInt(500));
+                Util.sleepUntil(() -> getLocalPlayer().isStandingStill(), 1000 + Rand.nextInt(500));
                 if (!interactService.interactWithGameObject(Items.Wheat.name, "Pick")) {
                     return false;
                 }
@@ -201,7 +202,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
             if (!interactService.interactWithGameObject(GameObjects.Gate.name, "Open")) {
                 return false;
             }
-            sleepUntil(() -> getLocalPlayer().isStandingStill(), 1000 + Rand.nextInt(500));
+            Util.sleepUntil(() -> getLocalPlayer().isStandingStill(), 1000 + Rand.nextInt(500));
         }
         return getInventory().contains(Items.Grain.name);
     }
@@ -236,7 +237,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
                     return false;
                 }
 
-                sleepUntil(() -> !getLocalPlayer().isAnimating() && !getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> !getLocalPlayer().isAnimating() && !getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
 
                 if (getLocalPlayer().getZ() == 2 || getLocalPlayer().getZ() == 1) {
@@ -261,7 +262,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
             return false;
         }
 
-        sleepUntil(() -> getDialogues().inDialogue(), Constants.MAX_SLEEP_UNTIL);
+        Util.sleepUntil(() -> getDialogues().inDialogue(), Constants.MAX_SLEEP_UNTIL);
 
         while (getDialogues().inDialogue()) {
             getDialogues().continueDialogue();

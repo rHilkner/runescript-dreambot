@@ -77,7 +77,7 @@ public abstract class AbstractMiner extends RunescriptAbstractContext {
                 if (sharedService.walkTo(mineArea)) {
                     if (miningService.mineRockWithDistanceLimit(rock, 5)) {
                         sleep(Calculations.random(1000, 2000));
-                        sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                        Util.sleepUntil(() -> !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                     }
                 }
                 break;
