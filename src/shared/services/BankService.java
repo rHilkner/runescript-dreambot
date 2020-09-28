@@ -31,7 +31,8 @@ public class BankService extends AbstractService {
         int counter = 0;
         while (!ctx.getBank().isOpen() && counter < 20) {
             ctx.logScript("Trying to open bank");
-            Util.sleepUntil(() -> ctx.getBank().openClosest(), Constants.MAX_SLEEP_UNTIL);
+            ctx.getBank().openClosest();
+            Util.sleepUntil(() -> ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL);
             ctx.logScript("Opening bank");
             antibanService.antibanSleep(AntibanActionType.FastPace);
             counter++;
@@ -42,7 +43,8 @@ public class BankService extends AbstractService {
     public void closeBank() {
         if (ctx.getBank().isOpen()) {
             ctx.logScript("Trying to close bank");
-            Util.sleepUntil(() -> ctx.getBank().close(), Constants.MAX_SLEEP_UNTIL);
+            ctx.getBank().close();
+            Util.sleepUntil(() -> !ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL);
             ctx.logScript("Closing bank");
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
@@ -113,11 +115,12 @@ public class BankService extends AbstractService {
 
     public boolean bankAll(boolean close) {
         if (openBank()) {
-            ctx.logScript("Trying to bank all");
             int counter = 0;
             while (!ctx.getInventory().isEmpty() && counter < 8) {
+                ctx.logScript("Banking all items");
                 ctx.getBank().depositAllItems();
-                antibanService.antibanSleep(AntibanActionType.FastPace);
+                sleepUntil(() -> ctx.getInventory().isEmpty(), Constants.MAX_SLEEP_UNTIL);
+//                antibanService.antibanSleep(AntibanActionType.FastPace);
                 counter++;
             }
 

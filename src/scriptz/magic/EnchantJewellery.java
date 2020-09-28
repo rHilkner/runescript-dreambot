@@ -7,7 +7,6 @@ import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.items.Item;
 import org.dreambot.api.wrappers.widgets.WidgetChild;
 import scriptz.RunescriptAbstractContext;
-import shared.Constants;
 import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Items;
@@ -111,7 +110,7 @@ public class EnchantJewellery extends RunescriptAbstractContext {
                 Item playersStaff = getEquipment().get(i -> i != null && i.getName() != null && Objects.equals(i.getName(), STAFF));
                 if (playersStaff == null) {
                     bankService.withdraw(STAFF, 1, true, false);
-                    interactService.interactInventoryItem(STAFF);
+                    interactService.interactInventoryItem(STAFF, false);
                 }
 
                 bankService.openBank();

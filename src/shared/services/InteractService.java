@@ -109,15 +109,35 @@ public class InteractService extends AbstractService {
         return false;
     }
 
-    public void interactInventoryItem(String name) {
+    public void interactInventoryItem(String name, boolean spam) {
         Item item = ctx.getInventory().get(i -> i != null && Objects.equals(i.getName(), name));
-        if (item != null) {
+        if (spam) {
+            while (ctx.getInventory().contains(name)) {
+                int itemSlot = item.getSlot();
+                logScript("Interacting with item in inventory: " + item.getName());
+                item.interact();
+                antibanService.antibanSleep(AntibanActionType.Tick);
+//                antibanService.antibanSleep(AntibanActionType.Latency);
+//                Util.sleepUntil(() -> ctx.getInventory().getItemInSlot(itemSlot) == null || !Objects.equals(ctx.getInventory().getItemInSlot(itemSlot).getName(), name), Util.getGaussianBetween(1000, 2000));
+                item = ctx.getInventory().get(i -> i != null && Objects.equals(i.getName(), name));
+            }
+        } else if (item != null) {
             logScript("Interacting with item in inventory: " + item.getName());
             if (item.interact()) {
                 antibanService.antibanSleep(AntibanActionType.FastPace);
             }
         } else {
             logScript("item fucking null?");
+        }
+    }
+
+    public void interactFullInventory(String itemName) {
+        for (int i = 0; i <= 27; i++) {
+            Item itemInSlot = ctx.getInventory().getItemInSlot(i);
+            if (itemInSlot != null && Objects.equals(itemInSlot.getName(), itemName)) {
+                itemInSlot.interact();
+                antibanService.antibanSleep(AntibanActionType.Latency);
+            }
         }
     }
 

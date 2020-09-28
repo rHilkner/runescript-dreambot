@@ -111,6 +111,20 @@ public enum Items {
     CopperOre("Copper ore"),
     IronOre("Iron ore"),
 
+    GrimyGuamLeaf("Grimy guam leaf"),
+    GrimyMarrentill("Grimy marrentill"),
+    GrimyTarromin("Grimy tarromin"),
+    GrimyHarralander("Grimy harralander"),
+    GrimyRanarr("Grimy ranarr"),
+    GrimyToadflax("Grimy toadflax"),
+
+    GuamLeaf("Guam leaf"),
+    Marrentill("Marrentill"),
+    Tarromin("Tarromin"),
+    Harralander("Harralander"),
+    Ranarr("Ranarr"),
+    Toadflax("Toadflax"),
+
     ;
 
     public final String name;

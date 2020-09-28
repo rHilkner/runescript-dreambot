@@ -110,7 +110,7 @@ public class SmeltingIronBars extends RunescriptAbstractContext {
                 Item playersRingOfForging = getEquipment().get(i -> i != null && i.getName() != null && Objects.equals(i.getName(), Items.RingOfForging.name));
                 if (playersRingOfForging == null) {
                     bankService.withdraw(Items.RingOfForging.name, 1, true, false);
-                    interactService.interactInventoryItem(Items.RingOfForging.name);
+                    interactService.interactInventoryItem(Items.RingOfForging.name, false);
                 }
                 bankService.withdraw(Items.IronOre.name, null, true, false);
 

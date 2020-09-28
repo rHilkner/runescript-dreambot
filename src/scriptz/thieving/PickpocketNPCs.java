@@ -1,6 +1,5 @@
 package scriptz.thieving;
 
-import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.skills.Skill;
 import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.script.Category;
@@ -71,7 +70,7 @@ public class PickpocketNPCs extends RunescriptAbstractContext {
                 }
 
                 if (getInventory().count(Items.CoinPouch.name) >= 25) {
-                    interactService.interactInventoryItem(Items.CoinPouch.name);
+                    interactService.interactInventoryItem(Items.CoinPouch.name, false);
                 }
 
                 interactService.interactClosestNpc(NPC_NAME, "Pickpocket");

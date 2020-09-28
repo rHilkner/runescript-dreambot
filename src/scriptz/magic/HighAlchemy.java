@@ -104,7 +104,7 @@ public class HighAlchemy extends RunescriptAbstractContext {
                 Item playersStaff = getEquipment().get(i -> i != null && i.getName() != null && Objects.equals(i.getName(), STAFF));
                 if (playersStaff == null) {
                     bankService.withdraw(STAFF, 1, true, false);
-                    interactService.interactInventoryItem(STAFF);
+                    interactService.interactInventoryItem(STAFF, false);
                 }
 
                 bankService.openBank();

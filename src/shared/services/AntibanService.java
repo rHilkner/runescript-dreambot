@@ -80,32 +80,16 @@ public class AntibanService extends  AbstractService {
 
     public void antibanSleep(AntibanActionType action) {
 
-        int sleepTime;
+        int sleepTime = getSleepDuration(action);
+        logScript("antiban " + action.name() + ": sleep(" + sleepTime + ")");
 
         switch (action) {
-            case Spam:
-                sleepTime = getSleepDuration(AntibanActionType.Spam);
-                logScript("antiban Spam: sleep(" + sleepTime + ")");
-                sleep(sleepTime);
-                break;
-            case FastPace:
-                sleepTime = getSleepDuration(AntibanActionType.FastPace);
-                logScript("antiban FastPace: sleep(" + sleepTime + ")");
-                sleep(sleepTime);
-                break;
-            case SlowPace:
-                sleepTime = getSleepDuration(AntibanActionType.SlowPace);
-                logScript("antiban SlowPace: sleep(" + sleepTime + ")");
-                sleep(sleepTime);
-                break;
             case Walking:
-                sleepTime = getSleepDuration(AntibanActionType.Walking);
                 logScript("antiban Walking: sleepUntil(!localPlayer.isMoving(), " + sleepTime + ")");
                 Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), sleepTime);
                 break;
-            case Latency:
-                sleepTime = getSleepDuration(AntibanActionType.Latency);
-                logScript("antiban Latency: sleep(" + sleepTime + ")");
+            default:
+                sleep(sleepTime);
                 break;
         }
     }
