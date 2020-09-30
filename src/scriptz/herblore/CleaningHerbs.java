@@ -22,7 +22,8 @@ public class CleaningHerbs extends RunescriptAbstractContext {
 
     private final String[] HERBS = {
             Items.GrimyTarromin.name, Items.GrimyHarralander.name, Items.GrimyToadflax.name,
-            Items.GrimyIritLeaf.name, Items.GrimyAvantoe.name, Items.GrimyKwuarm.name
+            Items.GrimyIritLeaf.name, Items.GrimyAvantoe.name, Items.GrimyKwuarm.name,
+            Items.GrimySnapdragon.name
     };
 
     @Override

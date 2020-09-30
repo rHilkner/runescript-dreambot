@@ -120,6 +120,7 @@ public enum Items {
     GrimyIritLeaf("Grimy irit leaf"),
     GrimyAvantoe("Grimy avantoe"),
     GrimyKwuarm("Grimy kwuarm"),
+    GrimySnapdragon("Grimy snapdragon"),
 
     GuamLeaf("Guam leaf"),
     Marrentill("Marrentill"),
