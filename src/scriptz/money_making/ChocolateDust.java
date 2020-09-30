@@ -11,7 +11,6 @@ import shared.services.InteractService;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 @ScriptManifest(author = "Xpt", name = "Chocolate dust", version = 1.0, description = "Makes chocolate dust", category = Category.MONEYMAKING)
@@ -140,8 +139,8 @@ public class ChocolateDust extends RunescriptAbstractContext {
                 break;
 
             case SELL:
-                bankService.withdraw(Items.ChocolateDust.name, null, false, true);
-                bankService.withdraw(Items.Coins.name, null, true, false);
+                bankService.withdraw(Items.ChocolateDust.name, null, false, true, false);
+                bankService.withdraw(Items.Coins.name, null, true, false, false);
 
                 if (grandExchangeService.addSellExchange(Items.ChocolateDust.name)) {
                     lastChocolateDustPrice = getGrandExchange().getCurrentPrice();
@@ -156,8 +155,8 @@ public class ChocolateDust extends RunescriptAbstractContext {
 
             case BUY:
                 if (getInventory().count("Coins") < 100) {
-                    bankService.withdraw(Items.Coins.name, null, true, false);
-                    bankService.closeBank(); // just making sure bank is closed
+                    bankService.withdraw(Items.Coins.name, null, true, false, false);
+                    bankService.closeBank(false); // just making sure bank is closed
                 }
 
                 if (grandExchangeService.addBuyExchange("choco", Items.ChocolateBar.name, false, false)) {
@@ -173,7 +172,7 @@ public class ChocolateDust extends RunescriptAbstractContext {
                 break;
 
             case MAKE_DUST:
-                bankService.closeBank(); // just making sure bank is closed
+                bankService.closeBank(false); // just making sure bank is closed
                 if (!getLocalPlayer().isAnimating()) {
                     interactService.interactInventoryItems(Items.Knife.name, Items.ChocolateBar.name, spamChocolateBars, true);
                 }
@@ -183,10 +182,10 @@ public class ChocolateDust extends RunescriptAbstractContext {
                 bankService.bankAllExcept(false, Items.Knife.name);
 
                 if (getInventory().count(Items.Knife.name) == 0) {
-                    bankService.withdraw(Items.Knife.name, 1, false, false);
+                    bankService.withdraw(Items.Knife.name, 1, false, false, false);
                 }
 
-                bankService.withdraw(Items.ChocolateBar.name, null, false, false);
+                bankService.withdraw(Items.ChocolateBar.name, null, false, false, false);
 
                 // update variables
                 totalChocolateBars = getBank().count(Items.ChocolateBar.name) + getInventory().count(Items.ChocolateBar.name);

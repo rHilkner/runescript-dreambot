@@ -90,15 +90,15 @@ public class CookingFishGE extends RunescriptAbstractContext {
                 bankService.bankAllExcept(false, Items.Tinderbox.name);
 
                 if (!getInventory().contains(Items.Tinderbox.name)) {
-                    bankService.withdraw(Items.Tinderbox.name, 1, false, false);
+                    bankService.withdraw(Items.Tinderbox.name, 1, false, false, false);
                 }
 
-                bankService.withdraw(Items.WillowLogs.name, 1, false, false);
+                bankService.withdraw(Items.WillowLogs.name, 1, false, false, false);
 
                 for (int i = 0; i < fishesToFry.size(); i++) {
                     String fishName = fishesToFry.get(i);
                     if (!getInventory().isFull() && getBank().count(fishName) > 0) {
-                        bankService.withdraw(fishName, null, false, false);
+                        bankService.withdraw(fishName, null, false, false, false);
                     }
                 }
 
@@ -106,7 +106,7 @@ public class CookingFishGE extends RunescriptAbstractContext {
                     stop();
                 }
 
-                bankService.closeBank();
+                bankService.closeBank(false);
                 break;
             case LIGHT_FIRE:
                 if (sharedService.walkTo(Areas.GrandExchangeCloseToEastBank)) {

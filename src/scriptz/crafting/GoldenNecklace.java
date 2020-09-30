@@ -126,8 +126,8 @@ public class GoldenNecklace extends RunescriptAbstractContext {
         switch (currentState) {
 
             case SELL:
-                bankService.withdraw(Items.GoldNecklace.name, null, false, true);
-                bankService.withdraw(Items.Coins.name, null, true, false);
+                bankService.withdraw(Items.GoldNecklace.name, null, false, true, false);
+                bankService.withdraw(Items.Coins.name, null, true, false, false);
 
                 if (grandExchangeService.addSellExchange(Items.GoldNecklace.name)) {
                     lastGoldNecklacePrice = getGrandExchange().getCurrentPrice();
@@ -143,8 +143,8 @@ public class GoldenNecklace extends RunescriptAbstractContext {
             case BUY:
                 if (sharedService.walkTo(Areas.GrandExchange)) {
                     if (getInventory().count("Coins") < 100) {
-                        bankService.withdraw(Items.Coins.name, null, true, false);
-                        bankService.closeBank(); // just making sure bank is closed
+                        bankService.withdraw(Items.Coins.name, null, true, false, false);
+                        bankService.closeBank(false); // just making sure bank is closed
                     }
 
                     if (grandExchangeService.addBuyExchange("gold b", Items.GoldBar.name, false, false)) {
@@ -161,7 +161,7 @@ public class GoldenNecklace extends RunescriptAbstractContext {
                 break;
 
             case MAKE_NECKLACE:
-                bankService.closeBank(); // just making sure bank is closed
+                bankService.closeBank(false); // just making sure bank is closed
                 if (!getLocalPlayer().isAnimating()) {
                     if (sharedService.walkTo(Areas.EdgevilleBankToFurnace)) {
                         if (sharedService.walkTo(Areas.EdgevilleFurnace)) {
@@ -189,10 +189,10 @@ public class GoldenNecklace extends RunescriptAbstractContext {
                     bankService.bankAllExcept(false, Items.NecklaceMould.name);
 
                     if (getInventory().count(Items.NecklaceMould.name) == 0) {
-                        bankService.withdraw(Items.NecklaceMould.name, 1, false, false);
+                        bankService.withdraw(Items.NecklaceMould.name, 1, false, false, false);
                     }
 
-                    bankService.withdraw(Items.GoldBar.name, null, false, false);
+                    bankService.withdraw(Items.GoldBar.name, null, false, false, false);
 
                     // update variables
                     totalGoldBars = getBank().count(Items.GoldBar.name) + getInventory().count(Items.GoldBar.name);

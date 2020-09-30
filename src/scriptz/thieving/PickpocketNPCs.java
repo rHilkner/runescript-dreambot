@@ -64,7 +64,7 @@ public class PickpocketNPCs extends RunescriptAbstractContext {
 
             case PICKPOCKET:
 
-                bankService.closeBank();
+                bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().open(Tab.INVENTORY);
                 }
@@ -83,7 +83,7 @@ public class PickpocketNPCs extends RunescriptAbstractContext {
                 break;
 
             case BANK:
-                bankService.bankAll(true);
+                bankService.bankAll(true, false);
                 break;
 
         }

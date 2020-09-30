@@ -138,8 +138,8 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
                     break;
                 }
 
-                bankService.withdraw(Items.EmeraldAmuletU.name, null, false, true);
-                bankService.withdraw(Items.Coins.name, null, true, false);
+                bankService.withdraw(Items.EmeraldAmuletU.name, null, false, true, false);
+                bankService.withdraw(Items.Coins.name, null, true, false, false);
 
                 if (grandExchangeService.addSellExchange(Items.EmeraldAmuletU.name)) {
                     lastEmeraldAmuletPrice = getGrandExchange().getCurrentPrice();
@@ -158,8 +158,8 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
                 }
 
                 if (getInventory().count("Coins") < 100) {
-                    bankService.withdraw(Items.Coins.name, null, true, false);
-                    bankService.closeBank(); // just making sure bank is closed
+                    bankService.withdraw(Items.Coins.name, null, true, false, false);
+                    bankService.closeBank(false); // just making sure bank is closed
                 }
 
                 if (grandExchangeService.addBuyExchange("gold b", Items.GoldBar.name, false, false)) {
@@ -183,7 +183,7 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
                 break;
 
             case MAKE_AMULETS:
-                bankService.closeBank(); // just making sure bank is closed
+                bankService.closeBank(false); // just making sure bank is closed
                 if (getLocalPlayer().isAnimating() ||
                         !sharedService.walkTo(Areas.EdgevilleBankToFurnace) ||
                         !sharedService.walkTo(Areas.EdgevilleFurnace) ||
@@ -242,12 +242,12 @@ public class EmeraldAmulets extends RunescriptAbstractContext {
                                     "\n\t- totalCoins = " + totalCoins);
 
                     if (getInventory().count(Items.AmuletMould.name) == 0) {
-                        bankService.withdraw(Items.AmuletMould.name, 1, false, false);
+                        bankService.withdraw(Items.AmuletMould.name, 1, false, false, false);
                     }
 
                     if (totalGoldBars > 0 && totalEmeralds > 0) {
-                        bankService.withdraw(Items.GoldBar.name, 13, false, false);
-                        bankService.withdraw(Items.Emerald.name, 13, false, false);
+                        bankService.withdraw(Items.GoldBar.name, 13, false, false, false);
+                        bankService.withdraw(Items.Emerald.name, 13, false, false, false);
                     }
                 }
 

@@ -124,11 +124,11 @@ public class PizzaDough extends RunescriptAbstractContext {
 
             case BUY:
                 if (getInventory().count(Items.Coins.name) < 1000) {
-                    bankService.withdraw(Items.Coins.name, null, true, false);
+                    bankService.withdraw(Items.Coins.name, null, true, false, false);
                     totalCoins = getInventory().count(Items.Coins.name);
                 }
 
-                bankService.closeBank(); // just making sure bank is closed
+                bankService.closeBank(false); // just making sure bank is closed
 
                 while (lastPotOfFlourPrice == -1) {
                     if (grandExchangeService.addBuyExchange("pot of", Items.PotOfFlour.name, false, false)) {
@@ -170,8 +170,8 @@ public class PizzaDough extends RunescriptAbstractContext {
                 break;
 
             case SELL:
-                bankService.withdraw(Items.PizzaBase.name, null, false, true);
-                bankService.withdraw(Items.Coins.name, null, true, false);
+                bankService.withdraw(Items.PizzaBase.name, null, false, true, false);
+                bankService.withdraw(Items.Coins.name, null, true, false, false);
 
                 if (grandExchangeService.addSellExchange(Items.PizzaBase.name)) {
                     lastPizzaBasePrice = getGrandExchange().getCurrentPrice();
@@ -210,7 +210,7 @@ public class PizzaDough extends RunescriptAbstractContext {
                 break;
 
             case BANK:
-                bankService.bankAll(false);
+                bankService.bankAll(false, false);
 
                 // update variables
                 totalPotOfFlour = getBank().count(Items.PotOfFlour.name);
@@ -226,13 +226,13 @@ public class PizzaDough extends RunescriptAbstractContext {
 
                 int counter = 0;
                 while (totalPotOfFlour > 0 && getInventory().count(Items.PotOfFlour.name) == 0 && counter < 20) {
-                    bankService.withdraw(Items.PotOfFlour.name, 9, false, false);
+                    bankService.withdraw(Items.PotOfFlour.name, 9, false, false, false);
                     counter++;
                 }
 
                 counter = 0;
                 while (totalJugOfWater > 0 && getInventory().count(Items.JugOfWater.name) == 0 && counter < 20) {
-                    bankService.withdraw(Items.JugOfWater.name, 9, true, false);
+                    bankService.withdraw(Items.JugOfWater.name, 9, true, false, false);
                     counter++;
                 }
 

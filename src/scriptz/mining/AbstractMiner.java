@@ -94,7 +94,7 @@ public abstract class AbstractMiner extends RunescriptAbstractContext {
                     break;
                 }
 
-                bankService.bankAll(false);
+                bankService.bankAll(false, false);
 
                 // Getting best pickaxe possible in bank
                 int miningLvl = getSkills().getRealLevel(Skill.MINING);
@@ -127,11 +127,11 @@ public abstract class AbstractMiner extends RunescriptAbstractContext {
 
                 if (playersPickaxe == null || !Objects.equals(playersPickaxe.getName(), playersBestPickaxe)) {
                     logScript("Going to equip pickaxe [" + playersBestPickaxe + "]");
-                    bankService.withdraw(playersBestPickaxe, 1, true, false);
+                    bankService.withdraw(playersBestPickaxe, 1, true, false, false);
                     if (getTabs().open(Tab.INVENTORY)) {
                         interactService.interactInventoryItem(playersBestPickaxe, "Wield");
                     }
-                    bankService.bankAll(true);
+                    bankService.bankAll(true, false);
                 }
 
                 break;

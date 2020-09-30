@@ -52,7 +52,7 @@ public class MakingMapleBows extends RunescriptAbstractContext {
             case BUY:
                 break;
             case MAKE_ARROW_SHAFTS:
-                bankService.closeBank();
+                bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().open(Tab.INVENTORY);
                 }
@@ -77,7 +77,7 @@ public class MakingMapleBows extends RunescriptAbstractContext {
                 if (getBank().count(Items.MapleLogs.name) <= 0) {
                     stop();
                 } else {
-                    bankService.withdraw(Items.MapleLogs.name, null, true, false);
+                    bankService.withdraw(Items.MapleLogs.name, null, true, false, false);
                 }
                 break;
 

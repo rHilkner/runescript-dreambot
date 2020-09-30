@@ -61,7 +61,7 @@ public class SmeltingIronBars extends RunescriptAbstractContext {
         switch (currentState) {
 
             case SMELT_BARS:
-                bankService.closeBank();
+                bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().open(Tab.INVENTORY);
                 }
@@ -100,7 +100,7 @@ public class SmeltingIronBars extends RunescriptAbstractContext {
                 }
 
                 logScript("Banking all");
-                bankService.bankAll(false);
+                bankService.bankAll(false, false);
 
                 if (!getBank().contains(Items.IronOre.name) || !getBank().contains(Items.RingOfForging.name)) {
                     stop();
@@ -109,10 +109,10 @@ public class SmeltingIronBars extends RunescriptAbstractContext {
 
                 Item playersRingOfForging = getEquipment().get(i -> i != null && i.getName() != null && Objects.equals(i.getName(), Items.RingOfForging.name));
                 if (playersRingOfForging == null) {
-                    bankService.withdraw(Items.RingOfForging.name, 1, true, false);
+                    bankService.withdraw(Items.RingOfForging.name, 1, true, false, false);
                     interactService.interactInventoryItem(Items.RingOfForging.name, false);
                 }
-                bankService.withdraw(Items.IronOre.name, null, true, false);
+                bankService.withdraw(Items.IronOre.name, null, true, false, false);
 
                 break;
 

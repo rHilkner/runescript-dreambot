@@ -10,7 +10,6 @@ import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Items;
 import shared.services.BankService;
-import shared.services.GrandExchangeService;
 import shared.services.InteractService;
 
 @ScriptManifest(author = "xpt", name = "Stringing Bows", version = 1.0, description = "Strings bows", category = Category.FLETCHING)
@@ -51,7 +50,7 @@ public class StringingBows extends RunescriptAbstractContext {
         switch (currentState) {
 
             case STRING_BOWS:
-                bankService.closeBank();
+                bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().open(Tab.INVENTORY);
                 }
@@ -72,13 +71,13 @@ public class StringingBows extends RunescriptAbstractContext {
 
                 break;
             case BANK:
-                bankService.bankAll(false);
+                bankService.bankAll(false, false);
                 if (getBank().count(BOW_NAME) <= 0 || getBank().count(BOW_STRING) <= 0) {
                     logScript("No more bows to string. Finishing execution.");
                     stop();
                 } else {
-                    bankService.withdraw(BOW_NAME, 14, false, false);
-                    bankService.withdraw(BOW_STRING, 14, true, false);
+                    bankService.withdraw(BOW_NAME, 14, false, false, false);
+                    bankService.withdraw(BOW_STRING, 14, true, false, false);
                 }
                 break;
 

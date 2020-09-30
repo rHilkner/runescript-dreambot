@@ -6,7 +6,7 @@ import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
-import shared.enums.AntibanActionType;
+import shared.Util;
 import shared.enums.Items;
 import shared.services.BankService;
 import shared.services.InteractService;
@@ -18,16 +18,19 @@ public class CleaningHerbs extends RunescriptAbstractContext {
 
     private BankService bankService;
     private InteractService interactService;
+    private int inventoriesDone = 0;
 
-    private final String[] HERBS = {Items.GrimyTarromin.name, Items.GrimyHarralander.name, Items.GrimyToadflax.name};
-    //private final String HERB = Items.GrimyTarromin.name;
+    private final String[] HERBS = {
+            Items.GrimyTarromin.name, Items.GrimyHarralander.name, Items.GrimyToadflax.name,
+            Items.GrimyIritLeaf.name, Items.GrimyAvantoe.name, Items.GrimyKwuarm.name
+    };
 
     @Override
     public void onStart() {
         super.onStart();
         bankService = BankService.getInstance();
         interactService = InteractService.getInstance();
-        antibanService.setSkillsToHover(Skill.MAGIC);
+        antibanService.setSkillsToHover(Skill.HERBLORE);
 
         logScript("Starting cleaning herbs script!");
     }
@@ -45,45 +48,48 @@ public class CleaningHerbs extends RunescriptAbstractContext {
 
         State currentState = getState();
         logScript("-- Current state: " + currentState.name());
+        logScript("-- Inventories done so far: " + inventoriesDone);
 
         switch (currentState) {
 
             case CLEAN_HERBS:
                 // basic closing shit and stuff
-                bankService.closeBank();
+                bankService.closeBank(true);
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().openWithMouse(Tab.INVENTORY);
                 }
 
+                inventoriesDone++;
+
                 logScript("Cleaning herbs");
                 for (String herb : HERBS) {
-                    interactService.interactFullInventory(herb);
-                    sleepUntil(() -> !getInventory().contains(herb), Constants.MAX_SLEEP_UNTIL);
+                    if (getInventory().contains(herb)) {
+                        interactService.interactFullInventory(herb);
+                        Util.sleepUntil(() -> !getInventory().contains(herb), Constants.MAX_SLEEP_UNTIL);
+                    }
                 }
 
                 break;
             case BANK:
-
                 // making sure to unselect any item
                 if (getInventory().isItemSelected()) {
                     getInventory().deselect();
                 }
 
-                bankService.bankAll(false);
+                bankService.bankAll(false, true);
+                Util.sleepUntil(() -> getInventory().isEmpty(), Constants.MAX_SLEEP_UNTIL);
+                if (!getBank().contains(HERBS)) {
+                    stop();
+                    break;
+                }
 
-                boolean containsHerbs = false;
                 for (String herb : HERBS) {
                     if (!getInventory().isFull() && getBank().contains(herb)) {
-                        bankService.withdraw(herb, null, false, false);
-                        containsHerbs = true;
+                        bankService.withdraw(herb, null, false, false, true);
                     }
                 }
-
-                bankService.closeBank();
-
-                if (!containsHerbs) {
-                    stop();
-                }
+                bankService.closeBank(true);
+                Util.sleepUntil(() -> !getInventory().isEmpty(), Constants.MAX_SLEEP_UNTIL);
 
                 break;
 

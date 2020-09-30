@@ -4,17 +4,12 @@ import org.dreambot.api.methods.skills.Skill;
 import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
-import org.dreambot.api.wrappers.widgets.WidgetChild;
 import scriptz.RunescriptAbstractContext;
-import shared.Constants;
 import shared.enums.AntibanActionType;
 import shared.enums.Areas;
 import shared.enums.Items;
 import shared.services.BankService;
-import shared.services.GrandExchangeService;
 import shared.services.InteractService;
-
-import java.util.Date;
 
 @ScriptManifest(author = "Xpt", name = "Smelting Bars", version = 1.0, description = "Smelting Bars", category = Category.SMITHING)
 public class SmeltingBars extends RunescriptAbstractContext {
@@ -62,7 +57,7 @@ public class SmeltingBars extends RunescriptAbstractContext {
         switch (currentState) {
 
             case SMELT_BARS:
-                bankService.closeBank();
+                bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().open(Tab.INVENTORY);
                 }
@@ -100,15 +95,15 @@ public class SmeltingBars extends RunescriptAbstractContext {
                     sharedService.walkTo(getBank().getClosestBankLocation().getArea(10));
                 }
 
-                bankService.bankAll(false);
+                bankService.bankAll(false, false);
 
                 if (!getBank().contains(Items.TinOre.name) || !getBank().contains(Items.CopperOre.name)) {
                     stop();
                     break;
                 }
 
-                bankService.withdraw(Items.TinOre.name, 14, false, false);
-                bankService.withdraw(Items.CopperOre.name, 14, true, false);
+                bankService.withdraw(Items.TinOre.name, 14, false, false, false);
+                bankService.withdraw(Items.CopperOre.name, 14, true, false, false);
 
                 break;
 

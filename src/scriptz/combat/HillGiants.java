@@ -136,24 +136,24 @@ public class HillGiants extends RunescriptAbstractContext {
                 bankService.bankAllExcept(false, Items.BrassKey.name);
 
                 if (!getInventory().contains(Items.BrassKey.name)) {
-                    bankService.withdraw(Items.BrassKey.name, 1, false, false);
+                    bankService.withdraw(Items.BrassKey.name, 1, false, false, false);
                 }
 
                 for (int i = 0; i < itemsToEat.size(); i++) {
                     String foodName = itemsToEat.get(i);
                     if (getBank().count(foodName) > 0 && !getInventory().isFull()) {
-                        bankService.withdraw(foodName, 24, false, false);
+                        bankService.withdraw(foodName, 24, false, false, false);
                         if (getInventory().count(foodName) >= 24) {
                             break;
                         }
                     }
                 }
 
-                bankService.closeBank();
+                bankService.closeBank(false);
                 break;
 
             case GO_TO_DUNGEON:
-                bankService.closeBank(); // just to be sure
+                bankService.closeBank(false); // just to be sure
 
                 if (sharedService.walkTo(dungeonTopOutArea)) {
                     Util.sleepUntil(() -> !getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);

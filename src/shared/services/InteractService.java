@@ -136,7 +136,7 @@ public class InteractService extends AbstractService {
             Item itemInSlot = ctx.getInventory().getItemInSlot(i);
             if (itemInSlot != null && Objects.equals(itemInSlot.getName(), itemName)) {
                 itemInSlot.interact();
-                antibanService.antibanSleep(AntibanActionType.Latency);
+//                antibanService.antibanSleep(AntibanActionType.Latency);
             }
         }
     }

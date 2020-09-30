@@ -52,7 +52,7 @@ public class MakingHeadlessArrows extends RunescriptAbstractContext {
             case BUY:
                 break;
             case MAKE_HEADLESS_ARROWS:
-                bankService.closeBank();
+                bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().open(Tab.INVENTORY);
                 }
@@ -73,12 +73,12 @@ public class MakingHeadlessArrows extends RunescriptAbstractContext {
 
                 break;
             case BANK:
-                bankService.bankAll(false);
+                bankService.bankAll(false, false);
                 if (getBank().count(Items.ArrowShaft.name) <= 0 || getBank().count(Items.Feather.name) <= 0) {
                     stop();
                 } else {
-                    bankService.withdraw(Items.ArrowShaft.name, null, false, false);
-                    bankService.withdraw(Items.Feather.name, null, true, false);
+                    bankService.withdraw(Items.ArrowShaft.name, null, false, false, false);
+                    bankService.withdraw(Items.Feather.name, null, true, false, false);
                 }
                 break;
             case STOP:

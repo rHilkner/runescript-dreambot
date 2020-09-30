@@ -62,7 +62,7 @@ public class HighAlchemy extends RunescriptAbstractContext {
 
             case HIGH_ALCH:
                 // basic closing shit and stuff
-                bankService.closeBank();
+                bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.MAGIC)) {
                     getTabs().openWithMouse(Tab.MAGIC);
                 }
@@ -103,15 +103,15 @@ public class HighAlchemy extends RunescriptAbstractContext {
 
                 Item playersStaff = getEquipment().get(i -> i != null && i.getName() != null && Objects.equals(i.getName(), STAFF));
                 if (playersStaff == null) {
-                    bankService.withdraw(STAFF, 1, true, false);
+                    bankService.withdraw(STAFF, 1, true, false, false);
                     interactService.interactInventoryItem(STAFF, false);
                 }
 
-                bankService.openBank();
+                bankService.openBank(false);
                 if (getBank().contains(NATURE_RUNE)) {
-                    bankService.withdraw(NATURE_RUNE, null, false, false);
+                    bankService.withdraw(NATURE_RUNE, null, false, false, false);
                 }
-                bankService.withdraw(ITEM, null, true, true);
+                bankService.withdraw(ITEM, null, true, true, false);
 
                 break;
 

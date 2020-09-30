@@ -117,6 +117,9 @@ public enum Items {
     GrimyHarralander("Grimy harralander"),
     GrimyRanarr("Grimy ranarr"),
     GrimyToadflax("Grimy toadflax"),
+    GrimyIritLeaf("Grimy irit leaf"),
+    GrimyAvantoe("Grimy avantoe"),
+    GrimyKwuarm("Grimy kwuarm"),
 
     GuamLeaf("Guam leaf"),
     Marrentill("Marrentill"),
@@ -124,6 +127,11 @@ public enum Items {
     Harralander("Harralander"),
     Ranarr("Ranarr"),
     Toadflax("Toadflax"),
+    IritLeaf("Irit leaf"),
+    Avantoe("Avantoe"),
+    Kwuarm("Kwuarm"),
+
+    VialOfWater("Vial of water"),
 
     ;
 

@@ -109,22 +109,22 @@ public class CowKiller extends RunescriptAbstractContext {
 
             case BANK:
 //                if (sharedService.walkTo(Areas.LumbridgeBank)) {
-                bankService.bankAll(false);
+                bankService.bankAll(false, false);
 
                 for (int i = 0; i < itemsToEat.size(); i++) {
                     String fishName = itemsToEat.get(i);
                     if (getInventory().isEmpty() && getBank().count(fishName) > 0) {
-                        bankService.withdraw(fishName, 24, false, false);
+                        bankService.withdraw(fishName, 24, false, false, false);
                         break;
                     }
                 }
 
-                bankService.closeBank();
+                bankService.closeBank(false);
 //                }
                 break;
 
             case GO_TO_COW_PEN:
-                bankService.closeBank(); // just to be sure
+                bankService.closeBank(false); // just to be sure
                 sharedService.walkTo(Areas.LumbridgeEastCowPen);
                 break;
 

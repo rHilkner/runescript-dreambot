@@ -161,11 +161,11 @@ public class GoldBarDwarvenMine extends RunescriptAbstractContext {
 
             case BUY:
                 if (getInventory().count(Items.Coins.name) < 10000) {
-                    bankService.withdraw(Items.Coins.name, null, true, false);
+                    bankService.withdraw(Items.Coins.name, null, true, false, false);
                     totalCoins = getInventory().count(Items.Coins.name);
                 }
 
-                bankService.closeBank(); // just making sure bank is closed
+                bankService.closeBank(false); // just making sure bank is closed
 
                 if (grandExchangeService.addBuyExchange("gold ba", Items.GoldBar.name, false, false)) {
                     lastGoldBarPrice = getGrandExchange().getCurrentPrice();
@@ -210,7 +210,7 @@ public class GoldBarDwarvenMine extends RunescriptAbstractContext {
 
                 int counter = 0;
                 while (totalGoldBars > 0 && getInventory().count(Items.GoldBar.name) == 0 && counter < 20) {
-                    bankService.withdraw(Items.GoldBar.name, null, false, true);
+                    bankService.withdraw(Items.GoldBar.name, null, false, true, false);
                     counter++;
                 }
 

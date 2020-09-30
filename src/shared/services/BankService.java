@@ -27,79 +27,90 @@ public class BankService extends AbstractService {
         return instance;
     }
 
-    public boolean openBank() {
+    public boolean openBank(boolean quickly) {
         int counter = 0;
-        while (!ctx.getBank().isOpen() && counter < 20) {
-            ctx.logScript("Trying to open bank");
-            ctx.getBank().openClosest();
-            Util.sleepUntil(() -> ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL);
+        while (!ctx.getBank().isOpen() && counter < 8) {
             ctx.logScript("Opening bank");
-            antibanService.antibanSleep(AntibanActionType.FastPace);
+            ctx.getBank().openClosest();
+            if (!quickly) {
+                Util.sleepUntil(() -> ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL);
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+            }
             counter++;
         }
         return ctx.getBank().isOpen();
     }
 
-    public void closeBank() {
+    public void closeBank(boolean quickly) {
         if (ctx.getBank().isOpen()) {
-            ctx.logScript("Trying to close bank");
-            ctx.getBank().close();
-            Util.sleepUntil(() -> !ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL);
             ctx.logScript("Closing bank");
-            antibanService.antibanSleep(AntibanActionType.FastPace);
+            ctx.getBank().close();
+            if (!quickly) {
+                Util.sleepUntil(() -> !ctx.getBank().isOpen(), Constants.MAX_SLEEP_UNTIL);
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+            }
         }
     }
 
     /**
      * @param quantity null means All and -1 means AllButOne
+     * @param quickly
      */
-    public void withdraw(String itemName, Integer quantity, boolean closeBank, boolean noted) {
-        if (openBank()) {
+    public void withdraw(String itemName, Integer quantity, boolean closeBank, boolean noted, boolean quickly) {
+        if (!openBank(quickly)) {
+            return;
+        }
 
-            if (!noted) {
-                ctx.logScript("Trying to withdraw " + quantity + " of " + itemName);
-            } else {
-                ctx.logScript("Trying to withdraw " + quantity + " of " + itemName + " (noted)");
-            }
+        if (noted) {
+            ctx.logScript("Trying to withdraw " + quantity + " of " + itemName + " (noted)");
+        } else {
+            ctx.logScript("Trying to withdraw " + quantity + " of " + itemName);
+        }
 
-            if (noted && ctx.getBank().getWithdrawMode() != BankMode.NOTE) {
-                Util.sleepUntil(() -> ctx.getBank().setWithdrawMode(BankMode.NOTE), Constants.MAX_SLEEP_UNTIL);
-                antibanService.antibanSleep(AntibanActionType.FastPace);
-            } else if (ctx.getBank().getWithdrawMode() != BankMode.ITEM) {
-                Util.sleepUntil(() -> ctx.getBank().setWithdrawMode(BankMode.ITEM), Constants.MAX_SLEEP_UNTIL);
-                antibanService.antibanSleep(AntibanActionType.FastPace);
-            }
-
-            int itemQuantity = ctx.getBank().count(itemName);
-
-            if (itemQuantity > 0) {
-                if (quantity == null) {
-                    Util.sleepUntil(() -> ctx.getBank().withdrawAll(itemName), Constants.MAX_SLEEP_UNTIL);
-                } else if (quantity == -1) {
-                    Util.sleepUntil(() -> ctx.getBank().withdraw(itemName, itemQuantity - 1), Constants.MAX_SLEEP_UNTIL);
-                } else {
-                    Util.sleepUntil(() -> ctx.getBank().withdraw(itemName, quantity), Constants.MAX_SLEEP_UNTIL);
-                }
+        if (noted && ctx.getBank().getWithdrawMode() != BankMode.NOTE) {
+            ctx.getBank().setWithdrawMode(BankMode.NOTE);
+            if (!quickly) {
                 antibanService.antibanSleep(AntibanActionType.FastPace);
             }
-
-            if (closeBank) {
-                closeBank();
+        } else if (!noted && ctx.getBank().getWithdrawMode() != BankMode.ITEM) {
+            ctx.getBank().setWithdrawMode(BankMode.ITEM);
+            if (!quickly) {
+                antibanService.antibanSleep(AntibanActionType.FastPace);
             }
         }
 
-        antibanService.antibanSleep(AntibanActionType.FastPace);
+        int itemQuantity = ctx.getBank().count(itemName);
+
+        if (ctx.getBank().contains(itemName)) {
+            if (quantity == null || itemQuantity < quantity) {
+                ctx.getBank().withdrawAll(itemName);
+            } else if (quantity == -1) {
+                ctx.getBank().withdraw(itemName, itemQuantity - 1);
+            } else {
+                ctx.getBank().withdraw(itemName, quantity);
+            }
+            if (!quickly) {
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+            }
+        }
+
+        if (closeBank) {
+            closeBank(quickly);
+        }
+
     }
 
     public boolean bankAllExcept(boolean closeBank, String... exceptItems) {
-        if (openBank()) {
+        if (openBank(false)) {
             if (!ctx.getInventory().isEmpty()) {
                 ctx.logScript("Trying to bank all except " + Arrays.toString(exceptItems));
                 Util.sleepUntil(() -> ctx.getBank().depositAllExcept(exceptItems), Constants.MAX_SLEEP_UNTIL);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
                 if (closeBank) {
-                    closeBank();
+                    closeBank(false);
                 }
+            } else {
+                ctx.logScript("No items to bank");
             }
         }
 
@@ -113,19 +124,16 @@ public class BankService extends AbstractService {
         return true;
     }
 
-    public boolean bankAll(boolean close) {
-        if (openBank()) {
-            int counter = 0;
-            while (!ctx.getInventory().isEmpty() && counter < 8) {
+    public boolean bankAll(boolean close, boolean quickly) {
+        if (openBank(quickly)) {
+            if (!ctx.getInventory().isEmpty()) {
                 ctx.logScript("Banking all items");
                 ctx.getBank().depositAllItems();
-                sleepUntil(() -> ctx.getInventory().isEmpty(), Constants.MAX_SLEEP_UNTIL);
-//                antibanService.antibanSleep(AntibanActionType.FastPace);
-                counter++;
+            } else {
+                ctx.logScript("No items to bank");
             }
-
             if (close) {
-                closeBank();
+                closeBank(quickly);
             }
         }
         return ctx.getInventory().isEmpty();

@@ -65,7 +65,7 @@ public class EnchantJewellery extends RunescriptAbstractContext {
 
             case ENCHANT:
                 // basic closing shit and stuff
-                bankService.closeBank();
+                bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.MAGIC)) {
                     getTabs().open(Tab.MAGIC);
                 }
@@ -109,15 +109,15 @@ public class EnchantJewellery extends RunescriptAbstractContext {
 
                 Item playersStaff = getEquipment().get(i -> i != null && i.getName() != null && Objects.equals(i.getName(), STAFF));
                 if (playersStaff == null) {
-                    bankService.withdraw(STAFF, 1, true, false);
+                    bankService.withdraw(STAFF, 1, true, false, false);
                     interactService.interactInventoryItem(STAFF, false);
                 }
 
-                bankService.openBank();
+                bankService.openBank(false);
                 if (getBank().contains(COSMIC_RUNE)) {
-                    bankService.withdraw(COSMIC_RUNE, null, false, false);
+                    bankService.withdraw(COSMIC_RUNE, null, false, false, false);
                 }
-                bankService.withdraw(JEWELLERY, null, true, false);
+                bankService.withdraw(JEWELLERY, null, true, false, false);
 
                 break;
 

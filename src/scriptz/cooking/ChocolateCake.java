@@ -131,11 +131,11 @@ public class ChocolateCake extends RunescriptAbstractContext {
 
             case BUY:
                 if (getInventory().count(Items.Coins.name) < 1000) {
-                    bankService.withdraw(Items.Coins.name, null, true, false);
+                    bankService.withdraw(Items.Coins.name, null, true, false, false);
                     totalCoins = getInventory().count(Items.Coins.name);
                 }
 
-                bankService.closeBank(); // just making sure bank is closed
+                bankService.closeBank(false); // just making sure bank is closed
 
                 while (lastCakePrice == -1) {
                     if (grandExchangeService.addBuyExchange("cake", Items.Cake.name, false, false)) {
@@ -177,8 +177,8 @@ public class ChocolateCake extends RunescriptAbstractContext {
                 break;
 
             case SELL:
-                bankService.withdraw(Items.ChocolateCake.name, null, false, true);
-                bankService.withdraw(Items.Coins.name, null, true, false);
+                bankService.withdraw(Items.ChocolateCake.name, null, false, true, false);
+                bankService.withdraw(Items.Coins.name, null, true, false, false);
 
                 if (grandExchangeService.addSellExchange(Items.ChocolateCake.name)) {
                     lastChocolateCakePrice = getGrandExchange().getCurrentPrice();
@@ -193,7 +193,7 @@ public class ChocolateCake extends RunescriptAbstractContext {
                 break;
 
             case MAKE_CAKE:
-                bankService.closeBank(); // just making sure bank is closed
+                bankService.closeBank(false); // just making sure bank is closed
 
                 if (getInventory().contains(Items.Cake.name) && getInventory().contains(Items.ChocolateBar.name)) {
                     interactService.interactInventoryItems(Items.Cake.name, Items.ChocolateBar.name, false, false);
@@ -211,7 +211,7 @@ public class ChocolateCake extends RunescriptAbstractContext {
                 break;
 
             case BANK:
-                bankService.bankAll(false);
+                bankService.bankAll(false, false);
 
                 // update variables
                 totalCake = getBank().count(Items.Cake.name);
@@ -227,20 +227,20 @@ public class ChocolateCake extends RunescriptAbstractContext {
 
                 int counter = 0;
                 while (totalCake > 0 && getInventory().count(Items.Cake.name) == 0 && counter < 20) {
-                    bankService.withdraw(Items.Cake.name, 14, false, false);
+                    bankService.withdraw(Items.Cake.name, 14, false, false, false);
                     counter++;
                 }
 
                 counter = 0;
                 while (totalChocolateBar > 0 && getInventory().count(Items.ChocolateBar.name) == 0 && counter < 20) {
-                    bankService.withdraw(Items.ChocolateBar.name, 14, true, false);
+                    bankService.withdraw(Items.ChocolateBar.name, 14, true, false, false);
                     counter++;
                 }
 
                 break;
 
             case STOP:
-                bankService.closeBank(); // just making sure bank is closed
+                bankService.closeBank(false); // just making sure bank is closed
                 sharedService.logout();
                 stop();
                 break;
