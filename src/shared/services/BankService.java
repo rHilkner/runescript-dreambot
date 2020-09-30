@@ -9,8 +9,6 @@ import shared.enums.AntibanActionType;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
-
 public class BankService extends AbstractService {
 
     private static BankService instance;

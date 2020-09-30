@@ -9,7 +9,6 @@ import shared.enums.AntibanActionType;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public class InventoryService extends AbstractService {

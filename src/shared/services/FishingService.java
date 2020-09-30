@@ -6,8 +6,6 @@ import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.FishingType;
 
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
-
 public class FishingService extends AbstractService {
 
     private static FishingService instance;

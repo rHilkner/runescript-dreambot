@@ -7,7 +7,6 @@ import shared.Constants;
 import shared.Util;
 import shared.enums.AntibanActionType;
 
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public class CombatService extends AbstractService {

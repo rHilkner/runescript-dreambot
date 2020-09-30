@@ -1,6 +1,7 @@
 package shared;
 
 import org.dreambot.api.methods.Calculations;
+import org.dreambot.api.utilities.impl.Condition;
 import scriptz.RunescriptAbstractContext;
 
 import java.text.DateFormat;
@@ -8,7 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import org.dreambot.api.utilities.impl.Condition;
 
 public class Util {
 

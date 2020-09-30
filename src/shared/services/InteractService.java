@@ -11,7 +11,6 @@ import shared.enums.AntibanActionType;
 
 import java.util.Objects;
 
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public class InteractService extends AbstractService {

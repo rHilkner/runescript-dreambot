@@ -31,6 +31,7 @@ public enum Areas {
     EdgevilleDungeonHillGiants(new Area(3095, 9824, 3125, 9860, 0)),
     EdgevilleDungeonHillGiantsLadder(new Area(3115, 9850, 3118, 9853, 0)),
 
+    FaladorEastBank(new Area(3010, 3357, 3015, 3355, 0)),
     FaladorSouthChickens(new Area(3014, 3294, 3020, 3282, 0)),
 
     GrandExchange(new Area(3160, 3494, 3170, 3484, 0)),
@@ -53,6 +54,8 @@ public enum Areas {
     VarrockSouthWestMineTin(new Area(3181, 3375, 3182, 3377, 0)),
     VarrockSouthWestMineIron(new Area(3174, 3366, 3175, 3368, 0)),
 
+    AirAltarOutside(new Area(2985, 3288, 3989, 3295, 0)),
+    AirAltarInside(new Area(2839,4826, 2846, 4836, 0)),
     ;
 
     private final Area area;

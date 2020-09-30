@@ -14,7 +14,6 @@ import shared.enums.Areas;
 import java.util.Objects;
 
 import static org.dreambot.api.methods.MethodProvider.sleep;
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public class SharedService extends AbstractService {

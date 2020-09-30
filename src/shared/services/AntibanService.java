@@ -11,7 +11,6 @@ import shared.services.providers.ZenAntibanAdapted;
 import java.util.Date;
 
 import static org.dreambot.api.methods.MethodProvider.sleep;
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public class AntibanService extends  AbstractService {

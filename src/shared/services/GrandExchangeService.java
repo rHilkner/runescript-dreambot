@@ -11,7 +11,6 @@ import shared.services.providers.GrandExchangeApi;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public class GrandExchangeService extends AbstractService {

@@ -78,6 +78,7 @@ public enum Items {
 
     IronArrow("Iron arrow"),
 
+    RuneEssence("Rune essence"),
     NatureRune("Nature rune"),
     LawRune("Law rune"),
     CosmicRune("Cosmic rune"),
@@ -88,6 +89,8 @@ public enum Items {
     StaffOfEarth("Staff of earth"),
     StaffOfWater("Staff of water"),
     StaffOfFire("Staff of fire"),
+
+    AirTiara("Air tiara"),
 
     UncutSapphire("Uncut sapphire"),
     UncutEmerald("Uncut emerald"),

@@ -6,8 +6,6 @@ import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Trees;
 
-import static org.dreambot.api.methods.MethodProvider.sleepUntil;
-
 public class WoodcuttingService extends AbstractService {
 
     private static WoodcuttingService instance;
