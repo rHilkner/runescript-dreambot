@@ -54,7 +54,7 @@ public enum Areas {
     VarrockSouthWestMineTin(new Area(3181, 3375, 3182, 3377, 0)),
     VarrockSouthWestMineIron(new Area(3174, 3366, 3175, 3368, 0)),
 
-    AirAltarOutside(new Area(2985, 3288, 3989, 3295, 0)),
+    AirAltarOutside(new Area(2977, 3288, 2989, 3295, 0)),
     AirAltarInside(new Area(2839,4826, 2846, 4836, 0)),
     ;
 

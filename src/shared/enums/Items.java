@@ -29,6 +29,9 @@ public enum Items {
     JugOfWater("Jug of water"),
     PizzaBase("Pizza base"),
 
+    PlainPizza("Plain pizza"),
+    PineappleRing("Pineapple ring"),
+
     ChocolateBar("Chocolate bar"),
     ChocolateDust("Chocolate dust"),
     Knife("Knife"),

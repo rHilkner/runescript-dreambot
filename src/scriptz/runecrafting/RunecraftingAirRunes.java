@@ -6,6 +6,8 @@ import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.items.Item;
 import scriptz.RunescriptAbstractContext;
+import shared.Constants;
+import shared.Util;
 import shared.enums.Areas;
 import shared.enums.Items;
 import shared.services.BankService;
@@ -63,9 +65,12 @@ public class RunecraftingAirRunes extends RunescriptAbstractContext {
                     logScript("Crafting runes");
                     interactService.interactWithGameObject("Altar");
                     inventoriesDone++;
+                    Util.sleepUntil(() -> !getInventory().contains(RUNE_ESSENCE) && !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
                     interactService.interactWithGameObject("Portal");
+                    Util.sleepUntil(() -> !AIR_ALTAR_INSIDE.contains(getLocalPlayer()), Constants.MAX_SLEEP_UNTIL);
                 } else if (AIR_ALTAR_OUTIDE.contains(getLocalPlayer())) {
                     interactService.interactWithGameObject("Mysterious ruins");
+                    Util.sleepUntil(() -> !AIR_ALTAR_OUTIDE.contains(getLocalPlayer()), Constants.MAX_SLEEP_UNTIL);
                 } else {
                     sharedService.walkTo(AIR_ALTAR_OUTIDE);
                 }
@@ -75,6 +80,11 @@ public class RunecraftingAirRunes extends RunescriptAbstractContext {
                 // making sure to unselect any item
                 if (getInventory().isItemSelected()) {
                     getInventory().deselect();
+                }
+
+                if (AIR_ALTAR_INSIDE.contains(getLocalPlayer())) {
+                    interactService.interactWithGameObject("Portal");
+                    Util.sleepUntil(() -> !AIR_ALTAR_INSIDE.contains(getLocalPlayer()), Constants.MAX_SLEEP_UNTIL);
                 }
 
                 if (sharedService.walkTo(FALADOR_EAST_BANK)) {

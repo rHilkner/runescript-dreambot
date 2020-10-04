@@ -1,4 +1,4 @@
-package scriptz.fletching;
+package scriptz.cooking;
 
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.skills.Skill;
@@ -12,32 +12,32 @@ import shared.enums.Items;
 import shared.services.BankService;
 import shared.services.InteractService;
 
-@ScriptManifest(author = "xpt", name = "Stringing Bows", version = 1.0, description = "Strings bows", category = Category.FLETCHING)
-public class StringingBows extends RunescriptAbstractContext {
+@ScriptManifest(author = "xpt", name = "Pineapple Pizza", version = 1.0, description = "Pineapple Pizza", category = Category.COOKING)
+public class PineapplePizza extends RunescriptAbstractContext {
 
-    enum State { STRING_BOWS, BANK }
+    enum State {MAKE_PIZZAS, BANK }
 
     private int inventoriesDone = 0;
     private BankService bankService;
     private InteractService interactService;
 
-    private final String BOW_NAME = Items.YewLongbowU.name;
-    private final String BOW_STRING = Items.BowString.name;
+    private final String PLAIN_PIZZA = Items.PlainPizza.name;
+    private final String PINEAPPLE_RING = Items.PineappleRing.name;
 
     @Override
     public void onStart() {
         super.onStart();
         bankService = BankService.getInstance();
         interactService = InteractService.getInstance();
-        antibanService.setSkillsToHover(Skill.FLETCHING);
+        antibanService.setSkillsToHover(Skill.COOKING);
 
-        logScript("Starting stringing bows script!");
+        logScript("Starting pineapple pizza script!");
     }
 
     public State getState() {
-        if (getInventory().contains(BOW_NAME) && !getInventory().get(BOW_NAME).isNoted()
-                && getInventory().contains(BOW_STRING) && !getInventory().get(BOW_STRING).isNoted()) {
-            return State.STRING_BOWS;
+        if (getInventory().contains(PLAIN_PIZZA) && !getInventory().get(PLAIN_PIZZA).isNoted()
+                && getInventory().contains(PINEAPPLE_RING) && !getInventory().get(PINEAPPLE_RING).isNoted()) {
+            return State.MAKE_PIZZAS;
         }
         return State.BANK;
     }
@@ -52,37 +52,39 @@ public class StringingBows extends RunescriptAbstractContext {
 
         switch (currentState) {
 
-            case STRING_BOWS:
+            case MAKE_PIZZAS:
                 bankService.closeBank(false);
                 if (!getTabs().isOpen(Tab.INVENTORY)) {
                     getTabs().open(Tab.INVENTORY);
                 }
-                interactService.interactInventoryItems(BOW_NAME, BOW_STRING, false, false);
+                interactService.interactInventoryItems(PLAIN_PIZZA, PINEAPPLE_RING, false, false);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
                 getKeyboard().type(" ");
                 Util.sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(3000, 5000));
 
                 int counter = 0;
-                while (getInventory().contains(BOW_NAME) && getInventory().contains(BOW_STRING) && counter < 5) {
-                    counter++;
+                while (getInventory().contains(PLAIN_PIZZA) && getInventory().contains(PINEAPPLE_RING) && counter < 20) {
                     antibanService.antibanSleep(AntibanActionType.SlowPace);
-                    if (getLocalPlayer().isAnimating()) {
-                        logScript("Still stringing bows");
-                        counter = 0;
-                    }
+                    logScript("Still making pizzas");
+                    counter++;
                 }
 
                 inventoriesDone++;
 
                 break;
             case BANK:
+
+                if (getInventory().isItemSelected()) {
+                    getInventory().deselect();
+                }
+
                 bankService.bankAll(false, false);
-                if (getBank().count(BOW_NAME) <= 0 || getBank().count(BOW_STRING) <= 0) {
-                    logScript("No more bows to string. Finishing execution.");
+                if (!getBank().contains(PLAIN_PIZZA) || !getBank().contains(PINEAPPLE_RING)) {
+                    logScript("No more pizzas to make. Finishing execution.");
                     stop();
                 } else {
-                    bankService.withdraw(BOW_NAME, 14, false, false, false);
-                    bankService.withdraw(BOW_STRING, 14, true, false, false);
+                    bankService.withdraw(PLAIN_PIZZA, 14, false, false, false);
+                    bankService.withdraw(PINEAPPLE_RING, 14, true, false, false);
                 }
                 break;
 
