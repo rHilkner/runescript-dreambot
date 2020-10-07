@@ -7,6 +7,8 @@ import shared.Constants;
 import shared.Util;
 import shared.enums.AntibanActionType;
 
+import java.util.Objects;
+
 import static scriptz.RunescriptAbstractContext.logScript;
 
 public class CombatService extends AbstractService {
@@ -28,6 +30,21 @@ public class CombatService extends AbstractService {
         if (instance == null)
             instance = new CombatService();
         return instance;
+    }
+
+    public void attackNearest(String npcName) {
+        NPC target = ctx.getNpcs().closest(t -> t != null && Objects.equals(t.getName(), npcName));
+
+        while (ctx.getDialogues().inDialogue() && ctx.getDialogues().canContinue()) {
+            ctx.getDialogues().continueDialogue();
+        }
+
+        if (target.interact("Attack")) {
+            logScript("Attacking target: " + target.getName() + " on " + target.getTile());
+            Util.sleepUntil(() -> ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+        }
     }
 
     public void combatLoot(String[] targets, String[] lootItems, Area area, Integer minQuantity, boolean buryBones, boolean prioritizeLoot) {
@@ -106,7 +123,7 @@ public class CombatService extends AbstractService {
             logScript("Target already in combat: " + target.getName() + " on " + target.getTile());
         } else {
             logScript("Walking to attack target: " + target.getName() + " on " + target.getTile());
-            sharedService.walkToTile(target.getTile());
+            sharedService.walkTo(target.getTile());
         }
     }
 

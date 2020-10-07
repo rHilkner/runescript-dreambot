@@ -75,15 +75,17 @@ public class SharedService extends AbstractService {
         }
     }
 
-    public void walkToTile(Tile tile) {
+    public boolean walkTo(Tile tile) {
 
-        if (tile == null) return;
+        if (tile == null) return false;
 
         if (ctx.getMap().canReach(tile) && ctx.getWalking().walk(tile)) {
             logScript("Walking to: " + tile);
-            Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving() && Objects.equals(ctx.getLocalPlayer().getTile(), tile), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.Walking);
         }
+
+        return Objects.equals(ctx.getLocalPlayer().getTile(), tile);
     }
 
     public void takeLoot(GroundItem loot) {
