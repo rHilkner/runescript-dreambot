@@ -56,6 +56,9 @@ public enum Areas {
 
     AirAltarOutside(new Area(2977, 3288, 2989, 3295, 0)),
     AirAltarInside(new Area(2839,4826, 2846, 4836, 0)),
+
+    SandiCrahbNortheast(new Area(1773, 3424, 1782, 3434, 0)),
+
     ;
 
     private final Area area;

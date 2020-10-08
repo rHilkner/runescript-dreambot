@@ -48,15 +48,40 @@ public class SharedService extends AbstractService {
 
         if (area == null) return false;
 
-        Tile randomTile = area.getRandomTile();
+        if (area.contains(ctx.getLocalPlayer())) {
+            logScript("Player already in area on tile: " + ctx.getLocalPlayer().getTile());
+        } else {
+            Tile randomTile = area.getRandomTile();
+            walkToTile(randomTile);
+        }
+
+        return area.contains(ctx.getLocalPlayer());
+    }
+
+    private void walkToTile(Tile tile) {
+        // loop stops if player standing in the same position for more than 20 counts
+        int counter = 0;
+        Tile playerLastTile = ctx.getLocalPlayer().getTile();
+        while ((ctx.getWalking().walk(tile) && !Objects.equals(ctx.getLocalPlayer().getTile(), tile)) || counter < 20) {
+            logScript("Walking to: " + tile);
+            antibanService.antibanSleep(AntibanActionType.Walking);
+            counter++;
+            if (!Objects.equals(ctx.getLocalPlayer().getTile(), playerLastTile)) {
+                counter = 0;
+            }
+            playerLastTile = ctx.getLocalPlayer().getTile();
+        }
+    }
+
+    public boolean walkToClosest(Area area) {
+
+        if (area == null) return false;
 
         if (area.contains(ctx.getLocalPlayer())) {
             logScript("Player already in area on tile: " + ctx.getLocalPlayer().getTile());
         } else {
-            logScript("Walking to: " + randomTile);
-            if (ctx.getWalking().walk(randomTile)) {
-                antibanService.antibanSleep(AntibanActionType.Walking);
-            }
+            Tile nearestTile = area.getNearestTile(ctx.getLocalPlayer());
+            walkToTile(nearestTile);
         }
 
         return area.contains(ctx.getLocalPlayer());

@@ -1,5 +1,6 @@
 package shared.services;
 
+import org.dreambot.api.methods.skills.Skills;
 import org.dreambot.api.methods.world.World;
 import shared.Constants;
 import shared.Util;
@@ -40,14 +41,14 @@ public class WorldHopService extends AbstractService {
         return ctx.getWorldHopper().isWorldHopperOpen();
     }
 
-    public boolean hopNext(boolean normalized, boolean f2pOnly, boolean noMininumLevel) {
+    public boolean hopNext(boolean normalized, boolean f2pOnly, boolean p2pOnly) {
         ctx.logScript("Trying to hop to next world");
 
         if (!open()) {
             return false;
         }
 
-        List<World> worldList = getFilteredWorldList(normalized, f2pOnly, noMininumLevel);
+        List<World> worldList = getFilteredWorldList(normalized, f2pOnly, p2pOnly);
 
         worldList.sort(Comparator.comparingInt(World::getWorld));
 
@@ -84,7 +85,7 @@ public class WorldHopService extends AbstractService {
         return false;
     }
 
-    public List<World> getFilteredWorldList(boolean normalized, boolean f2pOnly, boolean noMininumLevel) {
+    public List<World> getFilteredWorldList(boolean normalized, boolean f2pOnly, boolean p2pOnly) {
         List<World> worldList;
 
         if (normalized) {
@@ -97,9 +98,12 @@ public class WorldHopService extends AbstractService {
             worldList = worldList.stream().filter(World::isF2P).collect(Collectors.toList());
         }
 
-        if (noMininumLevel) {
-            worldList = worldList.stream().filter(w -> w.getMinimumLevel() == 0).collect(Collectors.toList());
+        if (p2pOnly) {
+            worldList = worldList.stream().filter(World::isMembers).collect(Collectors.toList());
         }
+
+        worldList = worldList.stream().filter(w -> w.getMinimumLevel() <= ctx.getSkills().getTotalLevel()).collect(Collectors.toList());
+
         return worldList;
     }
 
