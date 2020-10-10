@@ -16,10 +16,12 @@ public class InventoryService extends AbstractService {
     private static InventoryService instance;
 
     private final AntibanService antibanService;
+    private final SharedService sharedService;
 
     private InventoryService() {
         super();
         this.antibanService = AntibanService.getInstance();
+        this.sharedService = SharedService.getInstance();
     }
 
     public static InventoryService getInstance() {
@@ -28,7 +30,7 @@ public class InventoryService extends AbstractService {
         return instance;
     }
 
-    void buryBones(String specificBonesName) {
+    public void buryBones(String specificBonesName) {
 
         logScript("Burying bones");
 
@@ -40,13 +42,13 @@ public class InventoryService extends AbstractService {
             bonesName = specificBonesName;
         }
 
-        if (!ctx.getTabs().isOpen(Tab.INVENTORY))
-            ctx.getTabs().open(Tab.INVENTORY);
+        sharedService.openInventory();
 
         while (ctx.getInventory().contains(bonesName)) {
             Item bones = ctx.getInventory().get(bonesName);
+            int initialBonesCount = ctx.getInventory().count(bonesName);
             bones.interact("Bury");
-            Util.sleepUntil(() -> !ctx.getLocalPlayer().isStandingStill(), Constants.MAX_SLEEP_UNTIL);
+            Util.sleepUntil(() -> ctx.getInventory().count(bonesName) != initialBonesCount, Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
         }
         antibanService.antibanSleep(AntibanActionType.FastPace);

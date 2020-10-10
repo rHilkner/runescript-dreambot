@@ -1,8 +1,10 @@
 package shared.services;
 
 import org.dreambot.api.methods.map.Area;
+import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.GroundItem;
+import org.dreambot.api.wrappers.items.Item;
 import shared.Constants;
 import shared.Util;
 import shared.enums.AntibanActionType;
@@ -18,11 +20,13 @@ public class CombatService extends AbstractService {
     private final AntibanService antibanService;
     private final SharedService sharedService;
     private final InventoryService inventoryService;
+    private final InteractService interactService;
 
     private CombatService() {
         super();
         sharedService = SharedService.getInstance();
         inventoryService = InventoryService.getInstance();
+        interactService = InteractService.getInstance();
         antibanService = AntibanService.getInstance();
     }
 
@@ -33,7 +37,7 @@ public class CombatService extends AbstractService {
     }
 
     public void attackNearest(String npcName) {
-        NPC target = ctx.getNpcs().closest(t -> t != null && Objects.equals(t.getName(), npcName));
+        NPC target = ctx.getNpcs().closest(t -> t != null && Objects.equals(t.getName(), npcName) && !t.isInCombat());
 
         while (ctx.getDialogues().inDialogue() && ctx.getDialogues().canContinue()) {
             ctx.getDialogues().continueDialogue();
@@ -124,6 +128,25 @@ public class CombatService extends AbstractService {
         } else {
             logScript("Walking to attack target: " + target.getName() + " on " + target.getTile());
             sharedService.walkTo(target.getTile());
+        }
+    }
+
+    public void eatAnything() {
+        if (!ctx.getTabs().isOpen(Tab.INVENTORY)) {
+            ctx.getTabs().open(Tab.INVENTORY);
+        }
+
+        if (ctx.getInventory().isItemSelected()) {
+            ctx.getInventory().deselect();
+        }
+
+        for (Item item : ctx.getInventory().all()) {
+            if (item != null && item.hasAction("Eat")) {
+                interactService.interactInventoryItem(item.getName(), "Eat");
+                Util.sleepUntil(() -> ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                break;
+            }
         }
     }
 

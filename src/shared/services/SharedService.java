@@ -2,6 +2,7 @@ package shared.services;
 
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.methods.map.Tile;
+import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.randoms.RandomEvent;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
@@ -52,25 +53,37 @@ public class SharedService extends AbstractService {
             logScript("Player already in area on tile: " + ctx.getLocalPlayer().getTile());
         } else {
             Tile randomTile = area.getRandomTile();
-            walkToTile(randomTile);
+            walkTo(randomTile);
         }
 
         return area.contains(ctx.getLocalPlayer());
     }
 
-    private void walkToTile(Tile tile) {
+    public boolean walkTo(Tile tile) {
+
+        if (tile == null || !ctx.getMap().canReach(tile)) return false;
+
         // loop stops if player standing in the same position for more than 20 counts
         int counter = 0;
         Tile playerLastTile = ctx.getLocalPlayer().getTile();
-        while ((ctx.getWalking().walk(tile) && !Objects.equals(ctx.getLocalPlayer().getTile(), tile)) || counter < 20) {
+        Tile playerTileBeforeLast = null;
+        while (!Objects.equals(ctx.getLocalPlayer().getTile(), tile) && counter < 8) {
+            ctx.getWalking().walk(tile);
             logScript("Walking to: " + tile);
+            Util.sleepUntil(() -> ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.Walking);
             counter++;
-            if (!Objects.equals(ctx.getLocalPlayer().getTile(), playerLastTile)) {
+            if (Objects.equals(ctx.getLocalPlayer().getTile(), playerTileBeforeLast)) {
+                logScript("Player went to a tile that he already was... he looped. Breaking walk-to execution.");
+                break;
+            } else if (!Objects.equals(ctx.getLocalPlayer().getTile(), playerLastTile)) {
                 counter = 0;
             }
+            playerTileBeforeLast = new Tile(playerLastTile.getX(), playerLastTile.getY(), playerLastTile.getZ());
             playerLastTile = ctx.getLocalPlayer().getTile();
         }
+
+        return Objects.equals(ctx.getLocalPlayer().getTile(), tile);
     }
 
     public boolean walkToClosest(Area area) {
@@ -81,7 +94,7 @@ public class SharedService extends AbstractService {
             logScript("Player already in area on tile: " + ctx.getLocalPlayer().getTile());
         } else {
             Tile nearestTile = area.getNearestTile(ctx.getLocalPlayer());
-            walkToTile(nearestTile);
+            walkTo(nearestTile);
         }
 
         return area.contains(ctx.getLocalPlayer());
@@ -98,19 +111,6 @@ public class SharedService extends AbstractService {
             Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.Walking);
         }
-    }
-
-    public boolean walkTo(Tile tile) {
-
-        if (tile == null) return false;
-
-        if (ctx.getMap().canReach(tile) && ctx.getWalking().walk(tile)) {
-            logScript("Walking to: " + tile);
-            Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving() && Objects.equals(ctx.getLocalPlayer().getTile(), tile), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.Walking);
-        }
-
-        return Objects.equals(ctx.getLocalPlayer().getTile(), tile);
     }
 
     public void takeLoot(GroundItem loot) {
@@ -156,5 +156,19 @@ public class SharedService extends AbstractService {
     public void logout() {
         disableLoginSolver();
         ctx.getTabs().logout();
+    }
+
+    public boolean openInventory() {
+        if (!ctx.getTabs().isOpen(Tab.INVENTORY)) {
+            ctx.getTabs().open(Tab.INVENTORY);
+        }
+        return ctx.getTabs().isOpen(Tab.INVENTORY);
+    }
+
+    public boolean deselectAnyItem() {
+        if (ctx.getInventory().isItemSelected()) {
+            ctx.getInventory().deselect();
+        }
+        return ctx.getInventory().isItemSelected();
     }
 }

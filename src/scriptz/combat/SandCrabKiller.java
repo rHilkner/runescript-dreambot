@@ -10,8 +10,10 @@ import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.wrappers.interactive.Player;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
+import shared.Util;
 import shared.enums.Areas;
 import shared.services.AntibanService;
+import shared.services.CombatService;
 import shared.services.WorldHopService;
 
 import java.util.Arrays;
@@ -21,8 +23,9 @@ import java.util.Objects;
 @ScriptManifest(author = "xpt", name = "Sand Crab Killer", category = Category.COMBAT, version = 1.0, description = "Sand Crab Killer")
 public class SandCrabKiller extends RunescriptAbstractContext {
 
-    enum State { KEEP_KILLIN, WALK_AWAY, GO_TO_SANDCRAB_TILES }
+    enum State { KEEP_KILLIN, WALK_AWAY, GO_TO_SANDCRAB_TILES, EAT }
 
+    private CombatService combatService;
     private AntibanService antibanService;
     private WorldHopService worldHopService;
 
@@ -39,6 +42,10 @@ public class SandCrabKiller extends RunescriptAbstractContext {
 
     private State getState() {
 
+        if (getLocalPlayer().getHealthPercent() < 40) {
+            return State.EAT;
+        }
+
         if (getLocalPlayer().isInCombat()) {
             return State.KEEP_KILLIN;
         }
@@ -52,6 +59,7 @@ public class SandCrabKiller extends RunescriptAbstractContext {
         }
 
         if (isPlayerInSandCrabTiles) {
+            logScript("Player in SandCrab tile already... Waiting to see if the player will get attacked");
             if (sleepUntil(() -> getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL)) {
                 return State.KEEP_KILLIN;
             } else {
@@ -70,6 +78,7 @@ public class SandCrabKiller extends RunescriptAbstractContext {
     @Override
     public void onStart() {
         super.onStart();
+        this.combatService = CombatService.getInstance();
         this.antibanService = AntibanService.getInstance();
         this.worldHopService = WorldHopService.getInstance();
         antibanService.setSkillsToHover(Skill.ATTACK, Skill.STRENGTH, Skill.DEFENCE);
@@ -84,6 +93,11 @@ public class SandCrabKiller extends RunescriptAbstractContext {
         logScript("-- Current state: " + currentState.name());
 
         switch (currentState) {
+            case EAT:
+                // eat twice
+                combatService.eatAnything();
+                combatService.eatAnything();
+                break;
             case KEEP_KILLIN:
                 sleepUntil(() -> !getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
                 break;
@@ -96,20 +110,28 @@ public class SandCrabKiller extends RunescriptAbstractContext {
             case GO_TO_SANDCRAB_TILES:
                 Tile freeTile = null;
                 for (Tile tile : SAND_CRABS_TILES) {
-                    sharedService.walkToClosest(tile.getArea(Calculations.random(5, 12)));
+                    logScript("Going to check if " + tile + " is already occupied");
+                    sharedService.walkToClosest(tile.getArea(Calculations.random(8, 12)));
                     boolean isTileFree = true;
-                    for (Player player : Players.all()) {
-                        if (Objects.equals(player.getTile(), tile)) {
+                    for (Player player : getPlayers().all()) {
+                        if (tile.getArea(3).contains(player)) {
                             isTileFree = false;
                         }
                     }
                     if (isTileFree) {
                         freeTile = tile;
                         break;
+                    } else {
+                        logScript("Tile " + tile + " is already occupied, looking for another one");
                     }
                 }
 
                 if (freeTile == null) {
+                    if (getLocalPlayer().isInteractedWith()) {
+                        logScript("Just waiting until player is not in combat to hop world");
+                        Util.sleepUntil(() -> !getLocalPlayer().isInteractedWith() && !getLocalPlayer().isInCombat(), 59876);
+                        Util.sleep(Calculations.random(10000,11000));
+                    }
                     logScript("Looks like there is no free tile... hopping world!");
                     worldHopService.hopNext(true, false, true);
                 } else {

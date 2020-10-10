@@ -4,6 +4,7 @@ public enum Items {
     Coins("Coins"),
     CoinPouch("Coin pouch"),
     Bones("Bones"),
+    BigBones("Big bones"),
     Cowhide("Cowhide"),
     Feather("Feather"),
 
@@ -67,6 +68,7 @@ public enum Items {
     Anchovies("Anchovies"),
     Trout("Trout"),
     Salmon("Salmon"),
+    Monkfish("Monkfish"),
 
     Egg("Egg"),
     Pot("Pot"),
@@ -139,6 +141,21 @@ public enum Items {
     Kwuarm("Kwuarm"),
 
     VialOfWater("Vial of water"),
+
+    BlackPlatebody("Black platebody"),
+    BlackPlatelegs("Black platelegs"),
+    BlackFullHelm("Black full helm"),
+
+    WarriorGuildToken("Warrior guild token"),
+
+    BronzeDefender("Bronze defender"),
+    IronDefender("Iron defender"),
+    SteelDefender("Steel defender"),
+    BlackDefender("Black defender"),
+    MithrilDefender("Mithril defender"),
+    AdamantDefender("Adamant defender"),
+    RuneDefender("Rune defender"),
+    DragonDefender("Dragon defender"),
 
     ;
 

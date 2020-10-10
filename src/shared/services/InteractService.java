@@ -18,11 +18,13 @@ public class InteractService extends AbstractService {
     private static InteractService instance;
 
     private final AntibanService antibanService;
+    private final SharedService sharedService;
     private final InventoryService inventoryService;
 
     private InteractService() {
         super();
         antibanService = AntibanService.getInstance();
+        sharedService = SharedService.getInstance();
         inventoryService = InventoryService.getInstance();
     }
 
@@ -35,12 +37,13 @@ public class InteractService extends AbstractService {
     public boolean takeClosestGroundItem(String itemName) {
         int counter = 0;
         GroundItem item = ctx.getGroundItems().closest(itemName);
-        while (item != null && item.exists() && counter < 20) {
+        while (item != null && item.exists() && counter < 8) {
             logScript("Taking item from the ground: " + itemName);
+            int initialLootCount = ctx.getInventory().count(itemName);
             if (item.interact("Take")) {
+                Util.sleepUntil(() -> ctx.getInventory().count(itemName) != initialLootCount, Constants.MAX_SLEEP_UNTIL);
                 return true;
             }
-            Util.sleepUntil(() -> ctx.getInventory().contains(itemName), Constants.MAX_SLEEP_UNTIL);
             counter++;
         }
         return false;
@@ -191,9 +194,23 @@ public class InteractService extends AbstractService {
 
     public boolean interactClosestNpc(String npcName, String action) {
         NPC npc = ctx.getNpcs().closest(npcName);
-        if (npc != null && npc.hasAction(action)) {
+        if (npc != null && (action == null || npc.hasAction(action))) {
             logScript("Interacting with closest NPC " + npcName + " with action " + action);
-            boolean didInteract = npc.interact(action);
+            boolean didInteract = action == null ? npc.interact() : npc.interact(action);
+            Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
+            return didInteract;
+        }
+        return false;
+    }
+
+    public boolean useItemOnNpc(String itemName, String npcName) {
+        Item item = ctx.getInventory().get(itemName);
+        NPC npc = ctx.getNpcs().closest(npcName);
+        if (item != null && npc != null) {
+            logScript("Using item " + itemName + " on NPC " + npcName);
+            sharedService.openInventory();
+            boolean didInteract = item.useOn(npc);
             Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return didInteract;
