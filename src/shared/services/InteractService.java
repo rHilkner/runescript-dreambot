@@ -92,6 +92,8 @@ public class InteractService extends AbstractService {
             Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
             antibanService.antibanSleep(AntibanActionType.FastPace);
             return true;
+        } else {
+            logScript("Game-object " + gameObjectName + " doesn't exist or doesn't have the action " + action);
         }
 
         return false;
