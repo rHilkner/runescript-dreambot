@@ -63,7 +63,7 @@ public class Defender extends RunescriptAbstractContext {
 
     private State getState() {
 
-        if (getLocalPlayer().getHealthPercent() < 60) {
+        if (getLocalPlayer().getHealthPercent() < 70) {
             boolean playerHasEdibles = getInventory().contains(i -> i != null && i.hasAction("Eat"));
             if (!playerHasEdibles) {
                 return State.STOP;
@@ -71,12 +71,13 @@ public class Defender extends RunescriptAbstractContext {
             return State.EAT;
         }
 
-        if (getLocalPlayer().isInCombat()) {
+        if (getLocalPlayer().isInCombat() || getLocalPlayer().isInteractedWith()) {
             return State.KEEP_KILLIN;
         }
 
         if (!getGroundItems().all(DEFENDERS).isEmpty()) {
-            return State.GET_DEFENDER;
+//            return State.GET_DEFENDER;
+            return State.STOP;
         }
 
 
@@ -105,12 +106,15 @@ public class Defender extends RunescriptAbstractContext {
                     interactService.takeClosestGroundItem(Items.BigBones.name);
                     inventoryService.buryBones(Items.BigBones.name);
                 }
-                combatService.attackNearest(CYCLOPS);
-                Util.sleepUntil(() -> getLocalPlayer().isInCombat(), Calculations.random(3000, 4000));
+                if (!getLocalPlayer().isInCombat()) {
+                    combatService.attackNearest(CYCLOPS);
+                    Util.sleepUntil(() -> getLocalPlayer().isInCombat(), Calculations.random(3000, 4000));
+                }
                 break;
 
             case KEEP_KILLIN:
-                Util.sleepUntil(() -> !getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> !getLocalPlayer().isInCombat() && !getLocalPlayer().isInteractedWith(), Constants.MAX_SLEEP_UNTIL);
+                antibanService.antibanSleep(AntibanActionType.FastPace);
                 break;
 
             case GET_DEFENDER:
@@ -121,35 +125,37 @@ public class Defender extends RunescriptAbstractContext {
 
             case TALK_TO_KAMFREENA:
 
-                if (!THIRD_FLOOR_OUTSIDE.contains(getLocalPlayer())) {
-                    sharedService.walkTo(THIRD_FLOOR_DOOR_INSIDE);
+//                if (!THIRD_FLOOR_OUTSIDE.contains(getLocalPlayer())) {
+//                    sharedService.walkTo(THIRD_FLOOR_DOOR_INSIDE);
                     interactService.interactWithGameObject("Door", "Open");
                     Util.sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
-                }
-
-                if (getCurrentDefender() != null) {
-                    interactService.useItemOnNpc(getCurrentDefender(), KAMFREENA);
-                    Util.sleepUntil(() -> getDialogues().inDialogue(), Constants.MAX_SLEEP_UNTIL);
-                    while (getDialogues().inDialogue()) {
-                        getKeyboard().type(" ");
-                        antibanService.antibanSleep(AntibanActionType.SlowPace);
-                    }
-                }
-
-                nextDefender = getNextDefender();
-                logScript("Next defender is: " + nextDefender);
-                logScript("Going inside to kill some " + CYCLOPS);
-
-                interactService.interactWithGameObject("Door", "Open");
-                Util.sleepUntil(() -> !THIRD_FLOOR_OUTSIDE.contains(getLocalPlayer()), Constants.MAX_SLEEP_UNTIL);
-                while (getDialogues().inDialogue()) {
-                    getKeyboard().type(" ");
-                    antibanService.antibanSleep(AntibanActionType.SlowPace);
-                }
+//                }
+//
+//                if (getCurrentDefender() != null) {
+//                    interactService.useItemOnNpc(getCurrentDefender(), KAMFREENA);
+//                    Util.sleepUntil(() -> getDialogues().inDialogue(), Constants.MAX_SLEEP_UNTIL);
+//                    while (getDialogues().inDialogue()) {
+//                        getKeyboard().type(" ");
+//                        Util.sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+//                        antibanService.antibanSleep(AntibanActionType.SlowPace);
+//                    }
+//                }
+//
+//                nextDefender = getNextDefender();
+//                logScript("Next defender is: " + nextDefender);
+//                logScript("Going inside to kill some " + CYCLOPS);
+//
+//                interactService.interactWithGameObject("Door", "Open");
+//                Util.sleepUntil(() -> !getLocalPlayer().isMoving() && !getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+//                while (getDialogues().inDialogue()) {
+//                    getKeyboard().type(" ");
+//                    antibanService.antibanSleep(AntibanActionType.SlowPace);
+//                }
+//                Util.sleepUntil(() -> !THIRD_FLOOR_OUTSIDE.contains(getLocalPlayer()), Constants.MAX_SLEEP_UNTIL);
                 break;
 
             case STOP:
-                sharedService.walkTo(THIRD_FLOOR_DOOR_INSIDE);
+//                sharedService.walkTo(THIRD_FLOOR_DOOR_INSIDE);
                 interactService.interactWithGameObject("Door", "Open");
                 sleep(Calculations.random(10000, 12000));
                 stop();
@@ -200,7 +206,7 @@ public class Defender extends RunescriptAbstractContext {
         } else if (Objects.equals(currentDefender, Items.AdamantDefender.name)) {
             return Items.RuneDefender.name;
         } else if (Objects.equals(currentDefender, Items.RuneDefender.name)) {
-            return Items.DragonDefender.name;
+            return null;
         } else if (Objects.equals(currentDefender, Items.DragonDefender.name)) {
             return null;
         }

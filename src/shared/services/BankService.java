@@ -171,16 +171,15 @@ public class BankService extends AbstractService {
 
     public void depositAll(boolean close) {
         ctx.logScript("Depositing all");
-        if (!ctx.getDepositBox().isOpen()) {
-            Util.sleepUntil(() -> ctx.getDepositBox().openClosest(), Constants.MAX_SLEEP_UNTIL);
-        } else {
-            Util.sleepUntil(() -> ctx.getDepositBox().depositAllItems(), Constants.MAX_SLEEP_UNTIL);
+
+        if (openDepositBox()) {
+            ctx.getDepositBox().depositAllItems();
+            Util.sleepUntil(() -> ctx.getInventory().isEmpty(), Constants.MAX_SLEEP_UNTIL);
+            antibanService.antibanSleep(AntibanActionType.FastPace);
         }
-        antibanService.antibanSleep(AntibanActionType.FastPace);
 
         if (close) {
-            Util.sleepUntil(() -> ctx.getDepositBox().close(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.FastPace);
+            closeDepositBox();
         }
     }
 }
