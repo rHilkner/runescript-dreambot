@@ -97,7 +97,7 @@ public class Defender extends RunescriptAbstractContext {
 
         switch (currentState) {
             case EAT:
-                combatService.eatAnything();
+                sharedService.eatAnything();
                 break;
 
             case START_KILLIN:

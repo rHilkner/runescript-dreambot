@@ -95,8 +95,8 @@ public class SandCrabKiller extends RunescriptAbstractContext {
         switch (currentState) {
             case EAT:
                 // eat twice
-                combatService.eatAnything();
-                combatService.eatAnything();
+                sharedService.eatAnything();
+                sharedService.eatAnything();
                 break;
             case KEEP_KILLIN:
                 sleepUntil(() -> !getLocalPlayer().isInCombat(), Constants.MAX_SLEEP_UNTIL);

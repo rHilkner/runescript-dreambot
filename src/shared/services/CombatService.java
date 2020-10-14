@@ -131,24 +131,4 @@ public class CombatService extends AbstractService {
         }
     }
 
-    public void eatAnything() {
-        if (!ctx.getTabs().isOpen(Tab.INVENTORY)) {
-            ctx.getTabs().open(Tab.INVENTORY);
-        }
-
-        if (ctx.getInventory().isItemSelected()) {
-            ctx.getInventory().deselect();
-        }
-
-        for (Item item : ctx.getInventory().all()) {
-            if (item != null && item.hasAction("Eat")) {
-                interactService.interactInventoryItem(item.getName(), "Eat");
-                Util.sleepUntil(() -> ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
-                Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
-                break;
-            }
-        }
-    }
-
-
 }

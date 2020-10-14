@@ -6,6 +6,7 @@ import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.randoms.RandomEvent;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
+import org.dreambot.api.wrappers.items.Item;
 import scriptz.RunescriptAbstractContext;
 import shared.Constants;
 import shared.Util;
@@ -22,12 +23,14 @@ public class SharedService extends AbstractService {
     private static SharedService instance;
 
     private final AntibanService antibanService;
+    private InteractService interactService = null;
 
     /** SINGLETON METHODS */
 
     private SharedService() {
         super();
         this.antibanService = AntibanService.getInstance();
+        // It will cause a cyclic dependency if you add any other service here...
     }
 
     public static SharedService getInstance() {
@@ -36,18 +39,30 @@ public class SharedService extends AbstractService {
         return instance;
     }
 
+    private void setInteractService() {
+        if (this.interactService == null) {
+            this.interactService = InteractService.getInstance();
+        }
+    }
+
     /** STATIC FUNCTIONS */
 
     public boolean walkTo(Areas area) {
 
-        if (area == null) return false;
+        if (area == null) {
+            logScript("Area is null, not walking");
+            return false;
+        }
 
         return walkTo(area.getArea());
     }
 
     public boolean walkTo(Area area) {
 
-        if (area == null) return false;
+        if (area == null) {
+            logScript("Area is null, not walking");
+            return false;
+        }
 
         if (area.contains(ctx.getLocalPlayer())) {
             logScript("Player already in area on tile: " + ctx.getLocalPlayer().getTile());
@@ -61,7 +76,13 @@ public class SharedService extends AbstractService {
 
     public boolean walkTo(Tile tile) {
 
-        if (tile == null || !ctx.getMap().canReach(tile)) return false;
+        if (tile == null) {
+            logScript("Tile is null, not walking");
+            return false;
+        } else if (!ctx.getMap().canReach(tile)) {
+            logScript("Tile " + tile + " is unreachable, not walking");
+            return false;
+        }
 
         // loop stops if player standing in the same position for more than 20 counts
         int counter = 0;
@@ -88,7 +109,10 @@ public class SharedService extends AbstractService {
 
     public boolean walkToClosest(Area area) {
 
-        if (area == null) return false;
+        if (area == null) {
+            logScript("Area is null, not walking");
+            return false;
+        }
 
         if (area.contains(ctx.getLocalPlayer())) {
             logScript("Player already in area on tile: " + ctx.getLocalPlayer().getTile());
@@ -98,19 +122,6 @@ public class SharedService extends AbstractService {
         }
 
         return area.contains(ctx.getLocalPlayer());
-    }
-
-    public void walkToRandomTile(Area area) {
-
-        if (area == null) return;
-
-        Tile randomTile = area.getRandomTile();
-
-        if (ctx.getMap().canReach(randomTile) && ctx.getWalking().walk(randomTile)) {
-            logScript("Walking to: " + randomTile);
-            Util.sleepUntil(() -> !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.Walking);
-        }
     }
 
     public void takeLoot(GroundItem loot) {
@@ -170,5 +181,21 @@ public class SharedService extends AbstractService {
             ctx.getInventory().deselect();
         }
         return ctx.getInventory().isItemSelected();
+    }
+
+    public void eatAnything() {
+        openInventory();
+        deselectAnyItem();
+        // setting interact service to be able to use it below
+        setInteractService();
+
+        for (Item item : ctx.getInventory().all()) {
+            if (item != null && item.hasAction("Eat")) {
+                interactService.interactInventoryItem(item.getName(), "Eat");
+                Util.sleepUntil(() -> ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating(), Constants.MAX_SLEEP_UNTIL);
+                break;
+            }
+        }
     }
 }

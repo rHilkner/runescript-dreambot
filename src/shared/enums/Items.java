@@ -46,6 +46,7 @@ public enum Items {
     RingOfDueling8("Ring of dueling(8)"),
 
     GoldNecklace("Gold necklace"),
+    DodgyNecklace("Dodgy necklace"),
     EmeraldAmulet("Emerald amulet"),
     EmeraldAmuletU("Emerald amulet (u)"),
     NecklaceMould("Necklace mould"),
@@ -68,6 +69,7 @@ public enum Items {
     Anchovies("Anchovies"),
     Trout("Trout"),
     Salmon("Salmon"),
+    Lobster("Lobster"),
     Monkfish("Monkfish"),
 
     Egg("Egg"),
@@ -156,6 +158,9 @@ public enum Items {
     AdamantDefender("Adamant defender"),
     RuneDefender("Rune defender"),
     DragonDefender("Dragon defender"),
+
+    Compost("Compost"),
+    Saltpetre("Saltpetre"),
 
     ;
 

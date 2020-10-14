@@ -88,7 +88,7 @@ public class AnimatedArmours extends RunescriptAbstractContext {
         switch (currentState) {
             case EAT:
                 // eat twice
-                combatService.eatAnything();
+                sharedService.eatAnything();
                 break;
 
             case KEEP_KILLIN:

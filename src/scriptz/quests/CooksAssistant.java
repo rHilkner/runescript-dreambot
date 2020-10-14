@@ -108,7 +108,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
             return false;
         }
 
-        if (!interactService.interactClosestNpc(COOK, "Talk-to")) {
+        if (!interactService.interactClosestNpc(COOK, "Talk-to", false)) {
             return false;
         }
 
@@ -258,7 +258,7 @@ public class CooksAssistant extends RunescriptAbstractContext {
     public boolean completeCooksAssistant() {
         sharedService.walkTo(cookArea);
 
-        if (!interactService.interactClosestNpc(COOK, "Talk-to")) {
+        if (!interactService.interactClosestNpc(COOK, "Talk-to", false)) {
             return false;
         }
 

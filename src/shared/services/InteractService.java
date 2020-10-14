@@ -133,16 +133,6 @@ public class InteractService extends AbstractService {
         }
     }
 
-    public void interactFullInventory(String itemName) {
-        for (int i = 0; i <= 27; i++) {
-            Item itemInSlot = ctx.getInventory().getItemInSlot(i);
-            if (itemInSlot != null && Objects.equals(itemInSlot.getName(), itemName)) {
-                itemInSlot.interact();
-//                antibanService.antibanSleep(AntibanActionType.Latency);
-            }
-        }
-    }
-
     public void interactInventoryItem(String name, String action) {
         Item item = ctx.getInventory().get(i -> i != null && Objects.equals(i.getName(), name));
         if (item != null) {
@@ -186,19 +176,31 @@ public class InteractService extends AbstractService {
         antibanService.antibanSleep(AntibanActionType.FastPace);
     }
 
+    public void interactFullInventory(String itemName) {
+        for (int i = 0; i <= 27; i++) {
+            Item itemInSlot = ctx.getInventory().getItemInSlot(i);
+            if (itemInSlot != null && Objects.equals(itemInSlot.getName(), itemName)) {
+                itemInSlot.interact();
+//                antibanService.antibanSleep(AntibanActionType.Latency);
+            }
+        }
+    }
+
     public void interactWithWidget(WidgetChild widgetChild) {
         logScript("Interacting with widget: " + widgetChild.getText());
         Util.sleepUntil(widgetChild::interact, Constants.MAX_SLEEP_UNTIL);
         antibanService.antibanSleep(AntibanActionType.FastPace);
     }
 
-    public boolean interactClosestNpc(String npcName, String action) {
+    public boolean interactClosestNpc(String npcName, String action, boolean quickly) {
         NPC npc = ctx.getNpcs().closest(npcName);
         if (npc != null && (action == null || npc.hasAction(action))) {
             logScript("Interacting with closest NPC " + npcName + " with action " + action);
             boolean didInteract = action == null ? npc.interact() : npc.interact(action);
-            Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.FastPace);
+            if (!quickly) {
+                Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+                antibanService.antibanSleep(AntibanActionType.FastPace);
+            }
             return didInteract;
         }
         return false;
