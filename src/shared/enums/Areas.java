@@ -59,6 +59,8 @@ public enum Areas {
 
     SandiCrahbNortheast(new Area(1773, 3424, 1782, 3434, 0)),
 
+    ArdougneBank(new Area(2649, 3280, 2655, 3287, 0))
+
     ;
 
     private final Area area;

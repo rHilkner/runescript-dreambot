@@ -84,17 +84,17 @@ public class InteractService extends AbstractService {
     }
 
     public boolean interactWithGameObject(String gameObjectName, String action) {
-        GameObject gameObject = ctx.getGameObjects().closest(gameObjectName);
+        GameObject gameObject = ctx.getGameObjects().closest(o -> o != null && Objects.equals(o.getName(), gameObjectName) && o.hasAction(action));
 
-        if (gameObject != null && gameObject.exists() && gameObject.hasAction(action)) {
-            logScript("Interacting with game-object [" + gameObjectName + "] with action [" + action + "]");
-            gameObject.interact(action);
-            Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
-            antibanService.antibanSleep(AntibanActionType.FastPace);
-            return true;
-        } else {
+        if (gameObject == null) {
             logScript("Game-object " + gameObjectName + " doesn't exist or doesn't have the action " + action);
+            return false;
         }
+
+        logScript("Interacting with game-object [" + gameObjectName + "] with action [" + action + "]");
+        gameObject.interact(action);
+        Util.sleepUntil(() -> !ctx.getLocalPlayer().isAnimating() && !ctx.getLocalPlayer().isMoving(), Constants.MAX_SLEEP_UNTIL);
+        antibanService.antibanSleep(AntibanActionType.FastPace);
 
         return false;
     }

@@ -31,6 +31,8 @@ public class StealFruits extends RunescriptAbstractContext {
     private final Tile FRUIT_STALL_TILE = new Tile(1767, 3596, 0);
     private final Area LURE_AREA = new Area(1768, 3599, 1769, 3600, 0);
 
+    private int inventoriesDone = 0;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -59,6 +61,7 @@ public class StealFruits extends RunescriptAbstractContext {
 
         State currentState = getState();
         logScript("-- Current state: " + currentState.name());
+        logScript("-- Inventories done so far: " + inventoriesDone);
 
         switch (currentState) {
             case STEAL:
@@ -67,18 +70,21 @@ public class StealFruits extends RunescriptAbstractContext {
                 }
 
                 Util.sleepUntil(() -> getGameObjects().closest(FRUIT_STALL).hasAction("Steal-from"), Calculations.random(2000, 3500));
-                antibanService.antibanSleep(AntibanActionType.Latency);
 
+                if (!getLocalPlayer().isHealthBarVisible()) {
 //                int filledInventorySlots = getInventory().count(i -> i != null);
-                interactService.interactWithGameObject(FRUIT_STALL);
-                Util.sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(1000, 1800));
-                Util.sleepUntil(() -> !getLocalPlayer().isAnimating(), Calculations.random(1000, 1800));
-                // Sleeping until the number of items in the player's inventory changes (or breaking after 2.0-3.5 seconds)
+                    interactService.interactWithGameObject(FRUIT_STALL);
+                    Util.sleepUntil(() -> getLocalPlayer().isAnimating(), Calculations.random(1000, 1800));
+                    Util.sleepUntil(() -> !getLocalPlayer().isAnimating(), Calculations.random(1000, 1800));
+                    // Sleeping until the number of items in the player's inventory changes (or breaking after 2.0-3.5 seconds)
 //                Util.sleepUntil(() -> filledInventorySlots != getInventory().count(i -> i != null), Calculations.random(200, 300));
+                }
+
                 break;
 
             case DEPOSIT:
-                bankService.depositAll(true);
+                inventoriesDone++;
+                bankService.depositAll(false);
                 break;
 
             case LURE_DOGS:
