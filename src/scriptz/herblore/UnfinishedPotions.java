@@ -5,6 +5,7 @@ import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
+import shared.Constants;
 import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Items;
@@ -18,9 +19,13 @@ public class UnfinishedPotions extends RunescriptAbstractContext {
 
     private final String[] HERBS = {
             Items.Tarromin.name, Items.Harralander.name, Items.Toadflax.name,
-            Items.IritLeaf.name, Items.Avantoe.name, Items.Kwuarm.name
+            Items.IritLeaf.name, Items.Avantoe.name, Items.Kwuarm.name,
+            Items.Snapdragon.name, Items.Cadantine.name, Items.Ranarr.name,
+            Items.Lantadyme.name
     };
     private final String VIAL_OF_WATER = Items.VialOfWater.name;
+
+    private int inventoriesDone = 0;
 
     private BankService bankService;
     private InteractService interactService;
@@ -47,6 +52,7 @@ public class UnfinishedPotions extends RunescriptAbstractContext {
 
         State currentState = getState();
         logScript("-- Current state: " + currentState.name());
+        logScript("-- Inventories done so far: " + inventoriesDone);
 
         switch (currentState) {
 
@@ -74,6 +80,7 @@ public class UnfinishedPotions extends RunescriptAbstractContext {
                         }
                     }
                 }
+                inventoriesDone++;
 
                 break;
             case BANK:
@@ -88,9 +95,12 @@ public class UnfinishedPotions extends RunescriptAbstractContext {
                 for (String herb : HERBS) {
                     if (!getInventory().isFull() && getBank().contains(herb)) {
                         bankService.withdraw(herb, 14, false, false, true);
+                        break;
                     }
                 }
                 bankService.closeBank(true);
+
+                Util.sleepUntil(() -> getInventory().contains(VIAL_OF_WATER) && getInventory().contains(HERBS), Constants.MAX_SLEEP_UNTIL);
 
                 break;
 

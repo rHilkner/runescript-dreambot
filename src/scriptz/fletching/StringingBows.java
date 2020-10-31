@@ -6,6 +6,7 @@ import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import scriptz.RunescriptAbstractContext;
+import shared.Constants;
 import shared.Util;
 import shared.enums.AntibanActionType;
 import shared.enums.Items;
@@ -21,7 +22,7 @@ public class StringingBows extends RunescriptAbstractContext {
     private BankService bankService;
     private InteractService interactService;
 
-    private final String BOW_NAME = Items.YewLongbowU.name;
+    private final String BOW_NAME = Items.MagicLongbowU.name;
     private final String BOW_STRING = Items.BowString.name;
 
     @Override
@@ -53,10 +54,12 @@ public class StringingBows extends RunescriptAbstractContext {
         switch (currentState) {
 
             case STRING_BOWS:
-                bankService.closeBank(false);
-                if (!getTabs().isOpen(Tab.INVENTORY)) {
-                    getTabs().open(Tab.INVENTORY);
-                }
+                // Sanity check stuff here
+                bankService.closeBank(true);
+                sharedService.openInventory();
+                sharedService.deselectAnyItem();
+
+                // Stringing bows
                 interactService.interactInventoryItems(BOW_NAME, BOW_STRING, false, false);
                 antibanService.antibanSleep(AntibanActionType.FastPace);
                 getKeyboard().type(" ");
@@ -76,14 +79,20 @@ public class StringingBows extends RunescriptAbstractContext {
 
                 break;
             case BANK:
-                bankService.bankAll(false, false);
-                if (getBank().count(BOW_NAME) <= 0 || getBank().count(BOW_STRING) <= 0) {
+                // making sure to unselect item
+                sharedService.deselectAnyItem();
+
+                bankService.bankAll(false, true);
+                if (!getBank().contains(BOW_NAME) || !getBank().contains(BOW_STRING)) {
                     logScript("No more bows to string. Finishing execution.");
                     stop();
-                } else {
-                    bankService.withdraw(BOW_NAME, 14, false, false, false);
-                    bankService.withdraw(BOW_STRING, 14, true, false, false);
+                    break;
                 }
+
+                bankService.withdraw(BOW_NAME, 14, false, false, true);
+                bankService.withdraw(BOW_STRING, 14, true, false, true);
+
+                Util.sleepUntil(() -> getInventory().contains(BOW_NAME) && getInventory().contains(BOW_STRING), Constants.MAX_SLEEP_UNTIL);
                 break;
 
         }

@@ -23,7 +23,8 @@ public class CleaningHerbs extends RunescriptAbstractContext {
     private final String[] HERBS = {
             Items.GrimyTarromin.name, Items.GrimyHarralander.name, Items.GrimyToadflax.name,
             Items.GrimyIritLeaf.name, Items.GrimyAvantoe.name, Items.GrimyKwuarm.name,
-            Items.GrimySnapdragon.name
+            Items.GrimySnapdragon.name, Items.GrimyCadantine.name, Items.GrimyRanarr.name,
+            Items.GrimyLantadyme.name
     };
 
     @Override
@@ -87,6 +88,7 @@ public class CleaningHerbs extends RunescriptAbstractContext {
                 for (String herb : HERBS) {
                     if (!getInventory().isFull() && getBank().contains(herb)) {
                         bankService.withdraw(herb, null, false, false, true);
+                        break;
                     }
                 }
                 bankService.closeBank(true);

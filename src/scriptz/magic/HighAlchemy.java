@@ -24,7 +24,7 @@ public class HighAlchemy extends RunescriptAbstractContext {
     private BankService bankService;
     private InteractService interactService;
 
-    private final String ITEM = Items.YewLongbow.name;
+    private final String ITEM = Items.MagicLongbow.name;
     private final int[] HIGH_ALCH_WIDGET_INTS = {218, 39};
     private final String NATURE_RUNE = Items.NatureRune.name;
     private final String STAFF = Items.StaffOfFire.name;
@@ -63,6 +63,7 @@ public class HighAlchemy extends RunescriptAbstractContext {
             case HIGH_ALCH:
                 // basic closing shit and stuff
                 bankService.closeBank(false);
+                sharedService.deselectAnyItem();
                 if (!getTabs().isOpen(Tab.MAGIC)) {
                     getTabs().openWithMouse(Tab.MAGIC);
                 }
@@ -91,6 +92,8 @@ public class HighAlchemy extends RunescriptAbstractContext {
                     getTabs().openWithMouse(Tab.INVENTORY);
                     antibanService.antibanSleep(AntibanActionType.Latency);
                 }
+                // making sure to unselect item
+                sharedService.deselectAnyItem();
 
                 bankService.bankAllExcept(false, NATURE_RUNE);
 
