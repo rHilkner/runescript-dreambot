@@ -82,15 +82,15 @@ public class StringingBows extends RunescriptAbstractContext {
                 // making sure to unselect item
                 sharedService.deselectAnyItem();
 
-                bankService.bankAll(false, true);
+                bankService.bankAll(false, false);
                 if (!getBank().contains(BOW_NAME) || !getBank().contains(BOW_STRING)) {
                     logScript("No more bows to string. Finishing execution.");
                     stop();
                     break;
                 }
 
-                bankService.withdraw(BOW_NAME, 14, false, false, true);
-                bankService.withdraw(BOW_STRING, 14, true, false, true);
+                bankService.withdraw(BOW_NAME, 14, false, false, false);
+                bankService.withdraw(BOW_STRING, 14, true, false, false);
 
                 Util.sleepUntil(() -> getInventory().contains(BOW_NAME) && getInventory().contains(BOW_STRING), Constants.MAX_SLEEP_UNTIL);
                 break;
